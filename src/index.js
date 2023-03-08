@@ -1,3 +1,4 @@
-import displayOutput from './main.js';
+const { displayOutput } = require('./modules/display');
+
 
 displayOutput();

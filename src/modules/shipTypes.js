@@ -26,4 +26,4 @@ const shipTypes = {
   }
 }
 
-export default shipTypes;
+module.exports = { shipTypes };

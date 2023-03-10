@@ -1,3 +1,5 @@
+const { Ship } = require('./ship');
+
 const Gameboard = () => {
 
   const board = newGameboard();
@@ -18,9 +20,16 @@ const Gameboard = () => {
     else return board[row][col];
   }
 
+  function validHorizontalPlacement([row,col], shipType) {
+    let ship = Ship(shipType);
+    if (row + ship.length > 10) return undefined;
+    else return board[row][col];
+  }
+
   return {
     newGameboard,
-    inBounds
+    inBounds,
+    validHorizontalPlacement
   }
   
 }

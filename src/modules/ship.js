@@ -3,6 +3,7 @@ const { shipTypes } = require('./shipTypes');
 const Ship = (shipType) => {
   const type = shipType;
   const length = shipTypes[shipType].length;
+  const id = shipTypes[shipType].id;
   let hits = 0;
   function hit() {
     this.hits++;
@@ -12,7 +13,7 @@ const Ship = (shipType) => {
     else return false;
   }
   return {
-    type, length, hits, hit, isSunk
+    type, length, id, hits, hit, isSunk
   }
 }
 

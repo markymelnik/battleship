@@ -35,7 +35,7 @@ eval("const { Ship } = __webpack_require__(/*! ./ship */ \"./src/modules/ship.js
   \*****************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const { shipTypes } = __webpack_require__(/*! ./shipTypes */ \"./src/modules/shipTypes.js\");\n\nconst Ship = (shipType) => {\n  const type = shipType;\n  const length = shipTypes[shipType].length;\n  let hits = 0;\n  function hit() {\n    this.hits++;\n  }\n  function isSunk() {\n    if (this.hits >= this.length) return true;\n    else return false;\n  }\n  return {\n    type, length, hits, hit, isSunk\n  }\n}\n\nmodule.exports = { Ship };\n\n//# sourceURL=webpack://battleship/./src/modules/ship.js?");
+eval("const { shipTypes } = __webpack_require__(/*! ./shipTypes */ \"./src/modules/shipTypes.js\");\n\nconst Ship = (shipType) => {\n  const type = shipType;\n  const length = shipTypes[shipType].length;\n  const id = shipTypes[shipType].id;\n  let hits = 0;\n  function hit() {\n    this.hits++;\n  }\n  function isSunk() {\n    if (this.hits >= this.length) return true;\n    else return false;\n  }\n  return {\n    type, length, id, hits, hit, isSunk\n  }\n}\n\nmodule.exports = { Ship };\n\n//# sourceURL=webpack://battleship/./src/modules/ship.js?");
 
 /***/ }),
 

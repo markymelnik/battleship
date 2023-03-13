@@ -2,9 +2,10 @@ const { Ship } = require('./ship');
 
 const Gameboard = () => {
 
-  const board = newGameboard();
+  const board = newGameBoard();
+  let fleet = [];
 
-  function newGameboard() {
+  function newGameBoard() {
     let gameboard = [];
     for (let row = 0; row < 10; row++) {
       gameboard[row] = [];
@@ -29,14 +30,44 @@ const Gameboard = () => {
       if (col - ship.length < 0) return undefined;
       else return board[row][col];
     } else return undefined;
-    
-    
+  }
+
+  function placeShip([row,col], shipType, direction) {
+    let ship = Ship(shipType);
+    fleet.push(ship);
+    let length = ship.length;
+    if (direction === 'horizontal') {
+      for (let i = row; i < length + row; i++) {
+        board[i][col] = ship;
+      }
+      return board[row][col];
+    }
+    else if (direction === 'vertical') {
+      for (let i = col; i > col - length; i--) {
+        board[row][i] = ship;
+      }
+      return board[row][col];
+    }
+
+  }
+
+  function receiveAttack([row,col]) {
+    fleet.forEach((ship) => {
+      let currentShip = board[row][col];
+      if (ship.id == currentShip.id) {
+        ship.hit();
+      }
+    })
   }
 
   return {
-    newGameboard,
+    board,
+    fleet,
+    newGameBoard,
     inBounds,
-    validPlacement
+    validPlacement,
+    placeShip,
+    receiveAttack
   }
   
 }

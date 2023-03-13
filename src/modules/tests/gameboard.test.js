@@ -14,10 +14,12 @@ test('check for an empty gameboard with coordinate within bounds', () => {
 });
 
 test('check for valid horizontal placement', () => {
-  expect(gameboard.validHorizontalPlacement([0,0],'carrier')).toBe(null);
-  expect(gameboard.validHorizontalPlacement([5,0],'carrier')).toBe(null);
-  expect(gameboard.validHorizontalPlacement([6,0],'carrier')).toBe(undefined);
-  expect(gameboard.validHorizontalPlacement([9,2], 'destroyer')).toBe(undefined);
-  expect(gameboard.validHorizontalPlacement([7,4], 'battleship')).toBe(undefined);
-  expect(gameboard.validHorizontalPlacement([7,4], 'submarine')).toBe(null);
+  expect(gameboard.validPlacement([5,5],'carrier','horizontal')).toBe(null);
+  expect(gameboard.validPlacement([6,5],'carrier','horizontal')).toBe(undefined);
+  expect(gameboard.validPlacement([5,5],'carrier','vertical')).toBe(null);
+  expect(gameboard.validPlacement([5,4],'carrier','vertical')).toBe(undefined);
+  expect(gameboard.validPlacement([9,3],'destroyer','horizontal')).toBe(undefined);
+  expect(gameboard.validPlacement([2,3],'battleship','vertical')).toBe(undefined);
+  expect(gameboard.validPlacement([7,2],'submarine','horizontal')).toBe(null);
+  expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(null);
 });

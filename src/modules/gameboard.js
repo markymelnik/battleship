@@ -20,16 +20,23 @@ const Gameboard = () => {
     else return board[row][col];
   }
 
-  function validHorizontalPlacement([row,col], shipType) {
+  function validPlacement([row,col], shipType, direction) {
     let ship = Ship(shipType);
-    if (row + ship.length > 10) return undefined;
-    else return board[row][col];
+    if (direction === 'horizontal') {
+      if (row + ship.length > 10) return undefined;
+      else return board[row][col];
+    } else if (direction === 'vertical') {
+      if (col - ship.length < 0) return undefined;
+      else return board[row][col];
+    } else return undefined;
+    
+    
   }
 
   return {
     newGameboard,
     inBounds,
-    validHorizontalPlacement
+    validPlacement
   }
   
 }

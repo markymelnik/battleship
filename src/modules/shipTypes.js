@@ -21,7 +21,7 @@ const shipTypes = {
   },
   carrier: {
     id: 5,
-    name: 'carrer',
+    name: 'carrier',
     length: 5
   }
 }

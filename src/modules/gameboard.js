@@ -29,36 +29,43 @@ const Gameboard = () => {
     } else if (direction === 'vertical') {
       if (col - ship.length < 0) return undefined;
       else return board[row][col];
-    } else return undefined;
+    } 
+    else throw Error('Invalid paramters; use "vertical" or "horizontal"');
   }
 
   function placeShip([row,col], shipType, direction) {
-    let ship = Ship(shipType);
-    fleet.push(ship);
-    let length = ship.length;
-    if (direction === 'horizontal') {
-      for (let i = row; i < length + row; i++) {
-        board[i][col] = ship;
+    let currentShip = Ship(shipType);
+    if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {
+      fleet.push(currentShip);
+      let length = currentShip.length;
+      if (direction === 'horizontal') {
+        for (let i = row; i < length + row; i++) {
+          board[i][col] = currentShip;
+        }
+        return board[row][col];
       }
-      return board[row][col];
-    }
-    else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
-        board[row][i] = ship;
+      else if (direction === 'vertical') {
+        for (let i = col; i > col - length; i--) {
+          board[row][i] = currentShip;
+        }
+        return board[row][col];
       }
-      return board[row][col];
+      else throw Error('Invalid paramters; use "vertical" or "horizontal"');
     }
-
   }
 
   function receiveAttack([row,col]) {
-    fleet.forEach((ship) => {
-      let currentShip = board[row][col];
-      if (ship.id == currentShip.id) {
-        ship.hit();
-      }
-    })
-  }
+    let boardValue = board[row][col];
+    if (boardValue != null) {
+      fleet.forEach((fleetShip) => {
+        if (boardValue.id === fleetShip.id) {
+          board[row][col] = 'hit';
+          fleetShip.hit();
+        }
+      })
+    }
+    else board[row][col] = 'nohit'; 
+  };
 
   return {
     board,
@@ -73,4 +80,3 @@ const Gameboard = () => {
 }
 
 module.exports = { Gameboard };
-

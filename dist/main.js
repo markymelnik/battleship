@@ -45,7 +45,7 @@ eval("const { shipTypes } = __webpack_require__(/*! ./shipTypes */ \"./src/modul
   \**********************************/
 /***/ ((module) => {
 
-eval("const shipTypes = {\n  destroyer: {\n    id: 1,\n    name: 'destroyer',\n    length: 2\n  },\n  submarine: {\n    id: 2,\n    name: 'submarine',\n    length: 3\n  },\n  cruiser: {\n    id: 3,\n    name: 'cruiser',\n    length: 3\n  },\n  battleship: {\n    id: 4,\n    name: 'battleship',\n    length: 4\n  },\n  carrier: {\n    id: 5,\n    name: 'carrer',\n    length: 5\n  }\n}\n\nmodule.exports = { shipTypes };\n\n//# sourceURL=webpack://battleship/./src/modules/shipTypes.js?");
+eval("const shipTypes = {\n  destroyer: {\n    id: 1,\n    name: 'destroyer',\n    length: 2\n  },\n  submarine: {\n    id: 2,\n    name: 'submarine',\n    length: 3\n  },\n  cruiser: {\n    id: 3,\n    name: 'cruiser',\n    length: 3\n  },\n  battleship: {\n    id: 4,\n    name: 'battleship',\n    length: 4\n  },\n  carrier: {\n    id: 5,\n    name: 'carrier',\n    length: 5\n  }\n}\n\nmodule.exports = { shipTypes };\n\n//# sourceURL=webpack://battleship/./src/modules/shipTypes.js?");
 
 /***/ })
 

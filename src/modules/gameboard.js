@@ -3,7 +3,7 @@ const { Ship } = require('./ship');
 const Gameboard = () => {
 
   const board = newGameBoard();
-  let fleet = [];
+  const fleet = newFleet();
 
   function newGameBoard() {
     let gameboard = [];
@@ -15,6 +15,8 @@ const Gameboard = () => {
     }
     return gameboard;
   }
+
+  function newFleet() { return [] };
 
   function inBounds([row,col]) {
     if (row < 0 || row > 9 || col < 0 || col > 9) return undefined;
@@ -67,6 +69,11 @@ const Gameboard = () => {
     else board[row][col] = 'nohit'; 
   };
 
+  function checkEndGame() {
+    if (fleet.every((fleetShip) => fleetShip.isSunk() === true)) return true;
+    else return false;
+  }
+
   return {
     board,
     fleet,
@@ -74,7 +81,8 @@ const Gameboard = () => {
     inBounds,
     validPlacement,
     placeShip,
-    receiveAttack
+    receiveAttack,
+    checkEndGame
   }
   
 }

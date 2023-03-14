@@ -9,7 +9,7 @@ const Ship = (shipType) => {
     this.hits++;
   }
   function isSunk() {
-    if (this.hits >= this.length) return true;
+    if (this.hits === this.length) return true;
     else return false;
   }
   return {

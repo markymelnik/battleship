@@ -9,11 +9,15 @@ const Ship = (shipType) => {
     this.hits++;
   }
   function isSunk() {
-    if (this.hits === this.length) return true;
-    else return false;
+    return (this.hits === this.length);
   }
   return {
-    type, length, id, hits, hit, isSunk
+    type, 
+    length, 
+    id, 
+    hits, 
+    hit, 
+    isSunk
   }
 }
 

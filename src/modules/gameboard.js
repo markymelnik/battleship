@@ -19,20 +19,21 @@ const Gameboard = () => {
   function newFleet() { return [] };
 
   function inBounds([row,col]) {
-    if (row < 0 || row > 9 || col < 0 || col > 9) return undefined;
-    else return board[row][col];
+    return (row >= 0 && row <= 9 && col >= 0 && col <= 9)
   }
 
   function validPlacement([row,col], shipType, direction) {
-    let ship = Ship(shipType);
-    if (direction === 'horizontal') {
-      if (row + ship.length > 10) return undefined;
-      else return board[row][col];
-    } else if (direction === 'vertical') {
-      if (col - ship.length < 0) return undefined;
-      else return board[row][col];
-    } 
-    else throw Error('Invalid paramters; use "vertical" or "horizontal"');
+    if (inBounds([row,col])) {
+      let ship = Ship(shipType);
+      if (direction === 'horizontal') {
+        if (row + ship.length > 10) return undefined;
+        else return board[row][col];
+      } else if (direction === 'vertical') {
+        if (col - ship.length < 0) return undefined;
+        else return board[row][col];
+      } 
+      else throw Error('Invalid paramters; use "vertical" or "horizontal"');
+    }
   }
 
   function placeShip([row,col], shipType, direction) {
@@ -58,7 +59,7 @@ const Gameboard = () => {
 
   function receiveAttack([row,col]) {
     let boardValue = board[row][col];
-    if (boardValue != null) {
+    if (boardValue !== null) {
       fleet.forEach((fleetShip) => {
         if (boardValue.id === fleetShip.id) {
           board[row][col] = 'hit';
@@ -70,8 +71,7 @@ const Gameboard = () => {
   };
 
   function checkEndGame() {
-    if (fleet.every((fleetShip) => fleetShip.isSunk() === true)) return true;
-    else return false;
+    return (fleet.every((fleetShip) => fleetShip.isSunk() === true));
   }
 
   return {

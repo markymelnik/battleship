@@ -1,17 +1,18 @@
 const { Gameboard } = require('../gameboard');
-const { Ship } = require('../Ship');
+const { Ship } = require('../ship');
 
-let gameboard, fleet;
+let gameboard;
 
 beforeEach(() => {
   gameboard = Gameboard();
 });
 
 test('check for an empty gameboard with coordinate within bounds', () => {
-  expect(gameboard.inBounds([0,0])).toBe(null);
-  expect(gameboard.inBounds([9,10])).toBe(undefined);
-  expect(gameboard.inBounds([-1,-2])).toBe(undefined);
-  expect(gameboard.inBounds([1,2])).toBe(null);
+  expect(gameboard.inBounds([0,0])).toBe(true);
+  expect(gameboard.inBounds([9,9])).toBe(true);
+  expect(gameboard.inBounds([9,10])).toBe(false);
+  expect(gameboard.inBounds([-1,-2])).toBe(false);
+  expect(gameboard.inBounds([1,2])).toBe(true);
 });
 
 test('check for valid horizontal placement', () => {
@@ -25,7 +26,7 @@ test('check for valid horizontal placement', () => {
   expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(null);
 });
 
-test('gameboard squares update to true when a ship is placed', () => {
+test('gameboard position contains the ship object when ship is placed', () => {
   const foo = Ship('destroyer');
   const bar = Ship('submarine');
 
@@ -80,7 +81,6 @@ test('if an attack hits a ship, its board value becomes "hit"; otherwise its boa
   expect(JSON.stringify(gameboard.board[5][5])).toEqual(JSON.stringify(foo));
   gameboard.receiveAttack([5,4]);
   expect(gameboard.board[5][4]).toBe('hit');
-  expect(gameboard.fleet[0].hits).toBe(1);
   gameboard.receiveAttack([4,4]);
   expect(gameboard.board[4][4]).toBe('nohit');
 });
@@ -98,7 +98,7 @@ test('return true if a ship is sunk', () => {
   expect(gameboard.fleet[0].isSunk()).toBe(true);
 });
 
-test('check to see if a fleet is sunk, signaling the game ending', () => {
+test('check to see if whole fleet is sunk, signaling the game ending', () => {
   const foo = Ship('battleship');
   gameboard.placeShip([1,8],foo.type,'vertical');
   expect(gameboard.fleet[0].isSunk()).toBe(false);

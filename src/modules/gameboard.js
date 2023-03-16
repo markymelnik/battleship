@@ -16,7 +16,19 @@ const Gameboard = () => {
     return gameboard;
   }
 
+  function clearBoard() {
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        board[row][col] = null;
+      }
+    }
+  }
+
   function newFleet() { return [] };
+
+  function clearFleet() {
+    while (fleet.length > 0) fleet.pop();
+  }
 
   function inBounds([row,col]) {
     return (row >= 0 && row <= 9 && col >= 0 && col <= 9)
@@ -32,7 +44,6 @@ const Gameboard = () => {
         if (col - ship.length < 0) return undefined;
         else return board[row][col];
       } 
-      else throw Error('Invalid paramters; use "vertical" or "horizontal"');
     }
   }
 
@@ -53,7 +64,6 @@ const Gameboard = () => {
         }
         return board[row][col];
       }
-      else throw Error('Invalid paramters; use "vertical" or "horizontal"');
     }
   }
 
@@ -68,16 +78,18 @@ const Gameboard = () => {
       })
     }
     else board[row][col] = 'nohit'; 
-  };
+  }
 
   function checkEndGame() {
-    return (fleet.every((fleetShip) => fleetShip.isSunk() === true));
+    return fleet.every((fleetShip) => fleetShip.isSunk());
   }
 
   return {
     board,
     fleet,
     newGameBoard,
+    clearBoard,
+    clearFleet,
     inBounds,
     validPlacement,
     placeShip,

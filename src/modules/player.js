@@ -1,11 +1,11 @@
 const { Gameboard } = require('./gameboard')
 
 class Player {
-  constructor(name) {
-    this.name = typeof name === 'string' ? name : 'opponentAI';
-    this.turn = true;
+  constructor(playerName) {
+    this.name = typeof playerName === 'string' ? playerName : 'opponentAI';
+    this.turn = this.name === 'opponentAI' ? false : true;
   }
-
+  
   checkTurn() {
     return this.turn;
   }
@@ -16,9 +16,10 @@ class Player {
     }
   }
 
-  endTurn() {
+  endTurn(enemyPlayer) {
     if (this.turn === true) {
       this.turn = false;
+      enemyPlayer.startTurn();
     }
   }
 
@@ -27,6 +28,7 @@ class Player {
       enemyBoard.receiveAttack([x,y]);
       this.endTurn(enemyPlayer);
     }
+    else throw Error('Not your turn!')
   }
 }
 

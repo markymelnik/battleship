@@ -2,10 +2,10 @@ const { Ship } = require('./ship');
 
 const Gameboard = () => {
 
-  const board = newGameBoard();
+  const board = createGameBoard();
   const fleet = newFleet();
 
-  function newGameBoard() {
+  function createGameBoard() {
     let gameboard = [];
     for (let row = 0; row < 10; row++) {
       gameboard[row] = [];
@@ -87,7 +87,7 @@ const Gameboard = () => {
   return {
     board,
     fleet,
-    newGameBoard,
+    createGameBoard,
     clearBoard,
     clearFleet,
     inBounds,

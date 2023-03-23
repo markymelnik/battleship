@@ -23,9 +23,39 @@ eval("const { displayController } = __webpack_require__(/*! ./modules/displayCon
 /*!******************************************!*\
   !*** ./src/modules/displayController.js ***!
   \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const { Gameboard } = __webpack_require__(/*! ./gameboard */ \"./src/modules/gameboard.js\");\n\nconst playerGrid = document.querySelector('.player-grid');\nconst aiGrid = document.querySelector('.ai-grid');\n\nconst nameForm = document.querySelector('.name-form');\nconst playerName = document.querySelector('.player-name');\nconst nameInput = document.querySelector('#nameInput');\n\nconst resetBtn = document.querySelector('.reset-btn');\n\nconst displayController = () => {\n  console.log('Battleship');\n  getGridSquares(playerGrid);\n  getGridSquares(aiGrid);\n  submitForm();\n  resetGame();\n};\n\nconst getGridSquares = (grid) => {\n  grid.style.gridTemplate = `repeat(10, 40px) / repeat(10, 40px)`;\n  for (let i = 0; i < (10 * 10); i++) {\n    let tile = document.createElement('div');\n    tile.classList.add('tile');\n    grid.appendChild(tile);\n  }\n}\n\nconst submitForm = () => {\n  nameForm.addEventListener('submit', (event) => {\n    playerName.textContent = nameInput.value;\n    nameForm.style.visibility = 'hidden';\n    nameForm.reset();\n    event.preventDefault();\n  })\n};\n\nconst resetGame = () => {\n  resetBtn.addEventListener('click', () => {\n    nameForm.style.visibility = 'visible';\n    playerName.textContent = 'placeholder';\n  })\n}\n\nmodule.exports = { displayController };\n\n//# sourceURL=webpack://battleship/./src/modules/displayController.js?");
+
+/***/ }),
+
+/***/ "./src/modules/gameboard.js":
+/*!**********************************!*\
+  !*** ./src/modules/gameboard.js ***!
+  \**********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const { Ship } = __webpack_require__(/*! ./ship */ \"./src/modules/ship.js\");\n\nconst Gameboard = () => {\n\n  const board = createGameBoard();\n  const fleet = newFleet();\n\n  function createGameBoard() {\n    let gameboard = [];\n    for (let row = 0; row < 10; row++) {\n      gameboard[row] = [];\n      for (let col = 0; col < 10; col++) {\n        gameboard[row][col] = null;\n      }\n    }\n    return gameboard;\n  }\n\n  function clearBoard() {\n    for (let row = 0; row < 10; row++) {\n      for (let col = 0; col < 10; col++) {\n        board[row][col] = null;\n      }\n    }\n  }\n\n  function newFleet() { return [] };\n\n  function clearFleet() {\n    while (fleet.length > 0) fleet.pop();\n  }\n\n  function inBounds([row,col]) {\n    return (row >= 0 && row <= 9 && col >= 0 && col <= 9)\n  }\n\n  function validPlacement([row,col], shipType, direction) {\n    if (inBounds([row,col])) {\n      let ship = Ship(shipType);\n      if (direction === 'horizontal') {\n        if (row + ship.length > 10) return undefined;\n        else return board[row][col];\n      } else if (direction === 'vertical') {\n        if (col - ship.length < 0) return undefined;\n        else return board[row][col];\n      } \n    }\n  }\n\n  function placeShip([row,col], shipType, direction) {\n    let currentShip = Ship(shipType);\n    if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {\n      fleet.push(currentShip);\n      let length = currentShip.length;\n      if (direction === 'horizontal') {\n        for (let i = row; i < length + row; i++) {\n          board[i][col] = currentShip;\n        }\n        return board[row][col];\n      }\n      else if (direction === 'vertical') {\n        for (let i = col; i > col - length; i--) {\n          board[row][i] = currentShip;\n        }\n        return board[row][col];\n      }\n    }\n  }\n\n  function receiveAttack([row,col]) {\n    let boardValue = board[row][col];\n    if (boardValue !== null) {\n      fleet.forEach((fleetShip) => {\n        if (boardValue.id === fleetShip.id) {\n          board[row][col] = 'hit';\n          fleetShip.hit();\n        }\n      })\n    }\n    else board[row][col] = 'nohit'; \n  }\n\n  function checkEndGame() {\n    return fleet.every((fleetShip) => fleetShip.isSunk());\n  }\n\n  return {\n    board,\n    fleet,\n    createGameBoard,\n    clearBoard,\n    clearFleet,\n    inBounds,\n    validPlacement,\n    placeShip,\n    receiveAttack,\n    checkEndGame\n  }\n  \n}\n\nmodule.exports = { Gameboard };\n\n//# sourceURL=webpack://battleship/./src/modules/gameboard.js?");
+
+/***/ }),
+
+/***/ "./src/modules/ship.js":
+/*!*****************************!*\
+  !*** ./src/modules/ship.js ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const { shipTypes } = __webpack_require__(/*! ./shipTypes */ \"./src/modules/shipTypes.js\");\n\nconst Ship = (shipType) => {\n  const type = shipType;\n  const length = shipTypes[shipType].length;\n  const id = shipTypes[shipType].id;\n  let hits = 0;\n  function hit() {\n    this.hits++;\n  }\n  function isSunk() {\n    return (this.hits === this.length);\n  }\n  return {\n    type, \n    length, \n    id, \n    hits, \n    hit, \n    isSunk\n  }\n}\n\nmodule.exports = { Ship };\n\n//# sourceURL=webpack://battleship/./src/modules/ship.js?");
+
+/***/ }),
+
+/***/ "./src/modules/shipTypes.js":
+/*!**********************************!*\
+  !*** ./src/modules/shipTypes.js ***!
+  \**********************************/
 /***/ ((module) => {
 
-eval("const playerGrid = document.querySelector('.player-grid');\nconst aiGrid = document.querySelector('.ai-grid');\n\nconst displayController = () => {\n  console.log('Battleship');\n  getGridSquares(playerGrid);\n  getGridSquares(aiGrid);\n};\n\nconst getGridSquares = (grid) => {\n  grid.style.gridTemplate = `repeat(10, 40px) / repeat(10, 40px)`;\n  for (let i = 0; i < (10 * 10); i++) {\n    let tile = document.createElement('div');\n    tile.classList.add('tile');\n    grid.appendChild(tile);\n  }\n}\n\nmodule.exports = { displayController };\n\n//# sourceURL=webpack://battleship/./src/modules/displayController.js?");
+eval("const shipTypes = {\n  destroyer: {\n    id: 1,\n    name: 'destroyer',\n    length: 2\n  },\n  submarine: {\n    id: 2,\n    name: 'submarine',\n    length: 3\n  },\n  cruiser: {\n    id: 3,\n    name: 'cruiser',\n    length: 3\n  },\n  battleship: {\n    id: 4,\n    name: 'battleship',\n    length: 4\n  },\n  carrier: {\n    id: 5,\n    name: 'carrier',\n    length: 5\n  }\n}\n\nmodule.exports = { shipTypes };\n\n//# sourceURL=webpack://battleship/./src/modules/shipTypes.js?");
 
 /***/ })
 

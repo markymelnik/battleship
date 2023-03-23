@@ -1,4 +1,3 @@
-const { displayOutput } = require('./modules/display');
+const { displayController } = require('./modules/displayController');
 
-
-displayOutput();
+displayController();

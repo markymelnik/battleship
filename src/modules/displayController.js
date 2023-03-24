@@ -9,10 +9,9 @@ const nameInput = document.querySelector('#nameInput'); */
 
 const resetBtn = document.querySelector('.reset-btn');
 
-
 const displayController = () => {
 
-  const populateWithTiles = (grid) => {
+  const populateBoardWithTiles = (grid) => {
     grid.style.gridTemplate = `repeat(10, 40px) / repeat(10, 40px)`;
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -25,6 +24,24 @@ const displayController = () => {
     }
   }
 
+  const displayShips = (board) => {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (board[i][j] !== null) {
+          let tiles = document.querySelectorAll('.tile');
+          tiles.forEach((tile) => {
+            let tileRow = +tile.getAttribute('row');
+            let tileCol = +tile.getAttribute('col');
+            if (tileRow === i && tileCol === j) {
+              tile.setAttribute('ship', board[i][j].type);
+              tile.innerHTML = 'X';
+            }
+          })
+        }
+      }
+    }
+  }
+  
   /* const submitForm = () => {
   nameForm.addEventListener('submit', (event) => {
     playerName.textContent = nameInput.value || 'Player 1';
@@ -55,26 +72,23 @@ const displayController = () => {
 
   aiSide.placeShip([4,4], 'destroyer', 'horizontal');
   aiSide.placeShip([6,2], 'battleship', 'horizontal');
-  aiSide.placeShip([2,9], 'submarine', 'vertical');
+  aiSide.placeShip([3,9], 'submarine', 'vertical');
   aiSide.placeShip([1,6], 'carrier', 'vertical');
   aiSide.placeShip([6,8], 'cruiser', 'vertical');
-
 
   console.log('Battleship');
   console.log(playerBoard);
   console.log(aiBoard);
-  populateWithTiles(playerGrid);
-  populateWithTiles(aiGrid);
+
+  populateBoardWithTiles(playerGrid);
+  displayShips(playerBoard);
   
+  // populateBoardWithTiles(aiGrid);
+  // aiSide.displayShips(aiBoard);
+
   // submitForm();
   resetGame();
 
 };
-
-
-
-
-
-
 
 module.exports = { displayController };

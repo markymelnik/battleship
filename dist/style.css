@@ -74,6 +74,10 @@
   border: 1px solid black;
 }
 
+.tile:hover {
+  background:rgb(149, 202, 255);
+}
+
 .name-form {
   display: flex;
   flex-direction: column;

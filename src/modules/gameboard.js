@@ -54,13 +54,19 @@ const Gameboard = () => {
       let length = currentShip.length;
       if (direction === 'horizontal') {
         for (let i = row; i < length + row; i++) {
-          board[i][col] = currentShip;
+          if (board[i][col] === null) {
+            board[i][col] = currentShip;
+          }
+          else throw Error('Another ship is in the way!');
         }
         return board[row][col];
       }
       else if (direction === 'vertical') {
         for (let i = col; i > col - length; i--) {
-          board[row][i] = currentShip;
+          if (board[row][i] === null) {
+            board[row][i] = currentShip;
+          }
+          else throw Error('Another ship is in the way!');
         }
         return board[row][col];
       }

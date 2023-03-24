@@ -15,7 +15,7 @@ test('check for an empty gameboard with coordinate within bounds', () => {
   expect(gameboard.inBounds([1,2])).toBe(true);
 });
 
-test('check for valid horizontal placement', () => {
+test('check for valid vertical and horizontal placement', () => {
   expect(gameboard.validPlacement([5,5],'carrier','horizontal')).toBe(null);
   expect(gameboard.validPlacement([6,5],'carrier','horizontal')).toBe(undefined);
   expect(gameboard.validPlacement([5,5],'carrier','vertical')).toBe(null);
@@ -24,6 +24,14 @@ test('check for valid horizontal placement', () => {
   expect(gameboard.validPlacement([2,3],'battleship','vertical')).toBe(undefined);
   expect(gameboard.validPlacement([7,2],'submarine','horizontal')).toBe(null);
   expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(null);
+});
+
+test('check that ships do not cross over each other', () => {
+  const foo = Ship('battleship');
+  const bar = Ship('submarine');
+  gameboard.placeShip([5,5],foo.type,'horizontal');
+  expect(() => { gameboard.placeShip([6,6],bar.type,'vertical') } ).toThrow(Error);
+  gameboard.placeShip([5,4],bar.type,'vertical');
 });
 
 test('gameboard position contains the ship object when ship is placed', () => {

@@ -24,7 +24,7 @@
   font-size: 35px;
 }
 
-.body {
+.middle {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -34,7 +34,7 @@
   gap: 20px;
 }
 
-.player-container {
+.player-container, .ai-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,22 +44,9 @@
   border: 1px solid black;
 }
 
-.ai-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  border: 1px solid black;
-}
-
-.player-grid {
+.player-grid, .ai-grid {
   display: grid;
-}
-
-.ai-grid {
-  display: grid;
+  grid-template: repeat(10, 40px) / repeat(10, 40px);
 }
 
 .player-name {

@@ -88,7 +88,8 @@ const Gameboard = () => {
 
   function checkEndGame() {
     return fleet.every((fleetShip) => fleetShip.isSunk());
-  }
+  };
+
 
   return {
     board,
@@ -100,7 +101,7 @@ const Gameboard = () => {
     validPlacement,
     placeShip,
     receiveAttack,
-    checkEndGame
+    checkEndGame,
   }
   
 }

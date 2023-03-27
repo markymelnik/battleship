@@ -1,3 +1,4 @@
-const { displayController } = require('./modules/displayController');
+const { loadWebsite, gameFlowController} = require('./modules/dom');
 
-displayController();
+loadWebsite();
+gameFlowController();

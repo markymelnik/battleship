@@ -57,7 +57,7 @@
   font-size: 30px;
 }
 
-.tile {
+.player-tile, .ai-tile {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,7 @@
   border: 1px solid black;
 }
 
-.tile:hover {
+.player-tile:hover, .ai-tile:hover {
   background:rgb(149, 202, 255);
 }
 

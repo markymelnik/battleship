@@ -1,8 +1,6 @@
-const { Gameboard } = require('./gameboard');
-
 const domController = (() => {
 
-  function createHeader() {
+  const createHeader = () => {
     const header = document.createElement('div');
     header.classList.add('header');
     const headerText = document.createElement('div');
@@ -12,34 +10,26 @@ const domController = (() => {
     return header;
   }
 
-  function createMiddle() {
+  const createMiddle = () => {
     const middle = document.createElement('div');
     middle.classList.add('middle');
-
     const playerContainer = document.createElement('div');
     playerContainer.classList.add('player-container');
-
     const playerName = document.createElement('div');
     playerName.classList.add('player-name');
     playerName.textContent = 'placeholder';
-
     playerContainer.append(playerName,populateGrid('player'));
-
     const aiContainer = document.createElement('div');
     aiContainer.classList.add('ai-container');
-
     const aiName = document.createElement('div');
     aiName.classList.add('ai-name');
     aiName.textContent = 'OpponentAI';
-
     aiContainer.append(aiName,populateGrid('ai'));
-
     middle.append(playerContainer,aiContainer)
-
     return middle;
   }
 
-  function createFooter() {
+  const createFooter = () => {
     const footer = document.createElement('div');
     footer.classList.add('footer');
     const footerText = document.createElement('div');
@@ -49,7 +39,40 @@ const domController = (() => {
     return footer;
   }
 
-  function populateGrid(type) {
+  const createNameForm = () => {
+    const nameForm = document.createElement('form');
+    nameForm.classList.add('name-form');
+    nameForm.setAttribute('name','nameform');
+    nameForm.setAttribute('autocomplete','off');
+    const prompt = document.createElement('h1');
+    prompt.textContent = 'Enter your name:';
+    const formContent = document.createElement('div');
+    formContent.classList.add('form-content');
+    const label = document.createElement('label');
+    label.setAttribute('for','name');
+    const input = document.createElement('input');
+    input.setAttribute('type','text');
+    input.setAttribute('id','name-input');
+    input.setAttribute('name','name');
+    input.setAttribute('required','');
+    const button = document.createElement('button');
+    button.classList.add('submit-btn');
+    button.setAttribute('type','button');
+    button.textContent = 'Submit';
+    formContent.append(label, input, button);
+    nameForm.append(prompt,formContent);
+    return nameForm; 
+  }
+
+  const createResetBtn = () => {
+    const button = document.createElement('button');
+    button.classList.add('reset-btn');
+    button.setAttribute('type','button');
+    button.textContent = 'Reset';
+    return button;
+  }
+
+  const populateGrid = (type) => {
     const grid = document.createElement('div');
     grid.classList.add(type + '-grid');
     for (let row = 0; row < 10; row++) {
@@ -64,14 +87,14 @@ const domController = (() => {
     return grid;
   }
 
-  function displayShips(board, type) {
+  const displayShips = (board, type) => {
     const tiles = document.querySelectorAll('.'+type+'-tile');
     for (let row = 0; row < 10; row ++) {
       for (let col = 0; col < 10; col++) {
         tiles.forEach(tile => {
           if (board[row][col] !== null) {
             if (tile.dataset.row == row && tile.dataset.col == col) {
-              tile.textContent = 'X';
+              tile.textContent = 'O';
             }  
           }
         })
@@ -79,8 +102,29 @@ const domController = (() => {
     }
   }
 
-  const submitForm = () => {
+  const resetGame = () => {
+    const resetBtn = document.querySelector('.reset-btn');
+    const nameForm = document.querySelector('.name-form');
+    const playerName = document.querySelector('.player-name');
+    resetBtn.addEventListener('click', () => {
+      nameForm.style.visibility = 'visible';
+      playerName.textContent = 'placeholder';
+      console.log('Game Reset');
+    })
+  };
+
+  const formController = () => {
+    const nameForm = document.querySelector('.name-form');
+    const nameInput = document.querySelector('#name-input');
+    const playerName = document.querySelector('.player-name');
+    const submitBtn = document.querySelector('.submit-btn');
     nameForm.addEventListener('submit', (event) => {
+      playerName.textContent = nameInput.value || 'Player 1';
+      nameForm.style.visibility = 'hidden';
+      nameForm.reset();
+      event.preventDefault();
+    })
+    submitBtn.addEventListener('click', (event) => {
       playerName.textContent = nameInput.value || 'Player 1';
       nameForm.style.visibility = 'hidden';
       nameForm.reset();
@@ -88,17 +132,17 @@ const domController = (() => {
     })
   }
 
-  const resetGame = () => {
-    resetBtn.addEventListener('click', () => {
-      // nameForm.style.visibility = 'visible';
-      // playerName.textContent = 'placeholder';
-      console.log('Game Reset');
-    })
-  };
+  
 
   const loadWebsite = () => {
     const container = document.querySelector('.container');
-    container.append(createHeader(), createMiddle(), createFooter());
+    container.append(
+      createHeader(), 
+      createMiddle(), 
+      createFooter(),
+      // createNameForm(),
+      // createResetBtn()
+      );
     return container;
   }
 
@@ -106,54 +150,15 @@ const domController = (() => {
     createHeader,
     createMiddle,
     createFooter,
+    createNameForm,
+    createResetBtn,
     populateGrid,
     displayShips,
-    submitForm,
     resetGame,
+    formController,
     loadWebsite
   }
 
 })();
 
-
-
-const gameFlowController = () => {
-
-  domController.loadWebsite();
-
-  const playerSide = Gameboard();
-  const playerBoard = playerSide.board;
-  const playerGrid = document.querySelector('.player-grid');
-
-  const aiSide = Gameboard();
-  const aiBoard = aiSide.board;
-  const aiGrid = document.querySelector('.ai-grid');
-
-  playerSide.placeShip([1,1], 'destroyer', 'horizontal');
-  playerSide.placeShip([8,9], 'submarine', 'vertical');
-  playerSide.placeShip([2,8], 'cruiser', 'horizontal');
-  playerSide.placeShip([6,2], 'battleship', 'horizontal');
-  playerSide.placeShip([4,6], 'carrier', 'vertical');
-
-  aiSide.placeShip([5,6], 'destroyer', 'horizontal');
-  aiSide.placeShip([3,9], 'submarine', 'vertical');
-  aiSide.placeShip([5,2], 'cruiser', 'vertical');
-  aiSide.placeShip([6,4], 'battleship', 'horizontal');
-  aiSide.placeShip([1,6], 'carrier', 'vertical');
-
-  // const nameForm = document.querySelector('.name-form');
-  // const playerName = document.querySelector('.player-name');
-  // const nameInput = document.querySelector('#nameInput');
-
-  const resetBtn = document.querySelector('.reset-btn');
-
-  domController.displayShips(playerBoard,'player');
-  domController.displayShips(aiBoard,'ai');
-
-  console.log('Battleship');
-  console.log(playerBoard);
-  console.log(aiBoard);
-
-}
-
-module.exports = { gameFlowController };
+module.exports = { domController };

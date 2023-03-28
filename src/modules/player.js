@@ -2,7 +2,7 @@ const { Gameboard } = require('./gameboard');
 
 class Player {
   constructor(playerName) {
-    this.name = typeof playerName === 'string' ? playerName : 'opponentAI';
+    this.name = typeof playerName === 'string' ? playerName : 'OpponentAI';
     this.turn = true;
   }
   

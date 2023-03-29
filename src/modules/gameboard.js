@@ -34,43 +34,44 @@ const Gameboard = () => {
     return (row >= 0 && row <= 9 && col >= 0 && col <= 9)
   }
 
-  function validPlacement([row,col], shipType, direction) {
+  function validPlacement([row,col], length, direction) {
     if (inBounds([row,col])) {
-      let ship = Ship(shipType);
       if (direction === 'horizontal') {
-        if (row + ship.length > 10) return undefined;
-        else return board[row][col];
+        return (row + length < 10);
       } else if (direction === 'vertical') {
-        if (col - ship.length < 0) return undefined;
-        else return board[row][col];
+        return (col - length > 0);
       } 
     }
   }
 
   function placeShip([row,col], shipType, direction) {
     let currentShip = Ship(shipType);
+    let length = currentShip.length;
     if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {
       fleet.push(currentShip);
-      let length = currentShip.length;
-      if (direction === 'horizontal') {
-        for (let i = row; i < length + row; i++) {
-          if (board[i][col] === null) {
-            board[i][col] = currentShip;
+        if (direction === 'horizontal') {
+          for (let i = row; i < length + row; i++) {
+            if (board[i][col] === null) {
+              board[i][col] = currentShip;
+            }
+            else throw Error('Another ship is in the way!');
           }
-          else throw Error('Another ship is in the way!');
+          return board[row][col];
         }
-        return board[row][col];
-      }
-      else if (direction === 'vertical') {
-        for (let i = col; i > col - length; i--) {
-          if (board[row][i] === null) {
-            board[row][i] = currentShip;
+
+        else if (direction === 'vertical') {
+          for (let i = col; i > col - length; i--) {
+            if (board[row][i] === null) {
+              board[row][i] = currentShip;
+            }
+            else throw Error('Another ship is in the way!');
           }
-          else throw Error('Another ship is in the way!');
-        }
-        return board[row][col];
+          return board[row][col];
+        
+
       }
     }
+    else throw Error('This ship is already in the fleet!');
   }
 
   function receiveAttack([row,col]) {
@@ -78,7 +79,7 @@ const Gameboard = () => {
     if (boardValue !== null) {
       fleet.forEach((fleetShip) => {
         if (boardValue.id === fleetShip.id) {
-          board[row][col] = 'hit';
+          boardValue = 'hit';
           fleetShip.hit();
         }
       })

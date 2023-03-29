@@ -1,4 +1,3 @@
-const { Gameboard } = require('./gameboard');
 
 class Player {
   constructor(playerName) {

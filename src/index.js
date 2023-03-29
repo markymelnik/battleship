@@ -43,7 +43,7 @@ const updateBoard = () => {
 		tile.addEventListener('click', () => {
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
 			tile.textContent = 'X';
-
+			domController.updateTile(tile);
 		})
 	})
 
@@ -53,6 +53,7 @@ const updateBoard = () => {
 		tile.addEventListener('click', () => {
 			playerAI.targetedAttack([row,col], playerMark, playerSide);
 			tile.textContent = 'X';
+			domController.updateTile(tile);
 		})
 	})
 
@@ -63,3 +64,5 @@ updateBoard();
 console.log('Battleship');
 console.log(playerBoard);
 console.log(aiBoard);
+console.log(playerSide.fleet);
+console.log(aiSide.fleet);

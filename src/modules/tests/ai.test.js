@@ -17,7 +17,7 @@ beforeEach(() => {
 
 test('AI has a name and its initial turn status is false', () => {
 	expect(playerAI.turn).toBe(false);
-	expect(playerAI.name).toBe('opponentAI');
+	expect(playerAI.name).toBe('OpponentAI');
 });
 
 test('AI chooses random coordinates to hit', () => {

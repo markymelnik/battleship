@@ -16,14 +16,14 @@ test('check for an empty gameboard with coordinate within bounds', () => {
 });
 
 test('check for valid vertical and horizontal placement', () => {
-  expect(gameboard.validPlacement([5,5],'carrier','horizontal')).toBe(null);
-  expect(gameboard.validPlacement([6,5],'carrier','horizontal')).toBe(undefined);
-  expect(gameboard.validPlacement([5,5],'carrier','vertical')).toBe(null);
-  expect(gameboard.validPlacement([5,4],'carrier','vertical')).toBe(undefined);
-  expect(gameboard.validPlacement([9,3],'destroyer','horizontal')).toBe(undefined);
-  expect(gameboard.validPlacement([2,3],'battleship','vertical')).toBe(undefined);
-  expect(gameboard.validPlacement([7,2],'submarine','horizontal')).toBe(null);
-  expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(null);
+  expect(gameboard.validPlacement([5,5],'carrier','horizontal')).toBe(true);
+  expect(gameboard.validPlacement([6,5],'carrier','horizontal')).toBe(false);
+  expect(gameboard.validPlacement([5,4],'carrier','vertical')).toBe(true);
+  expect(gameboard.validPlacement([5,3],'carrier','vertical')).toBe(false);
+  expect(gameboard.validPlacement([9,3],'destroyer','horizontal')).toBe(false);
+  expect(gameboard.validPlacement([2,2],'battleship','vertical')).toBe(false);
+  expect(gameboard.validPlacement([7,2],'submarine','horizontal')).toBe(true);
+  expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(true);
 });
 
 test('check that ships do not cross over each other', () => {
@@ -31,7 +31,6 @@ test('check that ships do not cross over each other', () => {
   const bar = Ship('submarine');
   gameboard.placeShip([5,5],foo.type,'horizontal');
   expect(() => { gameboard.placeShip([6,6],bar.type,'vertical') } ).toThrow(Error);
-  gameboard.placeShip([5,4],bar.type,'vertical');
 });
 
 test('gameboard position contains the ship object when ship is placed', () => {
@@ -65,7 +64,6 @@ test('check if placing a ship pushes that ship into fleet array', () => {
   gameboard.placeShip([2,2],foo.type,'horizontal');
   expect(JSON.stringify(gameboard.fleet)).toBe(JSON.stringify([foo]));
   gameboard.placeShip([4,4],bar.type,'horizontal');
-  gameboard.placeShip([7,7],taz.type,'vertical');
   expect(JSON.stringify(gameboard.fleet)).toBe(JSON.stringify([foo,bar]));
 });
 
@@ -83,14 +81,11 @@ test('check if an attack hits a ship and increases hit count of that ship in the
   expect(gameboard.fleet[1].hits).toBe(2);
 });
 
-test('if an attack hits a ship, its board value becomes "hit"; otherwise its board value becomes "nohit"', () => {
-  const foo = Ship('carrier');
-  gameboard.placeShip([5,5],foo.type,'vertical');
-  expect(JSON.stringify(gameboard.board[5][5])).toEqual(JSON.stringify(foo));
-  gameboard.receiveAttack([5,4]);
-  expect(gameboard.board[5][4]).toBe('hit');
-  gameboard.receiveAttack([4,4]);
-  expect(gameboard.board[4][4]).toBe('nohit');
+test('the same type of ship cannot be placed twice', () => {
+  const foo = Ship('destroyer');
+  const bar = Ship('destroyer');
+  gameboard.placeShip([2,2], foo.type, 'vertical');
+  expect(() => { gameboard.placeShip([4,4], bar.type, 'horizontal') } ).toThrow(Error);
 });
 
 test('return true if a ship is sunk', () => {

@@ -31,47 +31,48 @@ const Gameboard = () => {
   }
 
   function inBounds([row,col]) {
-    return (row >= 0 && row <= 9 && col >= 0 && col <= 9)
+    return (row > -1 && row < 10 && col > -1 && col < 10)
   }
 
-  function validPlacement([row,col], length, direction) {
+  function validPlacement([row,col], shipType, direction) {
+    let length = Ship(shipType).length;
     if (inBounds([row,col])) {
       if (direction === 'horizontal') {
-        return (row + length < 10);
+        return (row + length - 1 < 10);
       } else if (direction === 'vertical') {
-        return (col - length > 0);
+        return (col - length + 1 > -1);
       } 
     }
   }
 
   function placeShip([row,col], shipType, direction) {
+    if (!validPlacement([row,col], shipType, direction)) throw Error('The ship extends outside the board')
     let currentShip = Ship(shipType);
     let length = currentShip.length;
     if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {
       fleet.push(currentShip);
-        if (direction === 'horizontal') {
-          for (let i = row; i < length + row; i++) {
-            if (board[i][col] === null) {
-              board[i][col] = currentShip;
-            }
-            else throw Error('Another ship is in the way!');
-          }
-          return board[row][col];
-        }
-
-        else if (direction === 'vertical') {
-          for (let i = col; i > col - length; i--) {
-            if (board[row][i] === null) {
-              board[row][i] = currentShip;
-            }
-            else throw Error('Another ship is in the way!');
-          }
-          return board[row][col];
-        
-
-      }
-    }
+    } 
     else throw Error('This ship is already in the fleet!');
+
+    if (direction === 'horizontal') {
+      for (let i = row; i < length + row; i++) {
+        if (board[i][col] === null) {
+          board[i][col] = currentShip;
+        }
+        else throw Error('Another ship is in the way!');
+      }
+      return board[row][col];
+    }
+    else if (direction === 'vertical') {
+      for (let i = col; i > col - length; i--) {
+        if (board[row][i] === null) {
+          board[row][i] = currentShip;
+        }
+        else throw Error('Another ship is in the way!');
+      }
+      return board[row][col];
+    }
+
   }
 
   function receiveAttack([row,col]) {
@@ -79,12 +80,10 @@ const Gameboard = () => {
     if (boardValue !== null) {
       fleet.forEach((fleetShip) => {
         if (boardValue.id === fleetShip.id) {
-          boardValue = 'hit';
           fleetShip.hit();
         }
       })
     }
-    else board[row][col] = 'nohit'; 
   }
 
   function checkEndGame() {

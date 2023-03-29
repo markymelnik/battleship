@@ -80,7 +80,7 @@ const domController = (() => {
         const tile = document.createElement('div');
         tile.classList.add(type + '-tile');
         tile.dataset.row = row;
-        tile.dataset.col = col
+        tile.dataset.col = col;
         grid.appendChild(tile);
       }
     }
@@ -95,6 +95,7 @@ const domController = (() => {
           if (board[row][col] !== null) {
             if (tile.dataset.row == row && tile.dataset.col == col) {
               tile.textContent = 'O';
+              tile.setAttribute('ship','true');
             }  
           }
         })
@@ -132,7 +133,14 @@ const domController = (() => {
     })
   }
 
-  
+  const updateTile = (tile) => {
+    if (tile.getAttribute('ship')) {
+      tile.style.backgroundColor = 'red';
+    } else {
+      tile.style.backgroundColor = 'lightblue';
+    }
+    return tile;
+  }
 
   const loadWebsite = () => {
     const container = document.querySelector('.container');
@@ -156,6 +164,7 @@ const domController = (() => {
     displayShips,
     resetGame,
     formController,
+    updateTile,
     loadWebsite
   }
 

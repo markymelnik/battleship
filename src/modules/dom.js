@@ -1,3 +1,4 @@
+
 const domController = (() => {
 
   const createHeader = () => {
@@ -133,7 +134,9 @@ const domController = (() => {
     })
   }
 
-  const updateTile = (tile) => {
+  const updateAiTile = (tile) => {
+    tile.style.pointerEvents = 'none';
+    tile.textContent = 'X';
     if (tile.getAttribute('ship')) {
       tile.style.backgroundColor = 'red';
     } else {
@@ -164,7 +167,7 @@ const domController = (() => {
     displayShips,
     resetGame,
     formController,
-    updateTile,
+    updateAiTile,
     loadWebsite
   }
 

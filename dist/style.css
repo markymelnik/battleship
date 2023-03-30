@@ -66,7 +66,8 @@
 }
 
 .player-tile:hover, .ai-tile:hover {
-  background:rgb(149, 202, 255);
+  background:lightgray;
+  cursor: pointer;
 }
 
 .name-form {

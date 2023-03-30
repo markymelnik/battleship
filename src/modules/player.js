@@ -22,9 +22,9 @@ class Player {
     }
   }
 
-  targetedAttack([row,col], enemyPlayer, enemyBoard) {
+  targetedAttack([row,col], enemyPlayer, enemySide) {
     if (this.checkTurn()) {
-      enemyBoard.receiveAttack([row,col]);
+      enemySide.receiveAttack([row,col]);
       this.endTurn(enemyPlayer);
     }
     else throw Error('Not your turn!')

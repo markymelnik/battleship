@@ -14,7 +14,7 @@ const playerTiles = document.querySelectorAll('.player-tile');
 const aiSide = Gameboard();
 const aiBoard = aiSide.board;
 const aiGrid = document.querySelector('.ai-grid');
-const playerAI = new AI();
+const playerAI = new AI('AI',playerMark,playerSide);
 const aiTiles = document.querySelectorAll('.ai-tile');
 
 playerSide.placeShip([1,1], 'destroyer', 'horizontal');
@@ -42,21 +42,23 @@ const updateBoard = () => {
 		let col = tile.dataset.col;
 		tile.addEventListener('click', () => {
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
-			tile.textContent = 'X';
-			domController.updateTile(tile);
+			domController.updateAiTile(tile);
+			playerAI.randomAttack(playerMark, playerSide);
+
+			let strike = playerAI.hitArray[playerAI.hitArray.length - 1];
+			playerTiles.forEach(tile => {
+				let row = tile.dataset.row;
+				let col = tile.dataset.col;
+				if (strike[0] == row && strike[1] == col) {
+					domController.updateAiTile(tile);
+				}
+			})
+
+			playerSide.checkEndGame();
+			aiSide.checkEndGame();
+
 		})
 	})
-
-	playerTiles.forEach(tile => {
-		let row = tile.dataset.row;
-		let col = tile.dataset.col;
-		tile.addEventListener('click', () => {
-			playerAI.targetedAttack([row,col], playerMark, playerSide);
-			tile.textContent = 'X';
-			domController.updateTile(tile);
-		})
-	})
-
 };
 
 updateBoard();

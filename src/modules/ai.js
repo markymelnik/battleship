@@ -1,16 +1,15 @@
 const { Player } = require('./player');
 
 class AI extends Player {
-  constructor(name, enemyPlayer, enemyBoard) {
+  constructor(name, enemyPlayer, enemySide) {
     super(name);
     this.turn = false;
     this.enemyPlayer = enemyPlayer;
-    this.enemyBoard = enemyBoard;
+    this.enemySide = enemySide;
     this.hitArray = [];
-
   }
 
-  randomAttack(enemyPlayer, enemyBoard) {
+  randomAttack(enemyPlayer, enemySide) {
     if(this.checkTurn()) {
       let strike = [];
       while(true) {
@@ -20,7 +19,7 @@ class AI extends Player {
         strike[1] = secondNum;
         if(!this.hitArray.some(coords => coords[0] == strike[0] && coords[1] == strike[1])) {
           this.hitArray.push(strike);
-          this.targetedAttack(strike, enemyPlayer, enemyBoard);
+          this.targetedAttack(strike, enemyPlayer, enemySide);
           break;
         }
       }

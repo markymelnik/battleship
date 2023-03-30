@@ -83,11 +83,18 @@ const Gameboard = () => {
           fleetShip.hit();
         }
       })
+    } else {
+      boardValue = 'nohit';
     }
   }
 
   function checkEndGame() {
-    return fleet.every((fleetShip) => fleetShip.isSunk());
+    if (fleet.every((fleetShip) => fleetShip.isSunk())) {
+      console.log('End Game!');
+      return true;
+    } else {
+      return false;
+    }
   };
 
 

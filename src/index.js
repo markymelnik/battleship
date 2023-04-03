@@ -7,17 +7,16 @@ domController.loadWebsite();
 
 const playerSide = Gameboard();
 const playerBoard = playerSide.board;
-const playerGrid = document.querySelector('.player-grid');
 const playerMark = new Player('Mark');
 const playerTiles = document.querySelectorAll('.player-tile');
 
 const aiSide = Gameboard();
 const aiBoard = aiSide.board;
-const aiGrid = document.querySelector('.ai-grid');
 const playerAI = new AI('AI',playerMark,playerSide);
 const aiTiles = document.querySelectorAll('.ai-tile');
 
-const resetBtn = document.querySelector('.reset-btn');
+const newGameBtn = document.querySelector('.new-game-btn');
+const resetGameBtn = document.querySelector('.reset-game-btn');
 
 const placeAllPlayerShips = () => {
 	playerSide.placeShip([1,1], 'destroyer', 'horizontal');
@@ -27,20 +26,22 @@ const placeAllPlayerShips = () => {
 	playerSide.placeShip([4,6], 'carrier', 'vertical');
 }
 
-const resetBoards = () => {
-	
+const resetGame = () => {
+	domController.resetNameForm();
+	newGame();
+}
+
+const newGame = () => {
 	const winBox = document.querySelector('.win-box');
 	winBox.style.visibility = 'hidden';
-
 	resetPlayerBoard();
 	resetAiBoard();
-
 }
 
 const resetPlayerBoard = () => {
 	playerSide.clearBoard();
 	playerSide.clearFleet();
-	domController.resetTiles('player');
+	domController.resetPlayerTiles();
 	placeAllPlayerShips();
 	domController.displayShips(playerBoard,'player');
 }
@@ -48,12 +49,12 @@ const resetPlayerBoard = () => {
 const resetAiBoard = () => {
 	aiSide.clearBoard();
 	aiSide.clearFleet();
-	domController.resetTiles('ai');
+	domController.resetAiTiles();
 	aiSide.placeShipsRandomly();
 	domController.displayShips(aiBoard,'ai');
 }
 
-// domController.formController();
+domController.nameFormController();
 
 placeAllPlayerShips();
 aiSide.placeShipsRandomly();
@@ -79,9 +80,11 @@ const updateBoard = () => {
 				let row = +tile.dataset.row;
 				let col = +tile.dataset.col;
 				if (strike[0] === row && strike[1] === col) {
-					setTimeout(() => { domController.updateTile(tile) }, 500);
+					setTimeout(() => { domController.updateTile(tile) }, 400);
 				}
 			})
+
+			
 
 			if (playerSide.checkEndGame()) {
 				domController.endGameController('ai');
@@ -90,16 +93,19 @@ const updateBoard = () => {
 			if (aiSide.checkEndGame()) {
 				domController.endGameController('player');
 			}
-
 		})
+
 	})
+
+	resetGameBtn.addEventListener('click', newGame);
+	newGameBtn.addEventListener('click', newGame);
 	
 };
-
-resetBtn.addEventListener('click', resetBoards);
 
 updateBoard();
 
 console.log('Battleship');
 console.log(playerBoard);
 console.log(aiBoard);
+console.log(playerSide.fleet);
+console.log(aiSide.fleet);

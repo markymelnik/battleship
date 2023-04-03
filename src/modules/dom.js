@@ -65,11 +65,11 @@ const domController = (() => {
     return nameForm; 
   }
 
-  const createResetBtn = () => {
+  const createResetGameBtn = () => {
     const button = document.createElement('button');
-    button.classList.add('reset-btn');
+    button.classList.add('reset-game-btn');
     button.setAttribute('type','button');
-    button.textContent = 'Reset';
+    button.textContent = 'Reset Game';
     return button;
   }
 
@@ -78,8 +78,15 @@ const domController = (() => {
     winBox.classList.add('win-box');
     const winText = document.createElement('div');
     winText.classList.add('win-text');
-    winBox.append(winText);
+    winBox.append(winText,createNewGameBtn());
     return winBox;
+  }
+
+  const createNewGameBtn = () => {
+    const newGameBtn = document.createElement('button');
+    newGameBtn.classList.add('new-game-btn');
+    newGameBtn.textContent = 'New Game';
+    return newGameBtn;
   }
 
   const populateGrid = (type) => {
@@ -113,18 +120,7 @@ const domController = (() => {
     }
   }
 
-  const resetDisplay = () => {
-    const resetBtn = document.querySelector('.reset-btn');
-    // const nameForm = document.querySelector('.name-form');
-    // const playerName = document.querySelector('.player-name');
-    resetBtn.addEventListener('click', () => {
-      // nameForm.style.visibility = 'visible';
-      // playerName.textContent = 'placeholder';
-      console.log('Game Reset');
-    })
-  };
-
-  const formController = () => {
+  const nameFormController = () => {
     const nameForm = document.querySelector('.name-form');
     const nameInput = document.querySelector('#name-input');
     const playerName = document.querySelector('.player-name');
@@ -143,6 +139,13 @@ const domController = (() => {
     })
   }
 
+  const resetNameForm = () => {
+    const nameForm = document.querySelector('.name-form');
+    const playerName = document.querySelector('.player-name');
+	  nameForm.style.visibility = 'visible';
+    playerName.textContent = 'placeholder';
+  }
+
   const updateTile = (tile) => {
     tile.style.pointerEvents = 'none';
     tile.textContent = 'X';
@@ -154,17 +157,26 @@ const domController = (() => {
     return tile;
   }
 
-  const resetTiles = (type) => {
-    const tiles = document.querySelectorAll('.'+type+'-tile');
+  const resetPlayerTiles = () => {
+    const tiles = document.querySelectorAll('.player-tile');
+    tiles.forEach(tile => {
+      tile.textContent = '';
+      tile.style.backgroundColor = 'darkslategrey';
+      tile.removeAttribute('ship');
+    })
+  }
+
+  const resetAiTiles = () => {
+    const tiles = document.querySelectorAll('.ai-tile');
     tiles.forEach(tile => {
       tile.textContent = '';
       tile.style.backgroundColor = 'darkslategrey';
       tile.style.pointerEvents = 'auto';
       tile.style.cursor = 'pointer';
-      tile.setAttribute('ship','');
+      tile.removeAttribute('ship');
     })
   }
-  
+
   const endGameController = (winner) => {
 
     const aiTiles = document.querySelectorAll('.ai-tile');
@@ -190,9 +202,9 @@ const domController = (() => {
       createHeader(), 
       createMiddle(), 
       createFooter(),
+      createNameForm(),
       createWinBox(),
-      // createNameForm(),
-      createResetBtn()
+      createResetGameBtn()
       );
     return container;
   }
@@ -200,10 +212,11 @@ const domController = (() => {
   return {
     populateGrid,
     displayShips,
-    resetDisplay,
-    formController,
+    nameFormController,
+    resetNameForm,
     updateTile,
-    resetTiles,
+    resetPlayerTiles,
+    resetAiTiles,
     endGameController,
     loadWebsite
   }

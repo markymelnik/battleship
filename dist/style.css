@@ -76,6 +76,7 @@
   background: darkslategrey;
   color: white;
   font-weight: bolder;
+
 }
 
 .player-tile:hover {
@@ -83,7 +84,7 @@
 }
 
 .ai-tile:hover {
-  background:lightgray;
+  background:darkgrey;
   cursor: pointer;
 }
 
@@ -122,6 +123,7 @@
 
 .name-form button:hover {
   background: lightgrey;
+  cursor: pointer;
 }
 
 .form-content {
@@ -131,27 +133,29 @@
   gap: 20px;
 }
 
-.reset-btn {
+.reset-game-btn {
   height: 60px;
-  width: 120px;
+  width: 140px;
   position: absolute;
-  background: rgb(243, 80, 80);
   border: 1px solid black;
-  font-size: 20px;
+  background: rgb(243, 80, 80);
+  font-size: 18px;
   right: 1.5%;
   bottom: 1.5%;
   transform: translate(-1.5%,-1.5%);
 }
 
-.reset-btn:hover {
+.reset-game-btn:hover {
   background: rgb(236, 127, 127);
   cursor: pointer;
 }
 
 .win-box {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 25px;
   position: absolute;
   height: 150px;
   width: 400px;
@@ -162,6 +166,19 @@
 
 .win-text {
   font-size: 30px;
+}
+
+.new-game-btn {
+  height: 50px;
+  width: 120px;
+  border: 1px solid black;
+  background: rgb(243, 80, 80);
+  font-size: 16px;
+}
+
+.new-game-btn:hover {
+  background: rgb(236, 127, 127);
+  cursor: pointer;
 }
 
 .footer {

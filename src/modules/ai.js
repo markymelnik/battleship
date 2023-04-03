@@ -9,6 +9,10 @@ class AI extends Player {
     this.hitArray = [];
   }
 
+  resetHitArray() {
+    return this.hitArray = [];
+  }
+
   randomAttack(enemyPlayer, enemySide) {
     if(this.checkTurn()) {
       let strike = [];

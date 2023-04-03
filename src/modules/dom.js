@@ -19,13 +19,13 @@ const domController = (() => {
     const playerName = document.createElement('div');
     playerName.classList.add('player-name');
     playerName.textContent = 'placeholder';
-    playerContainer.append(playerName,populateGrid('player'));
+    playerContainer.append(playerName,createGridTiles('player'));
     const aiContainer = document.createElement('div');
     aiContainer.classList.add('ai-container');
     const aiName = document.createElement('div');
     aiName.classList.add('ai-name');
     aiName.textContent = 'OpponentAI';
-    aiContainer.append(aiName,populateGrid('ai'));
+    aiContainer.append(aiName,createGridTiles('ai'));
     middle.append(playerContainer,aiContainer)
     return middle;
   }
@@ -89,7 +89,7 @@ const domController = (() => {
     return newGameBtn;
   }
 
-  const populateGrid = (type) => {
+  const createGridTiles = (type) => {
     const grid = document.createElement('div');
     grid.classList.add(type + '-grid');
     for (let row = 0; row < 10; row++) {
@@ -154,7 +154,6 @@ const domController = (() => {
     } else {
       tile.style.backgroundColor = 'dodgerblue';
     }
-    return tile;
   }
 
   const resetPlayerTiles = () => {
@@ -185,7 +184,6 @@ const domController = (() => {
     
     aiTiles.forEach(tile => {
       tile.style.pointerEvents = 'none';
-      tile.style.cursor = 'auto';
     })
     
     winBox.style.visibility = 'visible';
@@ -210,7 +208,7 @@ const domController = (() => {
   }
 
   return {
-    populateGrid,
+    createGridTiles,
     displayShips,
     nameFormController,
     resetNameForm,

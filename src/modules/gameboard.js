@@ -16,6 +16,8 @@ const Gameboard = () => {
     return gameboard;
   }
 
+  function newFleet() { return [] };
+
   function clearBoard() {
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
@@ -23,8 +25,6 @@ const Gameboard = () => {
       }
     }
   }
-
-  function newFleet() { return [] };
 
   function clearFleet() {
     while (fleet.length > 0) fleet.pop();

@@ -34,35 +34,35 @@ const resetGame = () => {
 const newGame = () => {
 	const winBox = document.querySelector('.win-box');
 	winBox.style.visibility = 'hidden';
-	resetPlayerBoard();
 	resetAiBoard();
+	resetPlayerBoard();
 }
 
 const resetPlayerBoard = () => {
-	playerSide.clearBoard();
 	playerSide.clearFleet();
+	playerSide.clearBoard();
 	domController.resetPlayerTiles();
 	placeAllPlayerShips();
 	domController.displayShips(playerBoard,'player');
 }
 
 const resetAiBoard = () => {
-	aiSide.clearBoard();
 	aiSide.clearFleet();
+	aiSide.clearBoard();
+	playerAI.resetHitArray();
 	domController.resetAiTiles();
 	aiSide.placeShipsRandomly();
 	domController.displayShips(aiBoard,'ai');
 }
 
-domController.nameFormController();
-
-placeAllPlayerShips();
-aiSide.placeShipsRandomly();
-
-domController.displayShips(playerBoard,'player');
-domController.displayShips(aiBoard,'ai');
-
 const updateBoard = () => {
+
+	placeAllPlayerShips();
+	aiSide.placeShipsRandomly();
+	domController.displayShips(playerBoard,'player');
+	domController.displayShips(aiBoard,'ai');
+
+	domController.nameFormController();
 
 	aiTiles.forEach(tile => {
 		let row = tile.dataset.row;
@@ -83,8 +83,6 @@ const updateBoard = () => {
 					setTimeout(() => { domController.updateTile(tile) }, 400);
 				}
 			})
-
-			
 
 			if (playerSide.checkEndGame()) {
 				domController.endGameController('ai');

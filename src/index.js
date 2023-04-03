@@ -17,16 +17,46 @@ const aiGrid = document.querySelector('.ai-grid');
 const playerAI = new AI('AI',playerMark,playerSide);
 const aiTiles = document.querySelectorAll('.ai-tile');
 
-playerSide.placeShip([1,1], 'destroyer', 'horizontal');
-playerSide.placeShip([8,9], 'submarine', 'vertical');
-playerSide.placeShip([2,8], 'cruiser', 'horizontal');
-playerSide.placeShip([6,2], 'battleship', 'horizontal');
-playerSide.placeShip([4,6], 'carrier', 'vertical');
+const resetBtn = document.querySelector('.reset-btn');
 
-aiSide.placeShipsRandomly();
+const placeAllPlayerShips = () => {
+	playerSide.placeShip([1,1], 'destroyer', 'horizontal');
+	playerSide.placeShip([8,9], 'submarine', 'vertical');
+	playerSide.placeShip([2,8], 'cruiser', 'horizontal');
+	playerSide.placeShip([6,2], 'battleship', 'horizontal');
+	playerSide.placeShip([4,6], 'carrier', 'vertical');
+}
 
-// domController.resetGame();
+const resetBoards = () => {
+	
+	const winBox = document.querySelector('.win-box');
+	winBox.style.visibility = 'hidden';
+
+	resetPlayerBoard();
+	resetAiBoard();
+
+}
+
+const resetPlayerBoard = () => {
+	playerSide.clearBoard();
+	playerSide.clearFleet();
+	domController.resetTiles('player');
+	placeAllPlayerShips();
+	domController.displayShips(playerBoard,'player');
+}
+
+const resetAiBoard = () => {
+	aiSide.clearBoard();
+	aiSide.clearFleet();
+	domController.resetTiles('ai');
+	aiSide.placeShipsRandomly();
+	domController.displayShips(aiBoard,'ai');
+}
+
 // domController.formController();
+
+placeAllPlayerShips();
+aiSide.placeShipsRandomly();
 
 domController.displayShips(playerBoard,'player');
 domController.displayShips(aiBoard,'ai');
@@ -38,6 +68,7 @@ const updateBoard = () => {
 		let col = tile.dataset.col;
 
 		tile.addEventListener('click', () => {
+
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
 			domController.updateTile(tile);
 			playerAI.randomAttack(playerMark, playerSide);
@@ -50,20 +81,22 @@ const updateBoard = () => {
 				if (strike[0] === row && strike[1] === col) {
 					setTimeout(() => { domController.updateTile(tile) }, 500);
 				}
-			});
+			})
 
 			if (playerSide.checkEndGame()) {
-				domController.showWinText('ai');
-				console.log('You lose!');
-			}	
+				domController.endGameController('ai');
+			}
+			
 			if (aiSide.checkEndGame()) {
-				domController.showWinText('player');
-				console.log('You win!');
+				domController.endGameController('player');
 			}
 
 		})
 	})
+	
 };
+
+resetBtn.addEventListener('click', resetBoards);
 
 updateBoard();
 

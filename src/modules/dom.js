@@ -113,13 +113,13 @@ const domController = (() => {
     }
   }
 
-  const resetGame = () => {
+  const resetDisplay = () => {
     const resetBtn = document.querySelector('.reset-btn');
-    const nameForm = document.querySelector('.name-form');
-    const playerName = document.querySelector('.player-name');
+    // const nameForm = document.querySelector('.name-form');
+    // const playerName = document.querySelector('.player-name');
     resetBtn.addEventListener('click', () => {
-      nameForm.style.visibility = 'visible';
-      playerName.textContent = 'placeholder';
+      // nameForm.style.visibility = 'visible';
+      // playerName.textContent = 'placeholder';
       console.log('Game Reset');
     })
   };
@@ -154,9 +154,28 @@ const domController = (() => {
     return tile;
   }
 
-  const showWinText = (winner) => {
+  const resetTiles = (type) => {
+    const tiles = document.querySelectorAll('.'+type+'-tile');
+    tiles.forEach(tile => {
+      tile.textContent = '';
+      tile.style.backgroundColor = 'darkslategrey';
+      tile.style.pointerEvents = 'auto';
+      tile.style.cursor = 'pointer';
+      tile.setAttribute('ship','');
+    })
+  }
+  
+  const endGameController = (winner) => {
+
+    const aiTiles = document.querySelectorAll('.ai-tile');
     const winBox = document.querySelector('.win-box');
     const winText = document.querySelector('.win-text');
+    
+    aiTiles.forEach(tile => {
+      tile.style.pointerEvents = 'none';
+      tile.style.cursor = 'auto';
+    })
+    
     winBox.style.visibility = 'visible';
     if (winner === 'player') {
       winText.textContent = 'You win!'
@@ -171,9 +190,9 @@ const domController = (() => {
       createHeader(), 
       createMiddle(), 
       createFooter(),
-      createWinBox()
+      createWinBox(),
       // createNameForm(),
-      // createResetBtn()
+      createResetBtn()
       );
     return container;
   }
@@ -181,10 +200,11 @@ const domController = (() => {
   return {
     populateGrid,
     displayShips,
-    resetGame,
+    resetDisplay,
     formController,
     updateTile,
-    showWinText,
+    resetTiles,
+    endGameController,
     loadWebsite
   }
 

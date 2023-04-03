@@ -66,10 +66,13 @@ const Gameboard = () => {
   }
 
   function placeShip([row,col], shipType, direction) {
+
     if (!validPlacement([row,col], shipType, direction)) throw Error('The ship extends outside the board.');
     if (!isPathClearOfShips([row,col],shipType,direction)) throw Error('There is another ship in the way.')
+    
     let currentShip = Ship(shipType);
     let length = currentShip.length;
+    
     if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {
       fleet.push(currentShip);
     } 
@@ -156,7 +159,7 @@ const Gameboard = () => {
     generateRandomPlacement,
     placeShipsRandomly,
     receiveAttack,
-    checkEndGame,
+    checkEndGame
   }
   
 }

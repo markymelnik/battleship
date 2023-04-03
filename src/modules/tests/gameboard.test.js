@@ -30,7 +30,9 @@ test('check that ships do not cross over each other', () => {
   const foo = Ship('battleship');
   const bar = Ship('submarine');
   gameboard.placeShip([5,5],foo.type,'horizontal');
-  expect(() => { gameboard.placeShip([6,6],bar.type,'vertical') } ).toThrow(Error);
+  expect(gameboard.isPathClearOfShips([6,6],bar.type,'vertical')).toBe(false);
+  expect(gameboard.isPathClearOfShips([8,6],bar.type,'vertical')).toBe(false);
+  expect(gameboard.isPathClearOfShips([9,6],bar.type,'vertical')).toBe(true);
 });
 
 test('gameboard position contains the ship object when ship is placed', () => {
@@ -116,3 +118,7 @@ test('check to see if whole fleet is sunk, signaling the game ending', () => {
   expect(gameboard.fleet[0].isSunk()).toBe(true);
   expect(gameboard.checkEndGame()).toBe(true);
 });
+
+test('ships are randomly placed on the board', () => {
+  gameboard.placeShipsRandomly();
+})

@@ -45,8 +45,29 @@ const Gameboard = () => {
     }
   }
 
+  function isPathClearOfShips([row,col], shipType, direction) {
+    let length = Ship(shipType).length;
+    if (direction === 'horizontal') {
+      for (let i = row; i < row + length; i++) {
+        if (board[i][col] !== null) {
+          return false;
+        }
+      }
+      return true;
+    }
+    else if (direction === 'vertical') {
+      for (let i = col; i > col - length; i--) {
+        if (board[row][i] !== null) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
   function placeShip([row,col], shipType, direction) {
-    if (!validPlacement([row,col], shipType, direction)) throw Error('The ship extends outside the board')
+    if (!validPlacement([row,col], shipType, direction)) throw Error('The ship extends outside the board.');
+    if (!isPathClearOfShips([row,col],shipType,direction)) throw Error('There is another ship in the way.')
     let currentShip = Ship(shipType);
     let length = currentShip.length;
     if (!fleet.some((fleetShip) => fleetShip.id === currentShip.id)) {
@@ -55,25 +76,57 @@ const Gameboard = () => {
     else throw Error('This ship is already in the fleet!');
 
     if (direction === 'horizontal') {
-      for (let i = row; i < length + row; i++) {
-        if (board[i][col] === null) {
-          board[i][col] = currentShip;
-        }
-        else throw Error('Another ship is in the way!');
+      for (let i = row; i < row + length; i++) {
+        board[i][col] = currentShip;
       }
-      return board[row][col];
     }
     else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
-        if (board[row][i] === null) {
-          board[row][i] = currentShip;
-        }
-        else throw Error('Another ship is in the way!');
+      for (let i = col; i > col - length; i--) { 
+        board[row][i] = currentShip;
       }
-      return board[row][col];
     }
-
   }
+  
+  function generateRandomPlacement() {
+
+    const coords = [
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10)
+    ];
+
+    const directions = ['horizontal','vertical'];
+    const direction = directions[Math.round(Math.random())];
+
+    return [coords, direction];
+  }
+
+  function placeShipsRandomly() {
+
+    let ships = [
+      Ship('destroyer'),
+      Ship('submarine'),
+      Ship('cruiser'),
+      Ship('battleship'),
+      Ship('carrier')
+    ];
+
+    ships.forEach(ship => {
+      while (ships.includes(ship)) {
+        let currentShip = ship.type;
+        let nums = generateRandomPlacement();
+        let coords = nums[0];
+        let direction = nums[1];
+        if (
+          validPlacement(coords,currentShip,direction) &&
+          isPathClearOfShips(coords,currentShip,direction)
+          ) {
+          placeShip(coords,currentShip,direction);
+          ships = ships.filter(element => element !== ship);
+        }
+      }
+    });
+  }
+
 
   function receiveAttack([row,col]) {
     let boardValue = board[row][col];
@@ -83,20 +136,12 @@ const Gameboard = () => {
           fleetShip.hit();
         }
       })
-    } else {
-      boardValue = 'nohit';
     }
   }
 
   function checkEndGame() {
-    if (fleet.every((fleetShip) => fleetShip.isSunk())) {
-      console.log('End Game!');
-      return true;
-    } else {
-      return false;
-    }
+    return (fleet.every((fleetShip) => fleetShip.isSunk()));
   };
-
 
   return {
     board,
@@ -106,7 +151,10 @@ const Gameboard = () => {
     clearFleet,
     inBounds,
     validPlacement,
+    isPathClearOfShips,
     placeShip,
+    generateRandomPlacement,
+    placeShipsRandomly,
     receiveAttack,
     checkEndGame,
   }

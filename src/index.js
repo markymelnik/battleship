@@ -23,11 +23,7 @@ playerSide.placeShip([2,8], 'cruiser', 'horizontal');
 playerSide.placeShip([6,2], 'battleship', 'horizontal');
 playerSide.placeShip([4,6], 'carrier', 'vertical');
 
-aiSide.placeShip([5,6], 'destroyer', 'horizontal');
-aiSide.placeShip([3,9], 'submarine', 'vertical');
-aiSide.placeShip([5,2], 'cruiser', 'vertical');
-aiSide.placeShip([6,4], 'battleship', 'horizontal');
-aiSide.placeShip([1,6], 'carrier', 'vertical');
+aiSide.placeShipsRandomly();
 
 // domController.resetGame();
 // domController.formController();
@@ -40,22 +36,30 @@ const updateBoard = () => {
 	aiTiles.forEach(tile => {
 		let row = tile.dataset.row;
 		let col = tile.dataset.col;
+
 		tile.addEventListener('click', () => {
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
-			domController.updateAiTile(tile);
+			domController.updateTile(tile);
 			playerAI.randomAttack(playerMark, playerSide);
 
 			let strike = playerAI.hitArray[playerAI.hitArray.length - 1];
-			playerTiles.forEach(tile => {
-				let row = tile.dataset.row;
-				let col = tile.dataset.col;
-				if (strike[0] == row && strike[1] == col) {
-					domController.updateAiTile(tile);
-				}
-			})
 
-			playerSide.checkEndGame();
-			aiSide.checkEndGame();
+			playerTiles.forEach(tile => {
+				let row = +tile.dataset.row;
+				let col = +tile.dataset.col;
+				if (strike[0] === row && strike[1] === col) {
+					setTimeout(() => { domController.updateTile(tile) }, 500);
+				}
+			});
+
+			if (playerSide.checkEndGame()) {
+				domController.showWinText('ai');
+				console.log('You lose!');
+			}	
+			if (aiSide.checkEndGame()) {
+				domController.showWinText('player');
+				console.log('You win!');
+			}
 
 		})
 	})
@@ -66,5 +70,3 @@ updateBoard();
 console.log('Battleship');
 console.log(playerBoard);
 console.log(aiBoard);
-console.log(playerSide.fleet);
-console.log(aiSide.fleet);

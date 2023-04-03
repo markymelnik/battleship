@@ -73,6 +73,15 @@ const domController = (() => {
     return button;
   }
 
+  const createWinBox = () => {
+    const winBox = document.createElement('div');
+    winBox.classList.add('win-box');
+    const winText = document.createElement('div');
+    winText.classList.add('win-text');
+    winBox.append(winText);
+    return winBox;
+  }
+
   const populateGrid = (type) => {
     const grid = document.createElement('div');
     grid.classList.add(type + '-grid');
@@ -134,15 +143,26 @@ const domController = (() => {
     })
   }
 
-  const updateAiTile = (tile) => {
+  const updateTile = (tile) => {
     tile.style.pointerEvents = 'none';
     tile.textContent = 'X';
     if (tile.getAttribute('ship')) {
-      tile.style.backgroundColor = 'red';
+      tile.style.backgroundColor = 'darkred';
     } else {
-      tile.style.backgroundColor = 'lightblue';
+      tile.style.backgroundColor = 'dodgerblue';
     }
     return tile;
+  }
+
+  const showWinText = (winner) => {
+    const winBox = document.querySelector('.win-box');
+    const winText = document.querySelector('.win-text');
+    winBox.style.visibility = 'visible';
+    if (winner === 'player') {
+      winText.textContent = 'You win!'
+    } else {
+      winText.textContent = 'You lose!';
+    }
   }
 
   const loadWebsite = () => {
@@ -151,6 +171,7 @@ const domController = (() => {
       createHeader(), 
       createMiddle(), 
       createFooter(),
+      createWinBox()
       // createNameForm(),
       // createResetBtn()
       );
@@ -158,16 +179,12 @@ const domController = (() => {
   }
 
   return {
-    createHeader,
-    createMiddle,
-    createFooter,
-    createNameForm,
-    createResetBtn,
     populateGrid,
     displayShips,
     resetGame,
     formController,
-    updateAiTile,
+    updateTile,
+    showWinText,
     loadWebsite
   }
 

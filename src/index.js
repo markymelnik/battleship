@@ -1,9 +1,10 @@
 const { Gameboard } = require('./modules/gameboard');
 const { Player } = require('./modules/player');
 const { AI } = require('./modules/ai');
-const { domController } = require('./modules/dom');
+const { domCreator } = require('./modules/dom');
+const { gameController } = require('./modules/control');
 
-domController.loadWebsite();
+domCreator.loadWebsite();
 
 const playerSide = Gameboard();
 const playerBoard = playerSide.board;
@@ -18,51 +19,56 @@ const aiTiles = document.querySelectorAll('.ai-tile');
 const newGameBtn = document.querySelector('.new-game-btn');
 const resetGameBtn = document.querySelector('.reset-game-btn');
 
-const placeAllPlayerShips = () => {
-	playerSide.placeShip([1,1], 'destroyer', 'horizontal');
-	playerSide.placeShip([8,9], 'submarine', 'vertical');
-	playerSide.placeShip([2,8], 'cruiser', 'horizontal');
-	playerSide.placeShip([6,2], 'battleship', 'horizontal');
-	playerSide.placeShip([4,6], 'carrier', 'vertical');
-}
+const resetController = (() => {
 
-const resetGame = () => {
-	domController.resetNameForm();
-	newGame();
-}
+	const resetPlayerBoard = () => {
+		playerSide.clearFleet();
+		playerSide.clearBoard();
+		playerSide.placeAllShips();
+		gameController.resetPlayerTiles();
+		gameController.displayShips(playerBoard,'player');
+	}
 
-const newGame = () => {
-	const winBox = document.querySelector('.win-box');
-	winBox.style.visibility = 'hidden';
-	resetPlayerBoard();
-	resetAiBoard();
-}
+	const resetAiBoard = () => {
+		aiSide.clearFleet();
+		aiSide.clearBoard();
+		playerAI.resetHitArray();
+		aiSide.placeShipsRandomly();
+		gameController.resetAiTiles();
+		gameController.displayShips(aiBoard,'ai');
+	}
 
-const resetPlayerBoard = () => {
-	playerSide.clearFleet();
-	playerSide.clearBoard();
-	domController.resetPlayerTiles();
-	placeAllPlayerShips();
-	domController.displayShips(playerBoard,'player');
-}
+	const newGame = () => {
+		const winBox = document.querySelector('.win-box');
+		winBox.style.visibility = 'hidden';
+		resetPlayerBoard();
+		resetAiBoard();
+	}
 
-const resetAiBoard = () => {
-	aiSide.clearFleet();
-	aiSide.clearBoard();
-	playerAI.resetHitArray();
-	domController.resetAiTiles();
-	aiSide.placeShipsRandomly();
-	domController.displayShips(aiBoard,'ai');
-}
+	const resetGame = () => {
+		gameController.resetNameForm();
+		newGame();
+	}
+
+	return {
+		resetPlayerBoard,
+		resetAiBoard,
+		newGame,
+		resetGame
+	}
+
+})();
 
 const updateBoard = () => {
 
-	placeAllPlayerShips();
+	playerSide.placeAllShips();
 	aiSide.placeShipsRandomly();
-	domController.displayShips(playerBoard,'player');
-	domController.displayShips(aiBoard,'ai');
+	gameController.displayShips(playerBoard,'player');
+	gameController.displayShips(aiBoard,'ai');
 
-	domController.nameFormController();
+	gameController.nameFormController();
+	resetGameBtn.addEventListener('click', resetController.resetGame);
+	newGameBtn.addEventListener('click', resetController.newGame);
 
 	aiTiles.forEach(tile => {
 		let row = tile.dataset.row;
@@ -71,7 +77,7 @@ const updateBoard = () => {
 		tile.addEventListener('click', () => {
 
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
-			domController.updateTile(tile);
+			gameController.updateTile(tile);
 			playerAI.randomAttack(playerMark, playerSide);
 
 			let strike = playerAI.hitArray[playerAI.hitArray.length - 1];
@@ -80,25 +86,20 @@ const updateBoard = () => {
 				let row = +tile.dataset.row;
 				let col = +tile.dataset.col;
 				if (strike[0] === row && strike[1] === col) {
-					setTimeout(() => { domController.updateTile(tile) }, 800);
+					setTimeout(() => { gameController.updateTile(tile) }, 600);
 				}
 			})
 
 			if (playerSide.checkEndGame()) {
-				domController.endGameController('ai');
+				gameController.endGameController('ai');
 			}
-			
 			if (aiSide.checkEndGame()) {
-				domController.endGameController('player');
+				gameController.endGameController('player');
 			}
 
 		})
 
 	})
-
-	resetGameBtn.addEventListener('click', resetGame);
-	newGameBtn.addEventListener('click', newGame);
-	
 };
 
 updateBoard();

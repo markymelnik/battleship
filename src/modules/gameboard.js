@@ -135,6 +135,14 @@ const Gameboard = () => {
       }
     }
   }
+
+  const placeAllShips = () => {
+    placeShip([1,1], 'destroyer', 'horizontal');
+    placeShip([8,9], 'submarine', 'vertical');
+    placeShip([2,8], 'cruiser', 'horizontal');
+    placeShip([6,2], 'battleship', 'horizontal');
+    placeShip([4,6], 'carrier', 'vertical');
+  }
   
   function generateRandomPlacement() {
 
@@ -206,6 +214,7 @@ const Gameboard = () => {
     getAdjacentTiles,
     areAdjacentTilesEmpty,
     placeShip,
+    placeAllShips,
     generateRandomPlacement,
     placeShipsRandomly,
     receiveAttack,

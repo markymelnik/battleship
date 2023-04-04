@@ -185,7 +185,6 @@ const Gameboard = () => {
     });
   }
 
-
   function receiveAttack([row,col]) {
     let boardValue = board[row][col];
     if (boardValue !== null) {

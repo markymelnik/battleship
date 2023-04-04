@@ -15,6 +15,62 @@
   background-color: rgb(74, 158, 154);
 }
 
+.ships-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
+  position: absolute;
+  right: 125px;
+  height: 500px;
+  width: 350px;
+  background: white;
+  border: 1px solid black;
+}
+
+.ships-container > h1 {
+  font-size: 25px;
+}
+
+.ship {
+  display: grid;
+  height: 45px;
+  border: 1px solid black;
+}
+
+.hide {
+  display: none;
+}
+
+.drag-over {
+  border: 2px solid lightskyblue;
+}
+
+#destroyer {
+  grid-template: 45px / repeat(2, 45px);
+}
+
+#cruiser {
+  grid-template: 45px / repeat(3, 45px);
+}
+
+#submarine {
+  grid-template: 45px / repeat(3, 45px);
+}
+
+#battleship {
+  grid-template: 45px / repeat(4, 45px);
+}
+
+#carrier {
+  grid-template: 45px / repeat(5, 45px);
+}
+
+.ship-part {
+  border: 1px solid black;
+}
+
 .header {
   display: flex;
   justify-content: center;

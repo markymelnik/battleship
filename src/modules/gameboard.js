@@ -3,7 +3,7 @@ const { Ship } = require('./ship');
 const Gameboard = () => {
 
   const board = createGameBoard();
-  const fleet = newFleet();
+  const fleet = createFleet();
 
   function createGameBoard() {
     let gameboard = [];
@@ -16,7 +16,7 @@ const Gameboard = () => {
     return gameboard;
   }
 
-  function newFleet() { return [] };
+  function createFleet() { return [] };
 
   function clearBoard() {
     for (let row = 0; row < 10; row++) {
@@ -65,10 +65,56 @@ const Gameboard = () => {
     }
   }
 
+  function getAdjacentTiles([row,col]) {
+    
+    if (!inBounds([row,col])) throw Error('Invalid row and col parameters.');
+    
+    let adjacentLocations = [
+      [row - 1, col - 1],
+      [row - 1, col],
+      [row - 1, col + 1],
+      [row, col + 1],
+      [row + 1, col + 1],
+      [row + 1, col],
+      [row + 1, col - 1],
+      [row, col - 1]
+    ];
+
+    let adjacentTiles = adjacentLocations.filter((tile) => {
+      if (inBounds([tile[0],tile[1]])) {
+        return tile;
+      }
+    })
+    return adjacentTiles;
+  }
+
+  function areAdjacentTilesEmpty([row,col], shipType, direction) {
+    let length = Ship(shipType).length;
+    if (direction === 'horizontal') {
+      for (let i = row; i < row + length; i++) {
+        let adjacentTiles = getAdjacentTiles([i,col]);
+        if (adjacentTiles.some((tile) => board[tile[0]][tile[1]] !== null)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    else if (direction === 'vertical') {
+      for (let i = col; i > col - length; i--) {
+        let adjacentTiles = getAdjacentTiles([row,i]);
+        if (adjacentTiles.some((tile) => board[tile[0]][tile[1]] !== null)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
   function placeShip([row,col], shipType, direction) {
 
     if (!validPlacement([row,col], shipType, direction)) throw Error('The ship extends outside the board.');
-    if (!isPathClearOfShips([row,col],shipType,direction)) throw Error('There is another ship in the way.')
+    if (!isPathClearOfShips([row,col],shipType,direction)) throw Error('There is another ship in the way.');
+    if (!areAdjacentTilesEmpty([row,col],shipType,direction)) throw Error('This ship is adjacent to another ship.');
     
     let currentShip = Ship(shipType);
     let length = currentShip.length;
@@ -121,6 +167,7 @@ const Gameboard = () => {
         let direction = nums[1];
         if (
           validPlacement(coords,currentShip,direction) &&
+          areAdjacentTilesEmpty(coords,currentShip,direction) &&
           isPathClearOfShips(coords,currentShip,direction)
           ) {
           placeShip(coords,currentShip,direction);
@@ -150,11 +197,14 @@ const Gameboard = () => {
     board,
     fleet,
     createGameBoard,
+    createFleet,
     clearBoard,
     clearFleet,
     inBounds,
     validPlacement,
     isPathClearOfShips,
+    getAdjacentTiles,
+    areAdjacentTilesEmpty,
     placeShip,
     generateRandomPlacement,
     placeShipsRandomly,

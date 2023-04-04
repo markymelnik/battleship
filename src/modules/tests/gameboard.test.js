@@ -35,6 +35,21 @@ test('check that ships do not cross over each other', () => {
   expect(gameboard.isPathClearOfShips([9,6],bar.type,'vertical')).toBe(true);
 });
 
+test('check that all valid adjacent tiles are returned', () => {
+  expect(gameboard.getAdjacentTiles([5,5])).toStrictEqual([[4, 4], [4, 5], [4, 6], [5, 6], [6, 6], [6, 5], [6, 4], [5, 4]]);
+  expect(gameboard.getAdjacentTiles([1,0])).toStrictEqual([[0, 0], [0, 1], [1, 1], [2, 1], [2, 0]]);
+  expect(gameboard.getAdjacentTiles([0,0])).toStrictEqual([[0, 1], [1, 1], [1, 0]]);
+})
+test('check that all adjacent tiles are empty', () => {
+  const foo = Ship('carrier');
+  const bar = Ship('battleship');
+  expect(gameboard.areAdjacentTilesEmpty([4,4],bar.type,'horizontal')).toBe(true);
+  gameboard.placeShip([3,3],foo.type,'horizontal');
+  expect(gameboard.areAdjacentTilesEmpty([4,4],bar.type,'horizontal')).toBe(false);
+  expect(gameboard.areAdjacentTilesEmpty([8,4],bar.type,'vertical')).toBe(false);
+  expect(gameboard.areAdjacentTilesEmpty([9,4],bar.type,'vertical')).toBe(true);
+});
+
 test('gameboard position contains the ship object when ship is placed', () => {
   const foo = Ship('destroyer');
   const bar = Ship('submarine');
@@ -77,9 +92,9 @@ test('check if an attack hits a ship and increases hit count of that ship in the
   gameboard.receiveAttack([5,4]);
   gameboard.receiveAttack([7,4]);
   expect(gameboard.fleet[0].hits).toBe(3);
-  gameboard.placeShip([3,3],bar.type,'vertical');
-  gameboard.receiveAttack([3,3]);
-  gameboard.receiveAttack([3,2]);
+  gameboard.placeShip([2,3],bar.type,'vertical');
+  gameboard.receiveAttack([2,3]);
+  gameboard.receiveAttack([2,2]);
   expect(gameboard.fleet[1].hits).toBe(2);
 });
 

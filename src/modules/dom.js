@@ -104,22 +104,6 @@ const domController = (() => {
     return grid;
   }
 
-  const displayShips = (board, type) => {
-    const tiles = document.querySelectorAll('.'+type+'-tile');
-    for (let row = 0; row < 10; row ++) {
-      for (let col = 0; col < 10; col++) {
-        tiles.forEach(tile => {
-          if (board[row][col] !== null) {
-            if (tile.dataset.row == row && tile.dataset.col == col) {
-              tile.textContent = 'O';
-              tile.setAttribute('ship','true');
-            }  
-          }
-        })
-      }
-    }
-  }
-
   const nameFormController = () => {
     const nameForm = document.querySelector('.name-form');
     const nameInput = document.querySelector('#name-input');
@@ -144,6 +128,22 @@ const domController = (() => {
     const playerName = document.querySelector('.player-name');
 	  nameForm.style.visibility = 'visible';
     playerName.textContent = 'placeholder';
+  }
+
+  const displayShips = (board, type) => {
+    const tiles = document.querySelectorAll('.'+type+'-tile');
+    for (let row = 0; row < 10; row ++) {
+      for (let col = 0; col < 10; col++) {
+        tiles.forEach(tile => {
+          if (board[row][col] !== null) {
+            if (tile.dataset.row == row && tile.dataset.col == col) {
+              tile.textContent = 'O';
+              tile.setAttribute('ship','true');
+            }  
+          }
+        })
+      }
+    }
   }
 
   const updateTile = (tile) => {
@@ -208,10 +208,9 @@ const domController = (() => {
   }
 
   return {
-    createGridTiles,
-    displayShips,
     nameFormController,
     resetNameForm,
+    displayShips,
     updateTile,
     resetPlayerTiles,
     resetAiTiles,

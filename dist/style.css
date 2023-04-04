@@ -12,7 +12,7 @@
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: grey;
+  background-color: rgb(74, 158, 154);
 }
 
 .header {
@@ -37,7 +37,8 @@
   height: 80%;
   width: 90%;
   padding: 5px;
-  gap: 40px;
+  gap: 80px;
+  margin: 50px 0 50px;
 }
 
 .player-container, .ai-container {
@@ -76,7 +77,6 @@
   background: darkslategrey;
   color: white;
   font-weight: bolder;
-
 }
 
 .player-tile:hover {
@@ -85,6 +85,10 @@
 
 .ai-tile:hover {
   cursor: pointer;
+}
+
+.tile-reset {
+  background: grey;
 }
 
 .name-form {

@@ -1,7 +1,7 @@
 const { Gameboard } = require('./modules/gameboard');
 const { Player } = require('./modules/player');
 const { AI } = require('./modules/ai');
-const { domController } = require('./modules/dom')
+const { domController } = require('./modules/dom');
 
 domController.loadWebsite();
 
@@ -34,8 +34,8 @@ const resetGame = () => {
 const newGame = () => {
 	const winBox = document.querySelector('.win-box');
 	winBox.style.visibility = 'hidden';
-	resetAiBoard();
 	resetPlayerBoard();
+	resetAiBoard();
 }
 
 const resetPlayerBoard = () => {
@@ -80,7 +80,7 @@ const updateBoard = () => {
 				let row = +tile.dataset.row;
 				let col = +tile.dataset.col;
 				if (strike[0] === row && strike[1] === col) {
-					setTimeout(() => { domController.updateTile(tile) }, 400);
+					setTimeout(() => { domController.updateTile(tile) }, 800);
 				}
 			})
 
@@ -91,11 +91,12 @@ const updateBoard = () => {
 			if (aiSide.checkEndGame()) {
 				domController.endGameController('player');
 			}
+
 		})
 
 	})
 
-	resetGameBtn.addEventListener('click', newGame);
+	resetGameBtn.addEventListener('click', resetGame);
 	newGameBtn.addEventListener('click', newGame);
 	
 };

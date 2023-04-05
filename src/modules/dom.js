@@ -109,7 +109,7 @@ const domCreator = (() => {
       createHeader(), 
       createMiddle(), 
       createFooter(),
-      createNameForm(),
+      // createNameForm(),
       createWinBox(),
       createResetGameBtn()
       );

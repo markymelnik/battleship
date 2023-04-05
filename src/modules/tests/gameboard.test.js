@@ -16,14 +16,14 @@ test('check for an empty gameboard with coordinate within bounds', () => {
 });
 
 test('check for valid vertical and horizontal placement', () => {
-  expect(gameboard.validPlacement([5,5],'carrier','horizontal')).toBe(true);
-  expect(gameboard.validPlacement([6,5],'carrier','horizontal')).toBe(false);
-  expect(gameboard.validPlacement([5,4],'carrier','vertical')).toBe(true);
-  expect(gameboard.validPlacement([5,3],'carrier','vertical')).toBe(false);
-  expect(gameboard.validPlacement([9,3],'destroyer','horizontal')).toBe(false);
-  expect(gameboard.validPlacement([2,2],'battleship','vertical')).toBe(false);
-  expect(gameboard.validPlacement([7,2],'submarine','horizontal')).toBe(true);
-  expect(gameboard.validPlacement([2,7],'submarine','vertical')).toBe(true);
+  expect(gameboard.validPlacement([5,5],Ship('carrier'),'horizontal')).toBe(true);
+  expect(gameboard.validPlacement([6,5],Ship('carrier'),'horizontal')).toBe(false);
+  expect(gameboard.validPlacement([5,4],Ship('carrier'),'vertical')).toBe(true);
+  expect(gameboard.validPlacement([5,3],Ship('carrier'),'vertical')).toBe(false);
+  expect(gameboard.validPlacement([9,3],Ship('destroyer'),'horizontal')).toBe(false);
+  expect(gameboard.validPlacement([2,2],Ship('battleship'),'vertical')).toBe(false);
+  expect(gameboard.validPlacement([7,2],Ship('submarine'),'horizontal')).toBe(true);
+  expect(gameboard.validPlacement([2,7],Ship('submarine'),'vertical')).toBe(true);
 });
 
 test('check that ships do not cross over each other', () => {

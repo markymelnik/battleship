@@ -100,8 +100,8 @@ const gameController = (() => {
 	}
 
 	return {
-		nameFormController,
-		resetNameForm,
+		// nameFormController,
+		// resetNameForm,
 		displayShips,
 		updateTile,
 		resetPlayerTiles,

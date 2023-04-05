@@ -34,9 +34,11 @@
 }
 
 .ship {
-  display: grid;
+  display: flex;
   height: 45px;
-  border: 1px solid black;
+  width: 45px;
+  border: 2px solid red;
+  z-index: 1;
 }
 
 .hide {
@@ -44,31 +46,7 @@
 }
 
 .drag-over {
-  border: 2px solid lightskyblue;
-}
-
-#destroyer {
-  grid-template: 45px / repeat(2, 45px);
-}
-
-#cruiser {
-  grid-template: 45px / repeat(3, 45px);
-}
-
-#submarine {
-  grid-template: 45px / repeat(3, 45px);
-}
-
-#battleship {
-  grid-template: 45px / repeat(4, 45px);
-}
-
-#carrier {
-  grid-template: 45px / repeat(5, 45px);
-}
-
-.ship-part {
-  border: 1px solid black;
+  border: 2px solid lightblue;
 }
 
 .header {
@@ -126,6 +104,7 @@
 
 .player-tile, .ai-tile {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 25px;

@@ -1,4 +1,5 @@
 const { Gameboard } = require('./modules/gameboard');
+const { Ship } = require('./modules/ship');
 const { Player } = require('./modules/player');
 const { AI } = require('./modules/ai');
 const { domCreator } = require('./modules/dom');
@@ -9,12 +10,10 @@ domCreator.loadWebsite();
 const playerSide = Gameboard();
 const playerBoard = playerSide.board;
 const playerMark = new Player('Mark');
-const playerTiles = document.querySelectorAll('.player-tile');
 
 const aiSide = Gameboard();
 const aiBoard = aiSide.board;
 const playerAI = new AI('AI',playerMark,playerSide);
-const aiTiles = document.querySelectorAll('.ai-tile');
 
 const newGameBtn = document.querySelector('.new-game-btn');
 const resetGameBtn = document.querySelector('.reset-game-btn');
@@ -61,12 +60,15 @@ const resetController = (() => {
 
 const updateBoard = () => {
 
-	playerSide.placeAllShips();
+	const playerTiles = document.querySelectorAll('.player-tile');
+	const aiTiles = document.querySelectorAll('.ai-tile');
+
+	// playerSide.placeAllShips();
 	aiSide.placeShipsRandomly();
 	gameController.displayShips(playerBoard,'player');
 	gameController.displayShips(aiBoard,'ai');
 
-	gameController.nameFormController();
+	// gameController.nameFormController();
 	resetGameBtn.addEventListener('click', resetController.resetGame);
 	newGameBtn.addEventListener('click', resetController.newGame);
 
@@ -113,45 +115,59 @@ console.log(aiSide.fleet);
 
 
 
+const ships = [
+	Ship('destroyer'),
+	Ship('submarine'),
+	Ship('cruiser'),
+	Ship('battleship'),
+	Ship('carrier')
+];
 
-const dragShip = document.querySelectorAll('.ship');
+let notDropped;
 
-dragShip.forEach(ship => {
+let draggedShip;
+
+const allShips = document.querySelectorAll('.ship');
+
+allShips.forEach(ship => {
 	ship.addEventListener('dragstart', dragStart);
 })
 
-function dragStart(e) {
-	e.dataTransfer.setData('text/plain', e.target.id);
-  setTimeout(() => {
-		e.target.classList.add('hide');
-	}, 0);
-}
+const allPlayerTiles = document.querySelectorAll('.player-tile');
 
-playerTiles.forEach(tile => {
+allPlayerTiles.forEach(tile => {
 	tile.addEventListener('dragenter', dragEnter);
 	tile.addEventListener('dragover', dragOver);
 	tile.addEventListener('dragLeave', dragLeave);
-	tile.addEventListener('drop', drop);
+	tile.addEventListener('drop', dropShip);
 })
 
+
+function dragStart(e) {
+	notDropped = false;
+	draggedShip = e.target;
+}
+
 function dragEnter(e) {
-	e.preventDefault();
-	e.target.classList.add('drag-over');
 }
 
 function dragOver(e) {
 	e.preventDefault();
-	e.target.classList.add('drag-over');
 }
 
 function dragLeave(e) {
-	e.target.classList.remove('drag-over');
+
 }
 
-function drop(e) {
-	e.target.classList.remove('drag-over');
-	const id = e.dataTransfer.getData('text/plain');
-  const draggable = document.getElementById(id);
-	e.target.appendChild(draggable);
-	draggable.classList.remove('hide');
+function dropShip(e) {
+	const row = e.target.dataset.row;
+	const col = e.target.dataset.col;
+	const ship = ships[draggedShip.id];
+	console.log(row);
+	console.log(col);
+	console.log(ship.type);
+	playerSide.placeShip([row,col],ship.type,'horizontal');
+	if (!notDropped) {
+		draggedShip.remove;
+	}
 }

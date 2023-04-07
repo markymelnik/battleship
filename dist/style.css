@@ -41,6 +41,26 @@
   z-index: 1;
 }
 
+.destroyer {
+  width: 90px;
+}
+
+.submarine {
+  width: 135px;
+}
+
+.cruiser {
+  width: 135px;
+}
+
+.battleship {
+  width: 180px;
+}
+
+.carrier {
+  width: 225px;
+}
+
 .hide {
   display: none;
 }

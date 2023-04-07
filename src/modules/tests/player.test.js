@@ -35,10 +35,9 @@ test('turn logic works correctly through endTurn function', () => {
 });
 
 test('attack function correctly calls endTurn which does not allow two consecutive attacks', () => {
-  const foo = Ship('battleship');
-
-  boardAI.placeShip([2,4],foo.type,'horizontal');
-  boardMark.placeShip([5,8],foo.type,'vertical');
+  
+  boardAI.placeShip([2,4],Ship('battleship'),'horizontal');
+  boardMark.placeShip([5,8],Ship('battleship'),'vertical');
 
   expect(playerMark.checkTurn()).toBe(true);
   expect(playerAI.checkTurn()).toBe(false);

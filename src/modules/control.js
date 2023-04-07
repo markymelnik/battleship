@@ -64,6 +64,7 @@ const gameController = (() => {
 		playerTiles.forEach(tile => {
 			tile.textContent = '';
 			tile.style.backgroundColor = 'darkslategrey';
+			tile.style.pointerEvents = 'auto';
 			tile.removeAttribute('ship');
 		})
 	}

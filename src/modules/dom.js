@@ -103,12 +103,72 @@ const domCreator = (() => {
     return grid;
   }
 
+  const appendShips = () => {
+
+    const allShips = document.createElement('div');
+    allShips.classList.add('all-ships');
+
+    const destroyer = document.createElement('div');
+    destroyer.classList.add('ship','destroyer','horizontal');
+    destroyer.id = 0;
+    destroyer.setAttribute('draggable','true');
+
+    const submarine = document.createElement('div');
+    submarine.classList.add('ship','submarine','horizontal');
+    submarine.id = 1;
+    submarine.setAttribute('draggable','true');
+
+    const cruiser = document.createElement('div');
+    cruiser.classList.add('ship','cruiser','horizontal');
+    cruiser.id = 2;
+    cruiser.setAttribute('draggable','true');
+
+    const battleship = document.createElement('div');
+    battleship.classList.add('ship','battleship','horizontal');
+    battleship.id = 3;
+    battleship.setAttribute('draggable','true');
+
+    const carrier = document.createElement('div');
+    carrier.classList.add('ship','carrier','horizontal');
+    carrier.id = 4;
+    carrier.setAttribute('draggable','true');
+  
+    allShips.append(
+      destroyer,
+      submarine,
+      cruiser,
+      battleship,
+      carrier
+    )
+
+    return allShips;
+  }
+
+  const createShipsContainer = () => {
+
+    const shipsContainer = document.createElement('div');
+    shipsContainer.classList.add('ships-container');
+
+    const shipsContainerHeader = document.createElement('h1');
+    shipsContainerHeader.textContent = 'Place your ships!';
+
+    const rotateBtn = document.createElement('button');
+    rotateBtn.classList.add('rotate-btn');
+    rotateBtn.textContent = 'Rotate';
+
+    shipsContainer.append(shipsContainerHeader, appendShips(), rotateBtn);
+    return shipsContainer;
+  } 
+
+  
+
   const loadWebsite = () => {
     const container = document.querySelector('.container');
     container.append(
       createHeader(), 
       createMiddle(), 
       createFooter(),
+      createShipsContainer(),
       // createNameForm(),
       createWinBox(),
       createResetGameBtn()
@@ -117,7 +177,8 @@ const domCreator = (() => {
   }
 
   return {
-    loadWebsite
+    loadWebsite,
+    appendShips
   }
 
 })();

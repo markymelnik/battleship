@@ -18,7 +18,7 @@
 .ships-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: space-evenly;
   gap: 10px;
   position: absolute;
@@ -27,18 +27,30 @@
   width: 350px;
   background: white;
   border: 1px solid black;
+  padding: 20px;
 }
 
 .ships-container > h1 {
   font-size: 25px;
+  text-align: center;
+}
+
+.all-ships {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .ship {
   display: flex;
   height: 45px;
   width: 45px;
-  border: 2px solid red;
+  border: 4px solid lightseagreen;
   z-index: 1;
+}
+
+.ship:hover {
+  cursor: pointer;
 }
 
 .destroyer {
@@ -67,6 +79,17 @@
 
 .drag-over {
   border: 2px solid lightblue;
+}
+
+.rotate-btn {
+  height: 25px;
+  width: 100px;
+  background-color: lightseagreen;
+  border: 1px solid black;
+}
+
+.rotate-btn:hover {
+  background-color: rgb(48, 223, 214);
 }
 
 .header {

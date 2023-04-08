@@ -13,6 +13,8 @@ const domCreator = (() => {
   const createMiddle = () => {
     const middle = document.createElement('div');
     middle.classList.add('middle');
+    const boardContainer = document.createElement('div');
+    boardContainer.classList.add('board-containers');
     const playerContainer = document.createElement('div');
     playerContainer.classList.add('player-container');
     const playerName = document.createElement('div');
@@ -25,7 +27,11 @@ const domCreator = (() => {
     aiName.classList.add('ai-name');
     aiName.textContent = 'OpponentAI';
     aiContainer.append(aiName,createGridTiles('ai'));
-    middle.append(playerContainer,aiContainer)
+    const gameText = document.createElement('div');
+    gameText.classList.add('game-text');
+    gameText.textContent = 'Loading...';
+    boardContainer.append(playerContainer,aiContainer);
+    middle.append(boardContainer, gameText)
     return middle;
   }
 
@@ -37,31 +43,6 @@ const domCreator = (() => {
     footerText.textContent = 'Mark Melnik, 2023'
     footer.append(footerText);
     return footer;
-  }
-
-  const createNameForm = () => {
-    const nameForm = document.createElement('form');
-    nameForm.classList.add('name-form');
-    nameForm.setAttribute('name','nameform');
-    nameForm.setAttribute('autocomplete','off');
-    const prompt = document.createElement('h1');
-    prompt.textContent = 'Enter your name:';
-    const formContent = document.createElement('div');
-    formContent.classList.add('form-content');
-    const label = document.createElement('label');
-    label.setAttribute('for','name');
-    const input = document.createElement('input');
-    input.setAttribute('type','text');
-    input.setAttribute('id','name-input');
-    input.setAttribute('name','name');
-    input.setAttribute('required','');
-    const button = document.createElement('button');
-    button.classList.add('submit-btn');
-    button.setAttribute('type','button');
-    button.textContent = 'Submit';
-    formContent.append(label, input, button);
-    nameForm.append(prompt,formContent);
-    return nameForm; 
   }
 
   const createResetGameBtn = () => {
@@ -152,24 +133,70 @@ const domCreator = (() => {
     const shipsContainerHeader = document.createElement('h1');
     shipsContainerHeader.textContent = 'Place your ships!';
 
+    const btnContainer = document.createElement('div');
+    btnContainer.classList.add('btn-container');
+
     const rotateBtn = document.createElement('button');
     rotateBtn.classList.add('rotate-btn');
     rotateBtn.textContent = 'Rotate';
 
-    shipsContainer.append(shipsContainerHeader, appendShips(), rotateBtn);
+    const randomBtn = document.createElement('button');
+    randomBtn.classList.add('random-btn');
+    randomBtn.textContent = 'Random';
+
+    btnContainer.append(rotateBtn,randomBtn);
+
+    shipsContainer.append(shipsContainerHeader, appendShips(), btnContainer);
     return shipsContainer;
   } 
+
+  const createNameForm = () => {
+
+    const nameForm = document.createElement('form');
+    nameForm.classList.add('name-form');
+    nameForm.setAttribute('name','name-form');
+    nameForm.setAttribute('autocomplete','off');
+
+    const label = document.createElement('label');
+    label.setAttribute('for','username');
+    label.textContent = 'Enter your name:';
+
+    const input = document.createElement('input');
+    input.setAttribute('type','text');
+    input.setAttribute('id','username');
+    input.setAttribute('name','username');
+    input.setAttribute('required','');
+
+    const startGameBtn = document.createElement('button');
+    startGameBtn.setAttribute('type','button');
+    startGameBtn.classList.add('start-game-btn');
+    startGameBtn.textContent = 'Start';
+
+    nameForm.append(label,input,startGameBtn);
+
+    return nameForm; 
+  }
+
+  const createStartScreen = () => {
+    const startScreen = document.createElement('div');
+    startScreen.classList.add('start-screen');
+    const startTitle = document.createElement('h1');
+    startTitle.classList.add('start-title');
+    startTitle.textContent = 'Battleship!';
+    startScreen.append(startTitle,createNameForm());
+    return startScreen;
+  }
 
   
 
   const loadWebsite = () => {
     const container = document.querySelector('.container');
     container.append(
+      createStartScreen(),
       createHeader(), 
       createMiddle(), 
       createFooter(),
       createShipsContainer(),
-      // createNameForm(),
       createWinBox(),
       createResetGameBtn()
       );

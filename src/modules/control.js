@@ -4,28 +4,6 @@ const { AI } = require('./ai');
 
 const gameController = (() => {
 
-	const nameFormController = () => {
-
-		const nameForm = document.querySelector('.name-form');
-		const nameInput = document.querySelector('#name-input');
-		const playerName = document.querySelector('.player-name');
-		const submitBtn = document.querySelector('.submit-btn');
-
-		nameForm.addEventListener('submit', (event) => {
-			playerName.textContent = nameInput.value || 'Player 1';
-			nameForm.style.visibility = 'hidden';
-			nameForm.reset();
-			event.preventDefault();
-		})
-		
-		submitBtn.addEventListener('click', (event) => {
-			playerName.textContent = nameInput.value || 'Player 1';
-			nameForm.style.visibility = 'hidden';
-			nameForm.reset();
-			event.preventDefault();
-		})
-	}
-
 	const resetNameForm = () => {
 		const nameForm = document.querySelector('.name-form');
 		const playerName = document.querySelector('.player-name');
@@ -85,6 +63,7 @@ const gameController = (() => {
 		const aiTiles = document.querySelectorAll('.ai-tile');
 		const winBox = document.querySelector('.win-box');
 		const winText = document.querySelector('.win-text');
+		const gameText = document.querySelector('.game-text');
 			
 		aiTiles.forEach(tile => {
 			tile.style.pointerEvents = 'none';
@@ -93,16 +72,17 @@ const gameController = (() => {
 		setTimeout(() => {  
 			winBox.style.visibility = 'visible';
 			if (winner === 'player') {
-				winText.textContent = 'You win!'
+				winText.textContent = 'You win!';
+				gameText.textContent = 'You win!';
 			} else {
 				winText.textContent = 'You lose!';
+				gameText.textContent = 'You lose!';
 			}
 		}, 800);
 	}
 
 	return {
-		// nameFormController,
-		// resetNameForm,
+		resetNameForm,
 		displayShips,
 		updateTile,
 		resetPlayerTiles,

@@ -41,17 +41,9 @@ const Gameboard = () => {
     let length = ship.length;
     
     if (direction === 'horizontal') {
-      if (row + length - 1 < 10) {
-        return true;
-      } else {
-        return false;
-      }
+      return (row + length - 1 < 10)
     } else if (direction === 'vertical') {
-      if (col - length + 1 > -1) {
-        return true;
-      } else {
-        return false;
-      }
+      return (col - length + 1 > -1)
     }
   }
 
@@ -215,6 +207,12 @@ const Gameboard = () => {
     return (fleet.every((fleetShip) => fleetShip.isSunk()));
   };
 
+  function resetShipHits() {
+    fleet.forEach(fleetShip => {
+      fleetShip.hits = 0;
+    })
+  }
+
   return {
     board,
     fleet,
@@ -233,7 +231,8 @@ const Gameboard = () => {
     placeShipsRandomly,
     receiveAttack,
     checkStartGame,
-    checkEndGame
+    checkEndGame,
+    resetShipHits
   }
   
 }

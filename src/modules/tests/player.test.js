@@ -1,7 +1,7 @@
-const { Player } = require('../player');
-const { AI } = require('../ai');
-const { Gameboard } = require('../gameboard');
-const { Ship } = require('../ship');
+const { Player } = require('../components/player');
+const { AI } = require('../components/ai');
+const { Gameboard } = require('../components/gameboard');
+const { Ship } = require('../components/ship');
 
 let playerMark;
 let playerAI;

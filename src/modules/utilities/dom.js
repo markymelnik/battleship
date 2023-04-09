@@ -90,27 +90,27 @@ const domCreator = (() => {
     allShips.classList.add('all-ships');
 
     const destroyer = document.createElement('div');
-    destroyer.classList.add('ship','destroyer','horizontal');
+    destroyer.classList.add('ship','destroyer-h','horizontal');
     destroyer.id = 0;
     destroyer.setAttribute('draggable','true');
 
     const submarine = document.createElement('div');
-    submarine.classList.add('ship','submarine','horizontal');
+    submarine.classList.add('ship','submarine-h','horizontal');
     submarine.id = 1;
     submarine.setAttribute('draggable','true');
 
     const cruiser = document.createElement('div');
-    cruiser.classList.add('ship','cruiser','horizontal');
+    cruiser.classList.add('ship','cruiser-h','horizontal');
     cruiser.id = 2;
     cruiser.setAttribute('draggable','true');
 
     const battleship = document.createElement('div');
-    battleship.classList.add('ship','battleship','horizontal');
+    battleship.classList.add('ship','battleship-h','horizontal');
     battleship.id = 3;
     battleship.setAttribute('draggable','true');
 
     const carrier = document.createElement('div');
-    carrier.classList.add('ship','carrier','horizontal');
+    carrier.classList.add('ship','carrier-h','horizontal');
     carrier.id = 4;
     carrier.setAttribute('draggable','true');
   
@@ -125,10 +125,10 @@ const domCreator = (() => {
     return allShips;
   }
 
-  const createShipsContainer = () => {
+  const createDragContainer = () => {
 
-    const shipsContainer = document.createElement('div');
-    shipsContainer.classList.add('ships-container');
+    const dragContainer = document.createElement('div');
+    dragContainer.classList.add('drag-container');
 
     const shipsContainerHeader = document.createElement('h1');
     shipsContainerHeader.textContent = 'Place your ships!';
@@ -146,8 +146,9 @@ const domCreator = (() => {
 
     btnContainer.append(rotateBtn,randomBtn);
 
-    shipsContainer.append(shipsContainerHeader, appendShips(), btnContainer);
-    return shipsContainer;
+    dragContainer.append(shipsContainerHeader, appendShips(), btnContainer);
+
+    return dragContainer;
   } 
 
   const createNameForm = () => {
@@ -187,8 +188,6 @@ const domCreator = (() => {
     return startScreen;
   }
 
-  
-
   const loadWebsite = () => {
     const container = document.querySelector('.container');
     container.append(
@@ -196,7 +195,7 @@ const domCreator = (() => {
       createHeader(), 
       createMiddle(), 
       createFooter(),
-      createShipsContainer(),
+      createDragContainer(),
       createWinBox(),
       createResetGameBtn()
       );

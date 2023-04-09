@@ -1,15 +1,4 @@
-const { Gameboard } = require('./gameboard');
-const { Player } = require('./player');
-const { AI } = require('./ai');
-
 const gameController = (() => {
-
-	const resetNameForm = () => {
-		const nameForm = document.querySelector('.name-form');
-		const playerName = document.querySelector('.player-name');
-		nameForm.style.visibility = 'visible';
-		playerName.textContent = 'placeholder';
-	}
 
 	const displayShips = (board, type) => {
 		const tiles = document.querySelectorAll('.'+type+'-tile');
@@ -35,6 +24,36 @@ const gameController = (() => {
 		} else {
 			tile.style.backgroundColor = 'dodgerblue';
 		}
+	}
+
+	const newGame = (playerSide, aiSide, playerAI) => {
+
+		const winBox = document.querySelector('.win-box');
+		const dragContainer = document.querySelector('.drag-container');
+		const gameText = document.querySelector('.game-text');
+
+		winBox.style.visibility = 'hidden';
+		dragContainer.style.visibility = 'visible';
+		resetPlayerBoard(playerSide);
+		resetAiBoard(aiSide, playerAI);
+		gameText.textContent = 'Place your ships.';
+		
+	}
+
+	const resetPlayerBoard = (playerSide) => {
+		playerSide.resetShipHits();
+		playerSide.clearFleet();
+		playerSide.clearBoard();
+		resetPlayerTiles();
+	}
+
+	const resetAiBoard = (aiSide, playerAI) => {
+		aiSide.clearFleet();
+		aiSide.clearBoard();
+		playerAI.resetHitArray();
+		resetAiTiles();
+		aiSide.placeShipsRandomly();
+		displayShips(aiSide.board,'ai');
 	}
 
 	const resetPlayerTiles = () => {
@@ -82,12 +101,14 @@ const gameController = (() => {
 	}
 
 	return {
-		resetNameForm,
 		displayShips,
 		updateTile,
+		resetPlayerBoard,
+		resetAiBoard,
 		resetPlayerTiles,
 		resetAiTiles,
-		endGameController
+		endGameController,
+		newGame
 	}
 
 })();

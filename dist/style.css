@@ -42,7 +42,6 @@
   width: 250px;
 }
 
-
 .name-form input {
   height: 25px;
   padding: 2px;
@@ -76,7 +75,7 @@
   opacity: 0;
 }
 
-.ships-container {
+.drag-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,7 +91,7 @@
   visibility: hidden;
 }
 
-.ships-container > h1 {
+.drag-container > h1 {
   font-size: 25px;
   text-align: center;
 }
@@ -117,24 +116,52 @@
   cursor: pointer;
 }
 
-.destroyer {
+.horizontal {
+  height: 45px;
+}
+
+.destroyer-h {
   width: 90px;
 }
 
-.submarine {
+.submarine-h {
   width: 135px;
 }
 
-.cruiser {
+.cruiser-h {
   width: 135px;
 }
 
-.battleship {
+.battleship-h {
   width: 180px;
 }
 
-.carrier {
+.carrier-h {
   width: 225px;
+}
+
+.vertical {
+  width: 45px;
+}
+
+.destroyer-v {
+  height: 90px;
+}
+
+.submarine-v {
+  height: 135px;
+}
+
+.cruiser-v {
+  height: 135px;
+}
+
+.battleship-v {
+  height: 180px;
+}
+
+.carrier-v {
+  height: 225px;
 }
 
 .hide {

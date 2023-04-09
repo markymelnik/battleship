@@ -1,5 +1,5 @@
-const { Gameboard } = require('../gameboard');
-const { Ship } = require('../ship');
+const { Gameboard } = require('../components/gameboard');
+const { Ship } = require('../components/ship');
 
 let gameboard;
 

@@ -55,7 +55,7 @@
   align-items: center;
 }
 
-.start-game-btn {
+.enter-game-btn {
   height: 50px;
   width: 150px;
   background-color: lightseagreen;
@@ -66,7 +66,7 @@
   font-weight: bold;
 }
 
-.start-game-btn:hover {
+.enter-game-btn:hover {
   cursor: pointer;
   background-color: rgb(57, 150, 145);
 }
@@ -203,6 +203,19 @@
 
 .random-btn:hover {
   background-color:rgb(135, 188, 206);
+  cursor: pointer;
+}
+
+.start-game-btn {
+  height: 40px;
+  width: 100px;
+  font-size: 18px;
+  background-color: lavender;
+  border: 1px solid black;
+}
+
+.start-game-btn:hover {
+  background-color: rgb(182, 182, 214);
   cursor: pointer;
 }
 

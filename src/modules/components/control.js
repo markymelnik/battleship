@@ -1,13 +1,13 @@
 const gameController = (() => {
 
-	const displayShips = (board, type) => {
+	const displayAllShips = (board, type) => {
 		const tiles = document.querySelectorAll('.'+type+'-tile');
 		for (let row = 0; row < 10; row ++) {
 			for (let col = 0; col < 10; col++) {
 				tiles.forEach(tile => {
 					if (board[row][col] !== null) {
 						if (tile.dataset.row == row && tile.dataset.col == col) {
-							tile.textContent = 'O';
+							tile.style.background = 'white';
 							tile.setAttribute('ship','true');
 						}  
 					}
@@ -15,6 +15,36 @@ const gameController = (() => {
 			}
 		}
 	}
+
+	const displayShip = ([row,col], ship, direction) => {
+
+    const tiles = document.querySelectorAll('.player-tile');
+
+    let length = ship.length;
+
+    row = +row;
+    col = +col;
+
+    if (direction === 'horizontal') {
+      for (let i = row; i < row + length; i++) {
+        tiles.forEach(tile => {
+          if (tile.dataset.row == i && tile.dataset.col == col) {
+            tile.style.background = 'white';
+          }
+        })
+      }
+    } 
+    else if (direction === 'vertical') {
+      for (let i = col; i > col - length; i--) {
+        tiles.forEach(tile => {
+          if (tile.dataset.col == i && tile.dataset.row == row) {
+            tile.style.background = 'white';
+          }
+        })
+      }
+    } 
+    
+  }
 
 	const updateTile = (tile) => {
 		tile.style.pointerEvents = 'none';
@@ -31,11 +61,16 @@ const gameController = (() => {
 		const winBox = document.querySelector('.win-box');
 		const dragContainer = document.querySelector('.drag-container');
 		const gameText = document.querySelector('.game-text');
+		const dragShips = document.querySelectorAll('.ship');
+
+		resetPlayerBoard(playerSide);
+		resetAiBoard(aiSide, playerAI);
 
 		winBox.style.visibility = 'hidden';
 		dragContainer.style.visibility = 'visible';
-		resetPlayerBoard(playerSide);
-		resetAiBoard(aiSide, playerAI);
+		dragShips.forEach(ship => { 
+			ship.style.visibility = 'visible';
+		})
 		gameText.textContent = 'Place your ships.';
 		
 	}
@@ -53,7 +88,7 @@ const gameController = (() => {
 		playerAI.resetHitArray();
 		resetAiTiles();
 		aiSide.placeShipsRandomly();
-		displayShips(aiSide.board,'ai');
+		displayAllShips(aiSide.board,'ai');
 	}
 
 	const resetPlayerTiles = () => {
@@ -101,7 +136,8 @@ const gameController = (() => {
 	}
 
 	return {
-		displayShips,
+		displayAllShips,
+		displayShip,
 		updateTile,
 		resetPlayerBoard,
 		resetAiBoard,

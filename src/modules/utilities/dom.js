@@ -144,7 +144,11 @@ const domCreator = (() => {
     randomBtn.classList.add('random-btn');
     randomBtn.textContent = 'Random';
 
-    btnContainer.append(rotateBtn,randomBtn);
+    const startGameBtn = document.createElement('button');
+    startGameBtn.classList.add('start-game-btn');
+    startGameBtn.textContent = 'Start';
+
+    btnContainer.append(rotateBtn,randomBtn,startGameBtn);
 
     dragContainer.append(shipsContainerHeader, appendShips(), btnContainer);
 
@@ -168,12 +172,12 @@ const domCreator = (() => {
     input.setAttribute('name','username');
     input.setAttribute('required','');
 
-    const startGameBtn = document.createElement('button');
-    startGameBtn.setAttribute('type','button');
-    startGameBtn.classList.add('start-game-btn');
-    startGameBtn.textContent = 'Start';
+    const enterGameBtn = document.createElement('button');
+    enterGameBtn.setAttribute('type','button');
+    enterGameBtn.classList.add('enter-game-btn');
+    enterGameBtn.textContent = 'Start';
 
-    nameForm.append(label,input,startGameBtn);
+    nameForm.append(label,input,enterGameBtn);
 
     return nameForm; 
   }

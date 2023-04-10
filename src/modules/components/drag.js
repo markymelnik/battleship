@@ -39,23 +39,20 @@ const shipPlacer = (() => {
 
     function dragEnter(e) {
       e.preventDefault();
-      e.target.classList.add('drag-over');
+  
     }
 
     function dragOver(e) {
       e.preventDefault();
-      e.target.classList.add('drag-over');
+
     }
 
     function dragLeave(e) {
-      e.preventDefault();
-      e.target.classList.remove('drag-over');
+
+ 
     }
 
     function dropShip(e) {
-
-      e.preventDefault();
-      e.target.classList.remove('drag-over');
 
       const row = e.target.dataset.row;
       const col = e.target.dataset.col;
@@ -63,17 +60,23 @@ const shipPlacer = (() => {
       const ship = ships[draggedShip.id];
 
       if (draggedShip.classList.contains('horizontal')) {
+
         playerSide.placeShip([row,col],ship,'vertical');
+        gameController.displayShip([row,col],ship,'vertical');
+        draggedShip.style.visibility = 'hidden';
+
       } else if (draggedShip.classList.contains('vertical')) {
         playerSide.placeShip([row,col],ship,'horizontal');
+        gameController.displayShip([row,col],ship,'horizontal');
+        draggedShip.style.visibility = 'hidden';
+
       }
 
-      gameController.displayShips(playerBoard,'player');
 
-      if (playerSide.checkStartGame()) {
+      /* if (playerSide.checkStartGame()) {
         dragContainer.style.visibility = 'hidden';
         gameText.textContent = 'Make your strike!';	
-      }
+      } */
     }
 	}
 
@@ -101,15 +104,37 @@ const shipPlacer = (() => {
     const dragContainer = document.querySelector('.drag-container');
     const randomBtn = document.querySelector('.random-btn');
     const gameText = document.querySelector('.game-text');
-    
+    const dragShips = document.querySelectorAll('.ship');
+
     randomBtn.addEventListener('click', () => {
       playerSide.placeShipsRandomly();
-      gameController.displayShips(playerBoard,'player');
+      gameController.displayAllShips(playerBoard,'player');
       dragContainer.style.visibility = 'hidden';
       gameText.textContent = 'Make your strike!';
+
+      dragShips.forEach(ship => { 
+        ship.style.visibility = 'hidden';
+      })
+      
     });
   }
-	
+
+  const startGame = () => {
+
+    const startGameBtn = document.querySelector('.start-game-btn');
+    const dragContainer = document.querySelector('.drag-container');
+    const dragShips = document.querySelectorAll('.ship');
+
+    startGameBtn.addEventListener('click', () => {
+      dragContainer.style.visibility = 'hidden';
+
+      dragShips.forEach(ship => { 
+        ship.style.visibility = 'hidden';
+      })
+
+    })
+
+  }
 
 	const rotateVertically = (ship) => {
 
@@ -174,7 +199,8 @@ const shipPlacer = (() => {
   return {
     dragController,
     rotateShips,
-    randomShips
+    randomShips,
+    startGame
   }
 
 })();

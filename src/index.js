@@ -24,14 +24,14 @@ const updateBoard = (() => {
 	const nameForm = document.querySelector('.name-form');
 	const nameInput = document.querySelector('#username');
 	const playerName = document.querySelector('.player-name');
-	const startGameBtn = document.querySelector('.start-game-btn');
+	const enterGameBtn = document.querySelector('.enter-game-btn');
 	const resetGameBtn = document.querySelector('.reset-game-btn');
 	const newGameBtn = document.querySelector('.new-game-btn');
 	const playerTiles = document.querySelectorAll('.player-tile');
 	const aiTiles = document.querySelectorAll('.ai-tile');
 	const dragContainer = document.querySelector('.drag-container');
 
-	startGameBtn.addEventListener('click', (event) => {
+	enterGameBtn.addEventListener('click', (event) => {
 		
 		startScreen.classList.add('fade-out');
 		playerName.textContent = nameInput.value || 'Player';
@@ -43,7 +43,7 @@ const updateBoard = (() => {
 			dragContainer.style.visibility = 'visible';
 			resetGameBtn.style.visibility = 'visible';
 			aiSide.placeShipsRandomly();
-			gameController.displayShips(aiBoard,'ai');
+			gameController.displayAllShips(aiBoard,'ai');
 			gameText.textContent = 'Place your ships';
 		}, 1000)
 
@@ -54,6 +54,7 @@ const updateBoard = (() => {
 	shipPlacer.dragController(playerSide,playerBoard);
 	shipPlacer.randomShips(playerSide,playerBoard);
 	shipPlacer.rotateShips();
+	shipPlacer.startGame();
 
 	resetGameBtn.addEventListener('click', () => {
 		gameController.newGame(playerSide,aiSide,playerAI);
@@ -99,5 +100,8 @@ const updateBoard = (() => {
 		})
 
 	})
+
+	console.log(playerBoard);
+	console.log(playerSide.fleet);
 
 })();

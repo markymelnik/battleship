@@ -1,5 +1,5 @@
 
-const shipTypes = {
+export const shipTypes = {
   destroyer: {
     id: 1,
     name: 'destroyer',
@@ -26,5 +26,3 @@ const shipTypes = {
     length: 5
   }
 }
-
-module.exports = { shipTypes };

@@ -1,4 +1,4 @@
-class Player {
+export class Player {
   constructor(playerName) {
     this.name = typeof playerName === 'string' ? playerName : 'OpponentAI';
     this.turn = true;
@@ -29,5 +29,3 @@ class Player {
     else throw Error('Not your turn!')
   }
 }
-
-module.exports = { Player };

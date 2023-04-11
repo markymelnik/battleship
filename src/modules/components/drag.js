@@ -1,5 +1,5 @@
-const { Ship } = require('./ship');
-const { gameController } = require('./control');
+import { Ship } from './ship';
+import { gameController } from './control';
 
 const dragController = (playerSide) => {
 
@@ -34,7 +34,7 @@ const dragController = (playerSide) => {
   }
 
   function dragEnter(tile) {
-    
+
     tile.preventDefault();
 
     let row = tile.target.dataset.row;
@@ -230,12 +230,9 @@ const rotateHorizontally = (ship) => {
   }
 }
 
-const initDrag = (playerSide,playerBoard) => {
+export const initDrag = (playerSide,playerBoard) => {
   dragController(playerSide),
   rotateShips(),
   randomShips(playerSide,playerBoard),
   startGame()
 }
-
-
-module.exports = { initDrag };

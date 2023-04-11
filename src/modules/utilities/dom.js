@@ -1,4 +1,4 @@
-const domCreator = (() => {
+export const domCreator = (() => {
 
   const createHeader = () => {
     const header = document.createElement('div');
@@ -211,5 +211,3 @@ const domCreator = (() => {
   }
 
 })();
-
-module.exports = { domCreator };

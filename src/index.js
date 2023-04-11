@@ -1,10 +1,10 @@
-const { Gameboard } = require('./modules/components/gameboard');
-const { Ship } = require('./modules/components/ship');
-const { Player } = require('./modules/components/player');
-const { AI } = require('./modules/components/ai');
-const { gameController } = require('./modules/components/control');
-const { domCreator } = require('./modules/utilities/dom');
-const { initDrag } = require('./modules/components/drag');
+import { Gameboard } from './modules/components/gameboard';
+import { Ship } from './modules/components/ship';
+import { Player } from './modules/components/player';
+import { AI } from './modules/components/ai';
+import { gameController } from './modules/components/control';
+import { domCreator } from './modules/utilities/dom';
+import { initDrag } from './modules/components/drag';
 
 domCreator.loadWebsite();
 

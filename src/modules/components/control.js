@@ -1,4 +1,4 @@
-const gameController = (() => {
+export const gameController = (() => {
 
 	const displayShip = ([row,col], ship, direction) => {
 
@@ -197,5 +197,3 @@ const gameController = (() => {
 	}
 
 })();
-
-module.exports = { gameController }

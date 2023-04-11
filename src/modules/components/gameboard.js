@@ -1,6 +1,6 @@
-const { Ship } = require('./ship');
+import { Ship } from './ship';
 
-const Gameboard = () => {
+export const Gameboard = () => {
 
   const board = createGameBoard();
   const fleet = createFleet();
@@ -236,5 +236,3 @@ const Gameboard = () => {
   }
   
 }
-
-module.exports = { Gameboard };

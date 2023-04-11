@@ -1,6 +1,6 @@
-const { Player } = require('./player');
+import { Player } from './player';
 
-class AI extends Player {
+export class AI extends Player {
   constructor(name, enemyPlayer, enemySide) {
     super(name);
     this.turn = false;
@@ -30,5 +30,3 @@ class AI extends Player {
     }
   }
 }
-
-module.exports = { AI };

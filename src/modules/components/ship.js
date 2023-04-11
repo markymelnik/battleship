@@ -1,6 +1,6 @@
-const { shipTypes } = require('./shipTypes');
+import { shipTypes } from './shipTypes';
 
-const Ship = (shipType) => {
+export const Ship = (shipType) => {
   const type = shipType;
   const length = shipTypes[shipType].length;
   const id = shipTypes[shipType].id;
@@ -20,5 +20,3 @@ const Ship = (shipType) => {
     isSunk
   }
 }
-
-module.exports = { Ship };

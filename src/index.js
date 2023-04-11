@@ -8,7 +8,6 @@ const { initDrag } = require('./modules/components/drag');
 
 domCreator.loadWebsite();
 
-
 // Initialization + Reset
 
 const playerSide = Gameboard();
@@ -26,21 +25,44 @@ const gameText = document.querySelector('.game-text');
 const updateBoard = (() => {
 
 	const startScreen = document.querySelector('.start-screen');
+	const startTitle = document.querySelector('.start-title');
+	const enterGameBtn = document.querySelector('.enter-game-btn');
 	const nameForm = document.querySelector('.name-form');
 	const nameInput = document.querySelector('#username');
 	const playerName = document.querySelector('.player-name');
-	const enterGameBtn = document.querySelector('.enter-game-btn');
 	const resetGameBtn = document.querySelector('.reset-game-btn');
 	const newGameBtn = document.querySelector('.new-game-btn');
 	const playerTiles = document.querySelectorAll('.player-tile');
 	const aiTiles = document.querySelectorAll('.ai-tile');
 	const dragContainer = document.querySelector('.drag-container');
 
+	window.addEventListener('DOMContentLoaded', () => {
+
+		setTimeout(() => {
+			startTitle.classList.add('active');
+		}, 500)
+
+		setTimeout(() => {
+			nameForm.classList.add('active');
+		}, 1000)
+	})
+
+
 	enterGameBtn.addEventListener('click', (event) => {
 		
-		startScreen.classList.add('fade-out');
+		startTitle.classList.remove('active');
+		startTitle.classList.add('fade');
+
+		setTimeout(() => {
+			nameForm.classList.remove('active');
+			nameForm.classList.add('fade');
+		}, 100)
+
+		setTimeout(() => {
+			startScreen.style.top = '-100vh'
+		}, 250);
+
 		playerName.textContent = nameInput.value || 'Player';
-		nameForm.style.visibility = 'hidden';
 		nameForm.reset();
 		
 		setTimeout(() => {
@@ -72,6 +94,11 @@ const updateBoard = (() => {
 
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
 			gameController.updateTile(tile);
+
+			aiTiles.forEach(tile => {
+				tile.style.pointerEvents = 'none';
+			});
+
 			playerAI.randomAttack(playerMark, playerSide);
 			gameText.textContent = 'AI Strikes!';
 
@@ -82,11 +109,19 @@ const updateBoard = (() => {
 				let col = +tile.dataset.col;
 				if (strike[0] === row && strike[1] === col) {
 					setTimeout(() => { 
+						
 						gameController.updateTile(tile);
 						if (!playerSide.checkEndGame() && !aiSide.checkEndGame()) {
 							gameText.textContent = 'Make your strike!';
 						}
-					}, 1000);
+
+						aiTiles.forEach(tile => {
+							if (!tile.getAttribute('hit')) {
+								tile.style.pointerEvents = 'auto';
+							}
+						});
+
+					}, 800);
 				}
 			})
 

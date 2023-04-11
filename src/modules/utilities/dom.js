@@ -164,7 +164,7 @@ const domCreator = (() => {
 
     const label = document.createElement('label');
     label.setAttribute('for','username');
-    label.textContent = 'Enter your name:';
+    label.textContent = 'Enter your name';
 
     const input = document.createElement('input');
     input.setAttribute('type','text');
@@ -187,7 +187,7 @@ const domCreator = (() => {
     startScreen.classList.add('start-screen');
     const startTitle = document.createElement('h1');
     startTitle.classList.add('start-title');
-    startTitle.textContent = 'Battleship!';
+    startTitle.textContent = 'Battleship';
     startScreen.append(startTitle,createNameForm());
     return startScreen;
   }

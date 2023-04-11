@@ -40,7 +40,7 @@ const gameController = (() => {
 				tiles.forEach(tile => {
 					if (board[row][col] !== null) {
 						if (tile.dataset.row == row && tile.dataset.col == col) {
-							tile.style.background = 'white';
+							// tile.style.background = 'white';
 							tile.setAttribute('ship','true');
 						}  
 					}
@@ -91,6 +91,7 @@ const gameController = (() => {
 
 	const updateTile = (tile) => {
 		tile.style.pointerEvents = 'none';
+		tile.setAttribute('hit','true');
 		tile.textContent = 'X';
 		if (tile.getAttribute('ship')) {
 			tile.style.backgroundColor = 'darkred';

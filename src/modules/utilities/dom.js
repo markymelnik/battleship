@@ -84,7 +84,7 @@ const domCreator = (() => {
     return grid;
   }
 
-  const appendShips = () => {
+  const createShips = () => {
 
     const allShips = document.createElement('div');
     allShips.classList.add('all-ships');
@@ -148,9 +148,9 @@ const domCreator = (() => {
     startGameBtn.classList.add('start-game-btn');
     startGameBtn.textContent = 'Start';
 
-    btnContainer.append(rotateBtn,randomBtn,startGameBtn);
+    btnContainer.append(rotateBtn,randomBtn);
 
-    dragContainer.append(shipsContainerHeader, appendShips(), btnContainer);
+    dragContainer.append(shipsContainerHeader, createShips(), btnContainer, startGameBtn);
 
     return dragContainer;
   } 
@@ -207,8 +207,7 @@ const domCreator = (() => {
   }
 
   return {
-    loadWebsite,
-    appendShips
+    loadWebsite
   }
 
 })();

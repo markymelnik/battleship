@@ -1,3 +1,4 @@
+
 const shipTypes = {
   destroyer: {
     id: 1,

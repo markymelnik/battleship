@@ -4,9 +4,12 @@ const { Player } = require('./modules/components/player');
 const { AI } = require('./modules/components/ai');
 const { gameController } = require('./modules/components/control');
 const { domCreator } = require('./modules/utilities/dom');
-const { shipPlacer } = require('./modules/components/drag');
+const { initDrag } = require('./modules/components/drag');
 
 domCreator.loadWebsite();
+
+
+// Initialization + Reset
 
 const playerSide = Gameboard();
 const playerBoard = playerSide.board;
@@ -15,6 +18,8 @@ const playerMark = new Player('Mark');
 const aiSide = Gameboard();
 const aiBoard = aiSide.board;
 const playerAI = new AI('AI',playerMark,playerSide);
+
+initDrag(playerSide,playerBoard);
 
 const gameText = document.querySelector('.game-text');
 
@@ -50,12 +55,7 @@ const updateBoard = (() => {
 		event.preventDefault();
 		
 	})
-
-	shipPlacer.dragController(playerSide,playerBoard);
-	shipPlacer.randomShips(playerSide,playerBoard);
-	shipPlacer.rotateShips();
-	shipPlacer.startGame();
-
+	
 	resetGameBtn.addEventListener('click', () => {
 		gameController.newGame(playerSide,aiSide,playerAI);
 	})

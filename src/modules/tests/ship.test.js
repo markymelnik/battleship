@@ -1,4 +1,5 @@
-const { Ship } = require('../components/ship');
+import { Ship } from '../components/ship';
+import { beforeEach, test, expect } from 'vitest';
 
 let cruiser; 
 

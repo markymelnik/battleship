@@ -1,5 +1,6 @@
-const { Gameboard } = require('../components/gameboard');
-const { Ship } = require('../components/ship');
+import { Gameboard } from '../components/gameboard';
+import { Ship } from '../components/ship';
+import { beforeEach, test, expect } from 'vitest';
 
 let gameboard;
 

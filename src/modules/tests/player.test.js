@@ -1,7 +1,8 @@
-const { Player } = require('../components/player');
-const { AI } = require('../components/ai');
-const { Gameboard } = require('../components/gameboard');
-const { Ship } = require('../components/ship');
+import { Player } from '../components/player';
+import { AI } from '../components/ai';
+import { Gameboard } from '../components/gameboard';
+import { Ship } from '../components/ship';
+import { beforeEach, test, expect } from 'vitest';
 
 let playerMark;
 let playerAI;

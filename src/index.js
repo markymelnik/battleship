@@ -1,5 +1,4 @@
 import { Gameboard } from './modules/components/gameboard';
-import { Ship } from './modules/components/ship';
 import { Player } from './modules/components/player';
 import { AI } from './modules/components/ai';
 import { gameController } from './modules/components/control';
@@ -8,12 +7,9 @@ import { initDrag } from './modules/components/drag';
 
 domCreator.loadWebsite();
 
-// Initialization + Reset
-
 const playerSide = Gameboard();
 const playerBoard = playerSide.board;
 const playerMark = new Player('Mark');
-
 const aiSide = Gameboard();
 const aiBoard = aiSide.board;
 const playerAI = new AI('AI',playerMark,playerSide);
@@ -41,41 +37,41 @@ const updateBoard = (() => {
 		setTimeout(() => {
 			startTitle.classList.add('active');
 		}, 500)
-
 		setTimeout(() => {
 			nameForm.classList.add('active');
 		}, 1000)
+		setTimeout(() => {
+			enterGameBtn.style.visibility = 'visible';
+		}, 1600)
+
 	})
 
-
 	enterGameBtn.addEventListener('click', (event) => {
-		
+
 		startTitle.classList.remove('active');
 		startTitle.classList.add('fade');
-
 		setTimeout(() => {
 			nameForm.classList.remove('active');
 			nameForm.classList.add('fade');
 		}, 100)
-
 		setTimeout(() => {
 			startScreen.style.top = '-100vh'
 		}, 250);
 
 		playerName.textContent = nameInput.value || 'Player';
 		nameForm.reset();
-		
+
 		setTimeout(() => {
 			startScreen.style.display = 'none';
 			dragContainer.style.visibility = 'visible';
 			resetGameBtn.style.visibility = 'visible';
 			aiSide.placeShipsRandomly();
 			gameController.displayAllShips(aiBoard,'ai');
-			gameText.textContent = 'Place your ships';
+			gameText.textContent = 'Place your ships...';
 		}, 1000)
 
 		event.preventDefault();
-		
+
 	})
 	
 	resetGameBtn.addEventListener('click', () => {
@@ -91,10 +87,9 @@ const updateBoard = (() => {
 		let col = tile.dataset.col;
 
 		tile.addEventListener('click', () => {
-
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
 			gameController.updateTile(tile);
-
+			
 			aiTiles.forEach(tile => {
 				tile.style.pointerEvents = 'none';
 			});
@@ -107,36 +102,27 @@ const updateBoard = (() => {
 			playerTiles.forEach(tile => {
 				let row = +tile.dataset.row;
 				let col = +tile.dataset.col;
+
 				if (strike[0] === row && strike[1] === col) {
 					setTimeout(() => { 
-						
 						gameController.updateTile(tile);
 						if (!playerSide.checkEndGame() && !aiSide.checkEndGame()) {
-							gameText.textContent = 'Make your strike!';
+							gameText.textContent = 'Your strike!';
+							aiTiles.forEach(tile => {
+								if (!tile.getAttribute('hit')) {
+									tile.style.pointerEvents = 'auto';
+								}
+							});
 						}
-
-						aiTiles.forEach(tile => {
-							if (!tile.getAttribute('hit')) {
-								tile.style.pointerEvents = 'auto';
-							}
-						});
-
 					}, 800);
 				}
 			})
-
 			if (playerSide.checkEndGame()) {
 				gameController.endGameController('ai');
 			}
 			if (aiSide.checkEndGame()) {
 				gameController.endGameController('player');		
 			}
-
 		})
-
 	})
-
-	console.log(playerBoard);
-	console.log(playerSide.fleet);
-
 })();

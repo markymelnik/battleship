@@ -40,7 +40,8 @@ export const gameController = (() => {
 				tiles.forEach(tile => {
 					if (board[row][col] !== null) {
 						if (tile.dataset.row == row && tile.dataset.col == col) {
-							// tile.style.background = 'white';
+							// if (type === 'player') 
+							tile.style.background = 'white';
 							tile.setAttribute('ship','true');
 						}  
 					}
@@ -90,13 +91,11 @@ export const gameController = (() => {
 	}
 
 	const updateTile = (tile) => {
-		tile.style.pointerEvents = 'none';
+		tile.textContent = '✕';
 		tile.setAttribute('hit','true');
-		tile.textContent = 'X';
+		tile.style.pointerEvents = 'none';
 		if (tile.getAttribute('ship')) {
 			tile.style.backgroundColor = 'darkred';
-		} else {
-			tile.style.backgroundColor = 'dodgerblue';
 		}
 	}
 
@@ -104,8 +103,7 @@ export const gameController = (() => {
 		const playerTiles = document.querySelectorAll('.player-tile');
 		playerTiles.forEach(tile => {
 			tile.textContent = '';
-			tile.style.backgroundColor = 'darkslategrey';
-			tile.style.pointerEvents = 'auto';
+			tile.style.backgroundColor = 'var(--blue-color)';
 			tile.removeAttribute('ship');
 		})
 	}
@@ -114,10 +112,11 @@ export const gameController = (() => {
 		const aiTiles = document.querySelectorAll('.ai-tile');
 		aiTiles.forEach(tile => {
 			tile.textContent = '';
-			tile.style.backgroundColor = 'darkslategrey';
+			tile.style.backgroundColor = 'var(--blue-color)';
 			tile.style.pointerEvents = 'auto';
 			tile.style.cursor = 'pointer';
 			tile.removeAttribute('ship');
+			tile.removeAttribute('hit');
 		})
 	}
 
@@ -143,21 +142,23 @@ export const gameController = (() => {
 		const winBox = document.querySelector('.win-box');
 		const winText = document.querySelector('.win-text');
 		const gameText = document.querySelector('.game-text');
-			
-		aiTiles.forEach(tile => {
-			tile.style.pointerEvents = 'none';
-		})
+		const playerName = document.querySelector('.player-name');
+		const aiName = document.querySelector('.ai-name');
 			
 		setTimeout(() => {  
 			winBox.style.visibility = 'visible';
 			if (winner === 'player') {
 				winText.textContent = 'You win!';
-				gameText.textContent = 'You win!';
+				gameText.textContent = `${playerName.textContent} wins!`;
 			} else {
 				winText.textContent = 'You lose!';
-				gameText.textContent = 'You lose!';
+				gameText.textContent = `${aiName.textContent} wins!`;
 			}
 		}, 800);
+
+		aiTiles.forEach(tile => {
+			tile.style.pointerEvents = 'none';
+		})	
 	}
 
 	const newGame = (playerSide, aiSide, playerAI) => {
@@ -179,7 +180,7 @@ export const gameController = (() => {
 			ship.style.visibility = 'visible';
 		})
 
-		gameText.textContent = 'Place your ships.';
+		gameText.textContent = 'Place your ships...';
 		
 	}
 

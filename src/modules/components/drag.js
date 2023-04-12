@@ -136,14 +136,13 @@ const randomShips = (playerSide,playerBoard) => {
 
   const startGameBtn = document.querySelector('.start-game-btn');
   const randomBtn = document.querySelector('.random-btn');
-  const gameText = document.querySelector('.game-text');
+  
   const dragShips = document.querySelectorAll('.ship');
 
   randomBtn.addEventListener('click', () => {
     if (playerSide.fleet.length > 0) gameController.resetPlayerBoard(playerSide);
     playerSide.placeShipsRandomly();
     gameController.displayAllShips(playerBoard,'player');
-    gameText.textContent = 'Make your strike!';
     startGameBtn.style.visibility = 'visible';
 
     dragShips.forEach(ship => { 
@@ -158,10 +157,12 @@ const startGame = () => {
   const startGameBtn = document.querySelector('.start-game-btn');
   const dragContainer = document.querySelector('.drag-container');
   const dragShips = document.querySelectorAll('.ship');
+  const gameText = document.querySelector('.game-text');
 
   startGameBtn.addEventListener('click', () => {
     dragContainer.style.visibility = 'hidden';
     startGameBtn.style.visibility = 'hidden';
+    gameText.textContent = 'Your strike!';
 
     dragShips.forEach(ship => { 
       ship.style.visibility = 'hidden';

@@ -12,7 +12,6 @@
   src: url('../src//fonts/bangers.ttf');
 }
 
-
 * {
   font-family: Bangers;
   letter-spacing: 4px;
@@ -124,6 +123,7 @@
   font-size: 25px;
   text-align: center;
   font-weight: bold;
+  visibility: hidden;
 }
 
 .enter-game-btn:hover {
@@ -141,11 +141,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  gap: 10px;
+  gap: 15px;
   position: absolute;
-  right: 125px;
+  top: 150px;
+  right: 200px;
   height: 550px;
-  width: 500px;
+  width: 600px;
   background: var(--dark-grey-color);
   border: 1px solid var(--white-color);
   padding: 20px;
@@ -155,6 +156,7 @@
 .drag-container > h1 {
   font-size: 30px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .all-ships {
@@ -163,7 +165,6 @@
   height: 300px;
   width: 300px;
   gap: 25px;
-  margin: 20px auto;
 }
 
 .ship {
@@ -237,6 +238,7 @@
   justify-content: center;
   width: 100%;
   gap: 20px;
+  margin-top: 20px;
 }
   
 .rotate-btn {
@@ -266,9 +268,9 @@
 }
 
 .start-game-btn {
-  height: 40px;
-  width: 100px;
-  font-size: 18px;
+  height: 50px;
+  width: 120px;
+  font-size: 20px;
   background-color: var(--dark-grey-color);
   border: 2px solid var(--purple-color);
   visibility: hidden;
@@ -330,6 +332,7 @@
   display: grid;
   grid-template: repeat(10, 45px) / repeat(10, 45px);
   margin-bottom: 50px;
+  background: var(--dark-grey-color);
 }
 
 .player-name, .ai-name {
@@ -340,11 +343,11 @@
 
 .player-tile, .ai-tile {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 0 2px 4px;
   font-size: 25px;
-  border: 1px solid var(--white-color);
+  border: 0.75px solid var(--white-color);
   background: var(--blue-color);
   font-weight: bolder;
 }
@@ -355,10 +358,15 @@
 
 .ai-tile:hover {
   cursor: pointer;
+  transform: translateY(-2px) translateX(2px);
+}
+
+.ai-tile:active {
+  transform: translateY(0px) translateX(0px);
 }
 
 .drag-over {
-  background-color: lightslategray;
+  background-color: rgb(175, 186, 197);
 }
 
 .tile-reset {
@@ -392,28 +400,30 @@
   align-items: center;
   gap: 25px;
   position: absolute;
-  height: 150px;
+  height: 180px;
   width: 400px;
-  border: 1px solid black;
-  background: whitesmoke;
+  border: 1px solid var(--white-color);
+  background: var(--dark-grey-color);
   visibility: hidden;
 }
 
 .win-text {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .new-game-btn {
-  height: 50px;
+  height: 40px;
   width: 120px;
-  border: 1px solid black;
-  background: rgb(197, 58, 58);
+  letter-spacing: 2px;
+  border: 1px solid var(--white-color);
+  background: rgb(51, 168, 104);
   font-size: 16px;
 }
 
 .new-game-btn:hover {
-  background: rgb(221, 76, 76);
+  background: rgb(52, 138, 90);
   cursor: pointer;
+  font-size: 18px;
 }
 
 .footer {
@@ -428,4 +438,5 @@
 
 .footer-text {
   font-size: 20px;
+  letter-spacing: 2px;
 }

@@ -5,12 +5,15 @@ export const Ship = (shipType) => {
   const length = shipTypes[shipType].length;
   const id = shipTypes[shipType].id;
   let hits = 0;
+
   function hit() {
     this.hits++;
   }
+
   function isSunk() {
     return this.hits === this.length;
   }
+  
   return {
     type,
     length,

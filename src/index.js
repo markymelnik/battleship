@@ -1,6 +1,6 @@
 import { Gameboard } from './modules/components/gameboard';
-import { Player } from './modules/components/player';
-import { AI } from './modules/components/ai';
+import { Player } from './modules/components/user/player';
+import { AI } from './modules/components/user/ai';
 import { gameController } from './modules/components/control';
 import { domCreator } from './modules/utilities/dom';
 import { initDrag } from './modules/components/drag';

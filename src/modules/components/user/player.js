@@ -1,6 +1,6 @@
 export class Player {
   constructor(playerName) {
-    this.name = typeof playerName === 'string' ? playerName : 'OpponentAI';
+    this.name = playerName;
     this.turn = true;
   }
 

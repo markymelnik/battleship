@@ -10,6 +10,15 @@ export const gameController = (() => {
     col = +col;
 
     if (direction === 'horizontal') {
+      for (let i = col; i < col + length; i++) {
+        tiles.forEach(tile => {
+          if (tile.dataset.col == i && tile.dataset.row == row) {
+            tile.style.background = 'white';
+						tile.setAttribute('ship','true');
+          }
+        })
+      }
+    } else if (direction === 'vertical') {
       for (let i = row; i < row + length; i++) {
         tiles.forEach(tile => {
           if (tile.dataset.row == i && tile.dataset.col == col) {
@@ -18,17 +27,7 @@ export const gameController = (() => {
           }
         })
       }
-    } 
-    else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
-        tiles.forEach(tile => {
-          if (tile.dataset.col == i && tile.dataset.row == row) {
-            tile.style.background = 'white';
-						tile.setAttribute('ship','true');
-          }
-        })
-      }
-    } 
+    }
   }
 
 	const displayAllShips = (board, type) => {
@@ -59,10 +58,23 @@ export const gameController = (() => {
     row = +row;
     col = +col;
 
-		if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
+    if (direction === 'horizontal') {
+      for (let i = col; i < col + length; i++) {
         allPlayerTiles.forEach(tile => {
           if (tile.dataset.row == row && tile.dataset.col == i) {
+            if (status === 'in') {
+							tile.classList.add('drag-over');
+						}
+						else if (status === 'out') {
+							tile.classList.remove('drag-over');
+						}
+          }
+        })
+      }
+    } else if (direction === 'vertical') {
+      for (let i = row; i < row + length; i++) {
+        allPlayerTiles.forEach(tile => {
+          if (tile.dataset.row == i && tile.dataset.col == col) {
 						if (status === 'in') {
 							tile.classList.add('drag-over');
 						}
@@ -70,20 +82,6 @@ export const gameController = (() => {
 							tile.classList.remove('drag-over');
 						}
             
-          }
-        })
-      }
-    }
-    else if (direction === 'horizontal') {
-      for (let i = row; i < row + length; i++) {
-        allPlayerTiles.forEach(tile => {
-          if (tile.dataset.row == i && tile.dataset.col == col) {
-            if (status === 'in') {
-							tile.classList.add('drag-over');
-						}
-						else if (status === 'out') {
-							tile.classList.remove('drag-over');
-						}
           }
         })
       }
@@ -104,6 +102,7 @@ export const gameController = (() => {
 		playerTiles.forEach(tile => {
 			tile.textContent = '';
 			tile.style.backgroundColor = 'var(--blue-color)';
+			tile.style.pointerEvents = 'auto';
 			tile.removeAttribute('ship');
 		})
 	}

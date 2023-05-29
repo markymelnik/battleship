@@ -9,14 +9,14 @@ export const Ship = (shipType) => {
     this.hits++;
   }
   function isSunk() {
-    return (this.hits === this.length);
+    return this.hits === this.length;
   }
   return {
-    type, 
-    length, 
-    id, 
-    hits, 
-    hit, 
-    isSunk
-  }
-}
+    type,
+    length,
+    id,
+    hits,
+    hit,
+    isSunk,
+  };
+};

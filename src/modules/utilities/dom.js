@@ -69,11 +69,6 @@ export const domCreator = (() => {
     return newGameBtn;
   }
 
-  /**
-   * Returns div squares inside a grid
-   * @param {string} type class prefix
-   * @returns HTMLDivElement
-   */
   const createGridTiles = (type) => {
     const grid = document.createElement('div');
     grid.classList.add(type + '-grid');

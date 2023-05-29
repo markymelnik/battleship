@@ -41,25 +41,24 @@ export const Gameboard = () => {
     let length = ship.length;
     
     if (direction === 'horizontal') {
-      return (row + length - 1 < 10)
+      return (col + length - 1 < 10) 
     } else if (direction === 'vertical') {
-      return (col - length + 1 > -1)
+      return (row + length - 1 < 10)
     }
   }
 
   function isPathClearOfShips([row,col], ship, direction) {
     let length = ship.length;
     if (direction === 'horizontal') {
-      for (let i = row; i < row + length; i++) {
-        if (board[i][col] !== null) {
+      for (let i = col; i < col + length; i++) {
+        if (board[row][i] !== null) {
           return false;
         }
       }
       return true;
-    }
-    else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
-        if (board[row][i] !== null) {
+    } else if (direction === 'vertical') {
+      for (let i = row; i < row + length; i++) {
+        if (board[i][col] !== null) {
           return false;
         }
       }
@@ -92,7 +91,7 @@ export const Gameboard = () => {
 
   function areAdjacentTilesEmpty([row,col], ship, direction) {
     let length = ship.length;
-    if (direction === 'horizontal') {
+    if (direction === 'vertical') {
       for (let i = row; i < row + length; i++) {
         let adjacentTiles = getAdjacentTiles([i,col]);
         if (adjacentTiles.some((tile) => board[tile[0]][tile[1]] !== null)) {
@@ -101,8 +100,8 @@ export const Gameboard = () => {
       }
       return true;
     }
-    else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) {
+    else if (direction === 'horizontal') {
+      for (let i = col; i < col + length; i++) {
         let adjacentTiles = getAdjacentTiles([row,i]);
         if (adjacentTiles.some((tile) => board[tile[0]][tile[1]] !== null)) {
           return false;
@@ -128,13 +127,13 @@ export const Gameboard = () => {
     } 
     else throw Error('This ship is already in the fleet!');
 
-    if (direction === 'horizontal') {
+    if (direction === 'vertical') {
       for (let i = row; i < row + length; i++) {
         board[i][col] = ship;
       }
     }
-    else if (direction === 'vertical') {
-      for (let i = col; i > col - length; i--) { 
+    else if (direction === 'horizontal') {
+      for (let i = col; i < col + length; i++) { 
         board[row][i] = ship;
       }
     }

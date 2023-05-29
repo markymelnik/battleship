@@ -43,10 +43,10 @@ const dragController = (playerSide) => {
     const ship = ships[draggedShip.id];
 
     if (draggedShip.classList.contains('horizontal')) {
-      gameController.displayShipPath([row,col],ship,'vertical','in');
+      gameController.displayShipPath([row,col],ship,'horizontal','in');
     }
     else if (draggedShip.classList.contains('vertical')) {
-      gameController.displayShipPath([row,col],ship,'horizontal','in');
+      gameController.displayShipPath([row,col],ship,'vertical','in');
     }
 
   }
@@ -61,10 +61,10 @@ const dragController = (playerSide) => {
     const ship = ships[draggedShip.id];
 
     if (draggedShip.classList.contains('horizontal')) {
-      gameController.displayShipPath([row,col],ship,'vertical','in');
+      gameController.displayShipPath([row,col],ship,'horizontal','in');
     }
     else if (draggedShip.classList.contains('vertical')) {
-      gameController.displayShipPath([row,col],ship,'horizontal','in');
+      gameController.displayShipPath([row,col],ship,'vertical','in');
     }
 
   }
@@ -77,10 +77,10 @@ const dragController = (playerSide) => {
     const ship = ships[draggedShip.id];
 
     if (draggedShip.classList.contains('horizontal')) {
-      gameController.displayShipPath([row,col],ship,'vertical','out');
+      gameController.displayShipPath([row,col],ship,'horizontal','out');
     }
     else if (draggedShip.classList.contains('vertical')) {
-      gameController.displayShipPath([row,col],ship,'horizontal','out');
+      gameController.displayShipPath([row,col],ship,'vertical','out');
     }
 
   }
@@ -96,13 +96,13 @@ const dragController = (playerSide) => {
 
     if (draggedShip.classList.contains('horizontal')) {
 
-      playerSide.placeShip([row,col],ship,'vertical');
-      gameController.displayShip([row,col],ship,'vertical');
+      playerSide.placeShip([row,col],ship,'horizontal');
+      gameController.displayShip([row,col],ship,'horizontal');
       draggedShip.style.visibility = 'hidden';
 
     } else if (draggedShip.classList.contains('vertical')) {
-      playerSide.placeShip([row,col],ship,'horizontal');
-      gameController.displayShip([row,col],ship,'horizontal');
+      playerSide.placeShip([row,col],ship,'vertical');
+      gameController.displayShip([row,col],ship,'vertical');
       draggedShip.style.visibility = 'hidden';
 
     }

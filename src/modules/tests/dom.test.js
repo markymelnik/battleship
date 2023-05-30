@@ -36,7 +36,7 @@ describe('create start screen', () => {
     const nameInputForm = startScreen.querySelector('.name-form');
     expect(nameInputForm.nodeName).toBe('FORM');
     expect(nameInputForm.children.length).toBe(3);
-    expect(nameInputForm.querySelector('label').textContent).toBe('Enter your name');
+    expect(nameInputForm.querySelector('label').textContent).toBe('Enter your name:');
     expect(nameInputForm.querySelector('input').nodeName).toBe('INPUT');
     expect(nameInputForm.querySelector('button').textContent).toBe('Start');
   });
@@ -72,7 +72,7 @@ test('should create a middle section with correct structure', () => {
   const aiName = aiContainer.querySelector('.ai-name');
   expect(aiName.textContent).toBe('Opponent AI');
 
-  const gameText = middle.querySelector('.game-text');
+  const gameText = middle.querySelector('.game-status-text');
   expect(gameText.textContent).toBe('Loading...');
 });
 
@@ -157,7 +157,7 @@ describe('create drag container', () => {
     const randomBtn = btnContainer.querySelector('.random-btn');
     const startGameBtn = dragContainer.querySelector('.start-game-btn');
 
-    expect(title.textContent).toBe('Place your ships!');
+    expect(title.textContent).toBe('Drag your ships onto the board!');
     expect(dragFleet).not.toBeNull();
     expect(rotateBtn.textContent).toBe('Rotate');
     expect(randomBtn.textContent).toBe('Random');

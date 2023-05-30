@@ -1,4 +1,4 @@
-export const shipTypes = {
+const shipTypes = {
   destroyer: {
     id: 1,
     name: 'destroyer',
@@ -25,3 +25,5 @@ export const shipTypes = {
     length: 5,
   },
 };
+
+export default shipTypes;

@@ -1,9 +1,9 @@
-import { Gameboard } from './modules/components/gameboard';
-import { Player } from './modules/components/user/player';
-import { AI } from './modules/components/user/ai';
-import { gameController } from './modules/components/control';
+import Gameboard from './modules/components/gameboard';
+import displayController from './modules/components/displayController';
+import initDrag from './modules/components/drag';
+import Player from './modules/components/user/player';
+import AI from './modules/components/user/ai';
 import loadDOM from './modules/utils/dom/loadDOM';
-import { initDrag } from './modules/components/drag';
 
 loadDOM();
 
@@ -16,7 +16,7 @@ const playerAI = new AI('AI',playerMark,playerSide);
 
 initDrag(playerSide,playerBoard);
 
-const gameText = document.querySelector('.game-text');
+const gameStatusText = document.querySelector('.game-status-text');
 
 const updateBoard = (() => {
 
@@ -31,6 +31,7 @@ const updateBoard = (() => {
 	const playerTiles = document.querySelectorAll('.player-tile');
 	const aiTiles = document.querySelectorAll('.ai-tile');
 	const dragContainer = document.querySelector('.drag-container');
+	const aiContainer = document.querySelector('.ai-container');
 
 	window.addEventListener('DOMContentLoaded', () => {
 
@@ -61,13 +62,15 @@ const updateBoard = (() => {
 		playerName.textContent = nameInput.value || 'Player';
 		nameForm.reset();
 
+		aiContainer.style.visibility = 'hidden';
+		dragContainer.style.visibility = 'visible';
+		resetGameBtn.style.visibility = 'visible';
+
 		setTimeout(() => {
 			startScreen.style.display = 'none';
-			dragContainer.style.visibility = 'visible';
-			resetGameBtn.style.visibility = 'visible';
 			aiSide.placeShipsRandomly();
-			gameController.displayAllShips(aiBoard,'ai');
-			gameText.textContent = 'Place your ships...';
+			displayController.displayAllShips(aiBoard,'ai');
+			gameStatusText.textContent = 'Place your ships...';
 		}, 1000)
 
 		event.preventDefault();
@@ -75,11 +78,11 @@ const updateBoard = (() => {
 	})
 	
 	resetGameBtn.addEventListener('click', () => {
-		gameController.newGame(playerSide,aiSide,playerAI);
+		displayController.newGame(playerSide,aiSide,playerAI);
 	})
 
 	newGameBtn.addEventListener('click', () => {
-		gameController.newGame(playerSide,aiSide,playerAI);
+		displayController.newGame(playerSide,aiSide,playerAI);
 	})
 
 	aiTiles.forEach(tile => {
@@ -88,14 +91,14 @@ const updateBoard = (() => {
 
 		tile.addEventListener('click', () => {
 			playerMark.targetedAttack([row,col], playerAI, aiSide);
-			gameController.updateTile(tile);
+			displayController.updateTile(tile);
 			
 			aiTiles.forEach(tile => {
 				tile.style.pointerEvents = 'none';
 			});
 
 			playerAI.randomAttack(playerMark, playerSide);
-			gameText.textContent = 'AI Strikes!';
+			gameStatusText.textContent = 'AI Strikes!';
 
 			let strike = playerAI.hitArray[playerAI.hitArray.length - 1];
 
@@ -105,9 +108,9 @@ const updateBoard = (() => {
 
 				if (strike[0] === row && strike[1] === col) {
 					setTimeout(() => { 
-						gameController.updateTile(tile);
+						displayController.updateTile(tile);
 						if (!playerSide.checkEndGame() && !aiSide.checkEndGame()) {
-							gameText.textContent = 'Your strike!';
+							gameStatusText.textContent = 'Your strike!';
 							aiTiles.forEach(tile => {
 								if (!tile.getAttribute('hit')) {
 									tile.style.pointerEvents = 'auto';
@@ -118,10 +121,10 @@ const updateBoard = (() => {
 				}
 			})
 			if (playerSide.checkEndGame()) {
-				gameController.endGameController('ai');
+				displayController.endGameController('ai');
 			}
 			if (aiSide.checkEndGame()) {
-				gameController.endGameController('player');		
+				displayController.endGameController('player');		
 			}
 		})
 	})

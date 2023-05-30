@@ -1,6 +1,6 @@
-import { Player } from './player';
+import Player from './player';
 
-export class AI extends Player {
+class AI extends Player {
   constructor(name = 'Opponent AI', enemyPlayer, enemySide) {
     super(name);
     this.turn = false;
@@ -31,3 +31,5 @@ export class AI extends Player {
     }
   }
 }
+
+export default AI;

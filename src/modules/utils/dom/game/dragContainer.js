@@ -3,7 +3,7 @@ import createDragFleet from './dragFleet';
 
 const createDragContainer = () => {
   const dragContainer = createElement('div', 'drag-container');
-  const dragContainerTitle = createElement('div', '', 'Place your ships!');
+  const dragContainerTitle = createElement('div', 'drag-container-title', 'Drag your ships onto the board!');
   const btnContainer = createElement('div', 'btn-container');
   const rotateBtn = createElement('button', 'rotate-btn', 'Rotate');
   const randomBtn = createElement('button', 'random-btn', 'Random');

@@ -1,5 +1,5 @@
-import { Gameboard } from '../components/gameboard';
-import { Ship } from '../components/ship';
+import Gameboard from '../components/gameboard';
+import Ship from '../components/ship';
 
 let gameboard;
 

@@ -7,7 +7,7 @@ const createMiddle = () => {
   const playerName = createElement('div', 'player-name', 'placeholder');
   const aiContainer = createElement('div', 'ai-container');
   const aiName = createElement('div', 'ai-name', 'Opponent AI');
-  const gameText = createElement('div', 'game-text', 'Loading...');
+  const gameText = createElement('div', 'game-status-text', 'Loading...');
 
   playerContainer.append(playerName, createGridTiles('player'));
   aiContainer.append(aiName, createGridTiles('ai'));

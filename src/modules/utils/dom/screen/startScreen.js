@@ -16,7 +16,7 @@ const createNameInputForm = () => {
 
   const label = document.createElement('label');
   label.setAttribute('for', 'username');
-  label.textContent = 'Enter your name';
+  label.textContent = 'Enter your name:';
 
   const input = document.createElement('input');
   input.setAttribute('type', 'text');

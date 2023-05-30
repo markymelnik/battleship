@@ -1,7 +1,7 @@
-import { Player } from '../components/user/player';
-import { AI } from '../components/user/ai';
-import { Gameboard } from '../components/gameboard';
-import { Ship } from '../components/ship';
+import Player from '../components/user/player';
+import AI from '../components/user/ai';
+import Gameboard from '../components/gameboard';
+import Ship from '../components/ship';
 
 let playerMark, playerAI, boardMark, boardAI;
 

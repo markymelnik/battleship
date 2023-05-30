@@ -1,4 +1,4 @@
-export class Player {
+class Player {
   constructor(playerName) {
     this.name = playerName;
     this.turn = true;
@@ -28,3 +28,5 @@ export class Player {
     } else throw Error('Not your turn!');
   }
 }
+
+export default Player;

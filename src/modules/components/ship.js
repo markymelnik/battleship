@@ -1,6 +1,6 @@
-import { shipTypes } from './shipTypes';
+import shipTypes from './shipTypes';
 
-export const Ship = (shipType) => {
+const Ship = (shipType) => {
   const type = shipType;
   const length = shipTypes[shipType].length;
   const id = shipTypes[shipType].id;
@@ -23,3 +23,5 @@ export const Ship = (shipType) => {
     isSunk,
   };
 };
+
+export default Ship;

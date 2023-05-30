@@ -37,10 +37,8 @@ const displayController = (() => {
           if (board[row][col] !== null) {
             if (tile.dataset.row == row && tile.dataset.col == col) {
               // Statement below toggles enemy ship display
-              if (type === 'player') {
-                tile.style.background = 'white';
-                tile.setAttribute('ship', 'true');
-              }
+              if (type === 'player') tile.style.background = 'white';
+              tile.setAttribute('ship', 'true');
             }
           }
         });

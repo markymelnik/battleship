@@ -1,10 +1,11 @@
 import createElement from '../createElement';
 
-const createDragShip = (tag, className1, className2, className3, id) => {
+const createDragShip = (tag, className1, className2, direction, id) => {
   const ship = document.createElement(tag);
-  ship.classList.add(className1, className2, className3);
+  ship.classList.add(className1, className2);
   ship.id = id;
-  ship.setAttribute('draggable','true');
+  ship.setAttribute('draggable', 'true');
+  ship.setAttribute('direction', direction);
   return ship;
 }
 

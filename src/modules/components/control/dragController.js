@@ -5,6 +5,7 @@ const dragController = (playerSide) => {
   const allShips = document.querySelectorAll('.ship');
   const allPlayerTiles = document.querySelectorAll('.player-tile');
   const startGameBtn = document.querySelector('.start-game-btn');
+  const dragContainer = document.querySelector('.drag-container');
 
   let draggedShip;
 
@@ -21,14 +22,29 @@ const dragController = (playerSide) => {
   });
 
   allPlayerTiles.forEach((tile) => {
+    tile.addEventListener('dragstart', dragShipOnBoardStart);
     tile.addEventListener('dragenter', dragEnter);
     tile.addEventListener('dragover', dragOver);
     tile.addEventListener('dragleave', dragLeave);
     tile.addEventListener('drop', dropShip);
   });
 
-  function dragStart(tile) {
-    draggedShip = tile.target;
+  function dragStart(dragShip) {
+    draggedShip = dragShip.target;
+  }
+
+  function dragShipOnBoardStart(tile) {
+
+    const allShips = document.querySelectorAll('.ship');
+    const ship = ships[tile.target.getAttribute('shipid')];
+    let row = tile.target.dataset.row;
+    let col = tile.target.dataset.col;
+    let direction = tile.target.getAttribute('direction');
+
+    draggedShip = allShips[tile.target.getAttribute('shipid')];
+
+    displayController.removeShipDisplay(ship);
+    playerSide.removeShip(ship);
   }
 
   function dragEnter(tile) {
@@ -39,9 +55,9 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    if (draggedShip.classList.contains('horizontal')) {
+    if (draggedShip.getAttribute('direction') === 'horizontal') {
       displayController.displayShipPath([row, col], ship, 'horizontal', 'in');
-    } else if (draggedShip.classList.contains('vertical')) {
+    } else if (draggedShip.getAttribute('direction') === 'vertical') {
       displayController.displayShipPath([row, col], ship, 'vertical', 'in');
     }
   }
@@ -54,9 +70,9 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    if (draggedShip.classList.contains('horizontal')) {
+    if (draggedShip.getAttribute('direction') === 'horizontal') {
       displayController.displayShipPath([row, col], ship, 'horizontal', 'in');
-    } else if (draggedShip.classList.contains('vertical')) {
+    } else if (draggedShip.getAttribute('direction') === 'vertical') {
       displayController.displayShipPath([row, col], ship, 'vertical', 'in');
     }
   }
@@ -67,30 +83,35 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    if (draggedShip.classList.contains('horizontal')) {
+    if (draggedShip.getAttribute('direction') === 'horizontal') {
       displayController.displayShipPath([row, col], ship, 'horizontal', 'out');
-    } else if (draggedShip.classList.contains('vertical')) {
+    } else if (draggedShip.getAttribute('direction') === 'vertical') {
       displayController.displayShipPath([row, col], ship, 'vertical', 'out');
     }
   }
 
   function dropShip(tile) {
-    tile.target.classList.remove('drag-over');
+
+    allPlayerTiles.forEach((tile) => {
+      tile.classList.remove('drag-over');
+    })
 
     const row = tile.target.dataset.row;
     const col = tile.target.dataset.col;
 
     const ship = ships[draggedShip.id];
 
-    if (draggedShip.classList.contains('horizontal')) {
+    if (draggedShip.getAttribute('direction') === 'horizontal') {
       playerSide.placeShip([row, col], ship, 'horizontal');
       displayController.displayShip([row, col], ship, 'horizontal');
-      draggedShip.style.visibility = 'hidden';
-    } else if (draggedShip.classList.contains('vertical')) {
+    } else if (draggedShip.getAttribute('direction') === 'vertical') {
       playerSide.placeShip([row, col], ship, 'vertical');
       displayController.displayShip([row, col], ship, 'vertical');
-      draggedShip.style.visibility = 'hidden';
     }
+
+    draggedShip.style.visibility = 'hidden';
+
+    console.log(draggedShip);
 
     if (playerSide.checkStartGame()) {
       startGameBtn.style.visibility = 'visible';
@@ -105,12 +126,12 @@ const rotateShips = () => {
 
   rotateBtn.addEventListener('click', () => {
     allShips.forEach((ship) => {
-      if (ship.classList.contains('horizontal')) {
+      if (ship.getAttribute('direction') === 'horizontal') {
         allShipsContainer.style.flexDirection = 'row';
-        rotateVertically(ship);
-      } else if (ship.classList.contains('vertical')) {
+        rotateToVertical(ship);
+      } else if (ship.getAttribute('direction') === 'vertical') {
         allShipsContainer.style.flexDirection = 'column';
-        rotateHorizontally(ship);
+        rotateToHorizontal(ship);
       }
     });
   });
@@ -154,9 +175,8 @@ const startGame = () => {
   });
 };
 
-const rotateVertically = (ship) => {
-  ship.classList.remove('horizontal');
-  ship.classList.add('vertical');
+const rotateToVertical = (ship) => {
+  ship.setAttribute('direction', 'vertical');
 
   let id = ship.id;
   switch (id) {
@@ -183,9 +203,8 @@ const rotateVertically = (ship) => {
   }
 };
 
-const rotateHorizontally = (ship) => {
-  ship.classList.remove('vertical');
-  ship.classList.add('horizontal');
+const rotateToHorizontal = (ship) => {
+  ship.setAttribute('direction', 'horizontal');
 
   let id = ship.id;
   switch (id) {
@@ -214,9 +233,9 @@ const rotateHorizontally = (ship) => {
 
 const initDrag = (playerSide, playerBoard) => {
   dragController(playerSide),
-    rotateShips(),
-    randomShips(playerSide, playerBoard),
-    startGame();
+  rotateShips(),
+  randomShips(playerSide, playerBoard),
+  startGame();
 };
 
 export default initDrag;

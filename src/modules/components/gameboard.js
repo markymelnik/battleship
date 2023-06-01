@@ -2,7 +2,7 @@ import Ship from './ship';
 
 const Gameboard = () => {
   const board = createGameBoard();
-  const fleet = createFleet();
+  let fleet = createFleet();
 
   function createGameBoard() {
     let gameboard = [];
@@ -123,9 +123,7 @@ const Gameboard = () => {
 
     let length = ship.length;
 
-    if (!fleet.some((fleetShip) => fleetShip.id === ship.id)) {
-      fleet.push(ship);
-    } else throw Error('This ship is already in the fleet!');
+    addShipToFleet(ship);
 
     if (direction === 'vertical') {
       for (let i = row; i < row + length; i++) {
@@ -136,6 +134,30 @@ const Gameboard = () => {
         board[row][i] = ship;
       }
     }
+
+    console.log(board);
+  }
+
+  function addShipToFleet(ship) {
+    if (!fleet.some((fleetShip) => fleetShip.id === ship.id)) {
+      fleet.push(ship);
+    } else throw Error('This ship is already in the fleet!');
+  }
+
+  function removeShip(ship) {
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        if (board[row][col] !== null && board[row][col].id == ship.id) {
+          board[row][col] = null;
+        }
+      }
+    }
+
+    removeShipFromFleet(ship);
+  }
+
+  function removeShipFromFleet(ship) {
+    fleet = fleet.filter((fleetShip) => fleetShip.id !== ship.id);
   }
 
   const placeAllShips = () => {
@@ -222,6 +244,9 @@ const Gameboard = () => {
     getAdjacentTiles,
     areAdjacentTilesEmpty,
     placeShip,
+    addShipToFleet,
+    removeShip,
+    removeShipFromFleet,
     placeAllShips,
     generateRandomPlacement,
     placeShipsRandomly,

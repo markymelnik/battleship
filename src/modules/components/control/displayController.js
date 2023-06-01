@@ -1,6 +1,6 @@
 const displayController = (() => {
   const displayShip = ([row, col], ship, direction) => {
-    const tiles = document.querySelectorAll('.player-tile');
+    const playerTiles = document.querySelectorAll('.player-tile');
 
     let length = ship.length;
 
@@ -9,24 +9,44 @@ const displayController = (() => {
 
     if (direction === 'horizontal') {
       for (let i = col; i < col + length; i++) {
-        tiles.forEach((tile) => {
+        playerTiles.forEach((tile) => {
           if (tile.dataset.col == i && tile.dataset.row == row) {
-            tile.style.background = 'white';
             tile.setAttribute('ship', 'true');
+            tile.setAttribute('shipid', ship.id);
+            tile.setAttribute('direction','horizontal');
+          }
+          if (tile.getAttribute('ship', 'true')) {
+            tile.style.background = 'white';
+            tile.style.cursor = 'pointer';
           }
         });
       }
     } else if (direction === 'vertical') {
       for (let i = row; i < row + length; i++) {
-        tiles.forEach((tile) => {
+        playerTiles.forEach((tile) => {
           if (tile.dataset.row == i && tile.dataset.col == col) {
-            tile.style.background = 'white';
             tile.setAttribute('ship', 'true');
+            tile.setAttribute('shipid', ship.id);
+            tile.setAttribute('direction','vertical');
+          }
+          if (tile.getAttribute('ship', 'true')) {
+            tile.style.background = 'white';
+            tile.style.cursor = 'pointer';
           }
         });
       }
     }
   };
+
+  const removeShipDisplay = (ship) => {
+    const playerTiles = document.querySelectorAll('.player-tile');
+
+    playerTiles.forEach((tile) => {
+      if (tile.getAttribute('shipid') == ship.id) {
+        resetTile(tile);
+      }
+    })
+  }
 
   const displayAllShips = (board, type) => {
     const tiles = document.querySelectorAll('.' + type + '-tile');
@@ -81,7 +101,7 @@ const displayController = (() => {
     }
   };
 
-  const updateTile = (tile) => {
+  const updateTileOnClick = (tile) => {
     tile.textContent = '✕';
     tile.setAttribute('hit', 'true');
     tile.style.pointerEvents = 'none';
@@ -90,25 +110,27 @@ const displayController = (() => {
     }
   };
 
+  const resetTile = (tile) => {
+    if (tile.getAttribute('ship')) {
+      tile.removeAttribute('ship');
+      tile.removeAttribute('shipid');
+      tile.removeAttribute('direction');
+      tile.removeAttribute('style');
+      tile.textContent = '';
+    }
+  };
+
   const resetPlayerTiles = () => {
     const playerTiles = document.querySelectorAll('.player-tile');
     playerTiles.forEach((tile) => {
-      tile.textContent = '';
-      tile.style.backgroundColor = 'var(--blue-color)';
-      tile.style.pointerEvents = 'auto';
-      tile.removeAttribute('ship');
+      resetTile(tile);
     });
   };
 
   const resetAiTiles = () => {
     const aiTiles = document.querySelectorAll('.ai-tile');
     aiTiles.forEach((tile) => {
-      tile.textContent = '';
-      tile.style.backgroundColor = 'var(--blue-color)';
-      tile.style.pointerEvents = 'auto';
-      tile.style.cursor = 'pointer';
-      tile.removeAttribute('ship');
-      tile.removeAttribute('hit');
+      resetTile(tile);
     });
   };
 
@@ -181,9 +203,10 @@ const displayController = (() => {
 
   return {
     displayShip,
+    removeShipDisplay,
     displayAllShips,
     displayShipPath,
-    updateTile,
+    updateTileOnClick,
     resetPlayerBoard,
     resetAiBoard,
     resetPlayerTiles,

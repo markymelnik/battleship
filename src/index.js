@@ -86,7 +86,7 @@ const updateBoard = (() => {
 
     tile.addEventListener('click', () => {
       playerMark.targetedAttack([row, col], playerAI, aiSide);
-      displayController.updateTile(tile);
+      displayController.updateTileOnClick(tile);
 
       aiTiles.forEach((tile) => {
         tile.style.pointerEvents = 'none';
@@ -103,7 +103,7 @@ const updateBoard = (() => {
 
         if (strike[0] === row && strike[1] === col) {
           setTimeout(() => {
-            displayController.updateTile(tile);
+            displayController.updateTileOnClick(tile);
             if (!playerSide.checkEndGame() && !aiSide.checkEndGame()) {
               gameStatusText.textContent = 'Your strike!';
               aiTiles.forEach((tile) => {

@@ -176,52 +176,54 @@
   border: 4px solid var(--white-color);
 }
 
-.horizontal {
-  height: 45px;
-}
-
 .destroyer-h {
+  height: 45px;
   width: 90px;
 }
 
 .submarine-h {
+  height: 45px;
   width: 135px;
 }
 
 .cruiser-h {
+  height: 45px;
   width: 135px;
 }
 
 .battleship-h {
+  height: 45px;
   width: 180px;
 }
 
 .carrier-h {
+  height: 45px;
   width: 225px;
-}
-
-.vertical {
-  width: 45px;
 }
 
 .destroyer-v {
   height: 90px;
+  width: 45px;
 }
 
 .submarine-v {
   height: 135px;
+  width: 45px;
 }
 
 .cruiser-v {
   height: 135px;
+  width: 45px;
 }
 
 .battleship-v {
   height: 180px;
+  width: 45px;
 }
 
 .carrier-v {
   height: 225px;
+  width: 45px;
 }
 
 .hide {

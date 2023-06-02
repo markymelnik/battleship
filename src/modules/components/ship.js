@@ -4,6 +4,7 @@ const Ship = (shipType) => {
   const type = shipType;
   const length = shipTypes[shipType].length;
   const id = shipTypes[shipType].id;
+  const direction = shipTypes[shipType].direction;
   let hits = 0;
 
   function hit() {
@@ -18,6 +19,7 @@ const Ship = (shipType) => {
     type,
     length,
     id,
+    direction,
     hits,
     hit,
     isSunk,

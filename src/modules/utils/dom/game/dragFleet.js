@@ -10,7 +10,7 @@ const createDragShip = (tag, className1, className2, direction, id) => {
 }
 
 const createDragFleet = () => {
-  const dragShips = createElement('div', 'all-ships');
+  const dragShips = createElement('div', 'ships-container');
   const destroyer = createDragShip('div', 'ship', 'destroyer-h', 'horizontal', 0);
   const submarine = createDragShip('div', 'ship', 'submarine-h', 'horizontal', 1);
   const cruiser = createDragShip('div', 'ship', 'cruiser-h', 'horizontal', 2);

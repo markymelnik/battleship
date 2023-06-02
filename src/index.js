@@ -14,6 +14,7 @@ const aiSide = Gameboard();
 const aiBoard = aiSide.board;
 const playerAI = new AI('AI', playerMark, playerSide);
 
+displayController.newGame(playerSide, aiSide, playerAI);
 initDrag(playerSide, playerBoard);
 
 const gameStatusText = document.querySelector('.game-status-text');
@@ -64,8 +65,7 @@ const updateBoard = (() => {
 
     setTimeout(() => {
       startScreen.style.display = 'none';
-      aiSide.placeShipsRandomly();
-      displayController.displayAllShips(aiBoard, 'ai');
+      displayController.initiateAiShips(aiBoard);
       gameStatusText.textContent = 'Place your ships...';
     }, 1000);
 

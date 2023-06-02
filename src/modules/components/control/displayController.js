@@ -48,16 +48,33 @@ const displayController = (() => {
     })
   }
 
-  const displayAllShips = (board, type) => {
-    const tiles = document.querySelectorAll('.' + type + '-tile');
+  const initiateAiShips = (aiBoard) => {
+    const tiles = document.querySelectorAll('.ai-tile');
+
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        tiles.forEach((tile) => {
+          if (aiBoard[row][col] !== null) {
+            if (tile.dataset.row == row && tile.dataset.col == col) {
+              // Uncomment statement below to view AI board ships
+              // tile.style.background = 'white';
+              tile.setAttribute('ship', 'true');
+            }
+          }
+        });
+      }
+    }
+  };
+
+  const displayAllPlayerShips = (board, type) => {
+    const tiles = document.querySelectorAll('.player-tile');
 
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
         tiles.forEach((tile) => {
           if (board[row][col] !== null) {
             if (tile.dataset.row == row && tile.dataset.col == col) {
-              // Statement below toggles enemy ship display
-              if (type === 'player') tile.style.background = 'white';
+              tile.style.background = 'white';
               tile.setAttribute('ship', 'true');
             }
           }
@@ -111,13 +128,12 @@ const displayController = (() => {
   };
 
   const resetTile = (tile) => {
-    if (tile.getAttribute('ship')) {
-      tile.removeAttribute('ship');
-      tile.removeAttribute('shipid');
-      tile.removeAttribute('direction');
-      tile.removeAttribute('style');
-      tile.textContent = '';
-    }
+    tile.removeAttribute('ship');
+    tile.removeAttribute('shipid');
+    tile.removeAttribute('direction');
+    tile.removeAttribute('style');
+    tile.removeAttribute('hit');
+    tile.textContent = '';
   };
 
   const resetPlayerTiles = () => {
@@ -147,7 +163,7 @@ const displayController = (() => {
     playerAI.resetHitArray();
     resetAiTiles();
     aiSide.placeShipsRandomly();
-    displayAllShips(aiSide.board, 'ai');
+    initiateAiShips(aiSide.board, 'ai');
   };
 
   const endGameController = (winner) => {
@@ -204,7 +220,8 @@ const displayController = (() => {
   return {
     displayShip,
     removeShipDisplay,
-    displayAllShips,
+    initiateAiShips,
+    displayAllPlayerShips,
     displayShipPath,
     updateTileOnClick,
     resetPlayerBoard,

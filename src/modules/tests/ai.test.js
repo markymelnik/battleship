@@ -1,40 +1,37 @@
-import Player from '../components/user/player';
-import AI from '../components/user/ai';
-import Gameboard from '../components/gameboard';
-import Ship from '../components/ship';
+import HumanPlayer from '../components/player/HumanPlayer';
+import ComputerPlayer from '../components/player/ComputerPlayer';
+import Gameboard from '../components/control/Gameboard';
+import Ship from '../components/ship/Ship';
 
-let playerMark;
-let playerAI;
-let boardMark;
-let boardAI;
+let humanPlayer, computerPlayer, humanPlayerBoard, computerPlayerBoard;
 
 beforeEach(() => {
-  playerMark = new Player('Mark');
-  playerAI = new AI();
-  boardMark = Gameboard();
-  boardAI = Gameboard();
+  humanPlayer = new HumanPlayer('Mark');
+  computerPlayer = new ComputerPlayer();
+  humanPlayerBoard = Gameboard();
+  computerPlayerBoard = Gameboard();
 });
 
 test('AI has a name', () => {
-  expect(playerAI.name).toBe('Opponent AI');
+  expect(computerPlayer.name).toBe('Computer');
 });
 
 test('AI turn set to false initially', () => {
-  expect(playerAI.checkTurn()).toBe(false);
+  expect(computerPlayer.checkTurn()).toBe(false);
 });
 
 test('player turn set to true initially', () => {
-  expect(playerMark.checkTurn()).toBe(true);
+  expect(humanPlayer.checkTurn()).toBe(true);
 });
 
 test('AI chooses random coordinates to hit and updates hitArray', () => {
-  boardAI.placeShip([1, 1], Ship('battleship'), 'horizontal');
-  boardMark.placeShip([1, 1], Ship('battleship'), 'horizontal');
-  playerMark.targetedAttack([1, 1], playerAI, boardAI);
+  computerPlayerBoard.placeShip([1, 1], Ship('battleship'), 'horizontal');
+  humanPlayerBoard.placeShip([1, 1], Ship('battleship'), 'horizontal');
+  humanPlayer.targetedAttack([1, 1], computerPlayer, computerPlayerBoard);
 
-  expect(playerAI.hitArray.length).toBe(0);
+  expect(computerPlayer.hitArray.length).toBe(0);
 
-  playerAI.randomAttack(playerMark, boardMark); // This correctly receives a random set of coordinates.
+  computerPlayer.randomAttack(humanPlayer, humanPlayerBoard); // This correctly receives a random set of coordinates.
 
-  expect(playerAI.hitArray.length).toBe(1);
+  expect(computerPlayer.hitArray.length).toBe(1);
 });

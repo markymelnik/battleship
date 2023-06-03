@@ -1,4 +1,4 @@
-import Ship from './ship/Ship';
+import Ship from '../ship/Ship';
 
 const Gameboard = () => {
   const board = createGameBoard();

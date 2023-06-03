@@ -1,8 +1,8 @@
-import Ship from '../ship/Ship';
-import displayController from './displayController';
-import rotateShips from './rotateShips';
-import randomShips from './randomShips';
-import startGame from './startGame';
+import Ship from '../../ship/Ship';
+import displayController from '../display/displayController';
+import rotateShips from '../drag/rotateShips';
+import randomShips from '../drag/randomShips';
+import startGame from '../display/startGame';
 
 const ships = [
   Ship('destroyer'),

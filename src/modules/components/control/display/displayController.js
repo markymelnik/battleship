@@ -43,7 +43,7 @@ const displayController = (() => {
 
     humanPlayerTiles.forEach((tile) => {
       if (tile.getAttribute('shipid') == ship.id) {
-        resetBoardTiles('human');
+        resetBoardTile(tile);
       }
     })
   }
@@ -127,83 +127,43 @@ const displayController = (() => {
     }
   };
 
-  const resetBoardTiles = (type) => {
-    const boardTiles = document.querySelectorAll('.' + type + '-player-tile');
-    boardTiles.forEach((tile) => {
-      tile.removeAttribute('ship');
-      tile.removeAttribute('shipid');
-      tile.removeAttribute('direction');
-      tile.removeAttribute('style');
-      tile.removeAttribute('hit');
-      tile.textContent = '';
-    });
+  const resetBoardTile = (tile) => {
+    tile.removeAttribute('ship');
+    tile.removeAttribute('shipid');
+    tile.removeAttribute('direction');
+    tile.removeAttribute('style');
+    tile.removeAttribute('hit');
+    tile.textContent = '';
   };
+
+  const resetHumanPlayerBoardTiles = () => {
+    const humanPlayerTiles = document.querySelectorAll('.human-player-tile');
+    humanPlayerTiles.forEach((tile) => {
+      resetBoardTile(tile);
+    });
+  }
+
+  const resetComputerPlayerBoardTiles = () => {
+    const computerPlayerTiles = document.querySelectorAll('.computer-player-tile');
+    computerPlayerTiles.forEach((tile) => {
+      resetBoardTile(tile);
+    });
+  }
 
   const resetHumanPlayerBoard = (playerSide) => {
     playerSide.resetShipHits();
     playerSide.clearFleet();
     playerSide.clearBoard();
-    resetBoardTiles('human');
+    resetHumanPlayerBoardTiles();
   };
 
   const resetComputerPlayerBoard = (aiSide, playerAI, ships) => {
     aiSide.clearFleet();
     aiSide.clearBoard();
     playerAI.resetHitArray();
-    resetBoardTiles('computer');
+    resetComputerPlayerBoardTiles();
     aiSide.placeShipsRandomly(ships);
     initiateComputerPlayerShips(aiSide.board);
-  };
-
-  const endGameController = (winner) => {
-    const computerPlayerTiles = document.querySelectorAll('.computer-player-tile');
-    const endGameContainer = document.querySelector('.end-game-container');
-    const endGameText = document.querySelector('.end-game-text');
-    const gameStatusText = document.querySelector('.game-status-text');
-    const humanPlayerName = document.querySelector('.human-player-name');
-    const computerPlayerName = document.querySelector('.computer-player-name');
-    const middle = document.querySelector('.middle');
-
-    setTimeout(() => {
-      endGameContainer.style.visibility = 'visible';
-      middle.style.opacity = '0.5';
-      if (winner === 'player') {
-        endGameText.textContent = 'You win!';
-        gameStatusText.textContent = `${humanPlayerName.textContent} wins!`;
-      } else {
-        endGameText.textContent = 'You lose!';
-        gameStatusText.textContent = `${computerPlayerName.textContent} wins!`;
-      }
-    }, 800);
-
-    computerPlayerTiles.forEach((tile) => {
-      tile.style.pointerEvents = 'none';
-    });
-  };
-
-  const resetGame = (playerSide, aiSide, playerAI, ships) => {
-    const dragContainer = document.querySelector('.drag-container');
-    const dragShips = document.querySelectorAll('.drag-ship');
-    const startGameBtn = document.querySelector('.start-game-btn');
-    const endGameContainer = document.querySelector('.end-game-container');
-    const gameStatusText = document.querySelector('.game-status-text');
-    const computerBoardContainer = document.querySelector('.computer-board-container');
-    const middle = document.querySelector('.middle');
-
-    resetHumanPlayerBoard(playerSide);
-    resetComputerPlayerBoard(aiSide, playerAI, ships);
-
-    endGameContainer.style.visibility = 'hidden';
-    startGameBtn.style.visibility = 'hidden';
-    dragContainer.style.visibility = 'visible';
-    computerBoardContainer.style.visibility = 'hidden';
-    middle.style.opacity = '1.0';
-
-    dragShips.forEach((ship) => {
-      ship.style.visibility = 'visible';
-    });
-
-    gameStatusText.textContent = 'Place your ships...';
   };
 
   return {
@@ -213,11 +173,11 @@ const displayController = (() => {
     displayAllPlayerShips,
     displayShipPathOnHover,
     updateTileOnClick,
+    resetBoardTile,
+    resetHumanPlayerBoardTiles,
+    resetComputerPlayerBoardTiles,
     resetHumanPlayerBoard,
     resetComputerPlayerBoard,
-    resetBoardTiles,
-    endGameController,
-    resetGame
   };
 })();
 

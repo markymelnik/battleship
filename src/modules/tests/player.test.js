@@ -1,58 +1,58 @@
-import Player from '../components/user/player';
-import AI from '../components/user/ai';
-import Gameboard from '../components/gameboard';
-import Ship from '../components/ship';
+import HumanPlayer from '../components/player/HumanPlayer';
+import ComputerPlayer from '../components/player/ComputerPlayer';
+import Gameboard from '../components/control/Gameboard';
+import Ship from '../components/ship/Ship';
 
-let playerMark, playerAI, boardMark, boardAI;
+let humanPlayer, computerPlayer, humanPlayerBoard, computerPlayerBoard;
 
 beforeEach(() => {
-  playerMark = new Player('Mark');
-  playerAI = new AI();
-  boardMark = Gameboard();
-  boardAI = Gameboard();
+  humanPlayer = new HumanPlayer('Mark');
+  computerPlayer = new ComputerPlayer();
+  humanPlayerBoard = Gameboard();
+  computerPlayerBoard = Gameboard();
 });
 
 test('player has a name', () => {
-  expect(playerMark.name).toBe('Mark');
+  expect(humanPlayer.name).toBe('Mark');
 });
 
 test('player turn set to true initially', () => {
-  expect(playerMark.checkTurn()).toBe(true);
+  expect(humanPlayer.checkTurn()).toBe(true);
 });
 
 test('AI turn set to false initially', () => {
-  expect(playerAI.checkTurn()).toBe(false);
+  expect(computerPlayer.checkTurn()).toBe(false);
 });
 
 test('endTurn function switches turns between players', () => {
-  playerMark.endTurn(playerAI);
-  expect(playerMark.checkTurn()).toBe(false);
-  expect(playerAI.checkTurn()).toBe(true);
-  playerAI.endTurn(playerMark);
-  expect(playerMark.checkTurn()).toBe(true);
-  expect(playerAI.checkTurn()).toBe(false);
+  humanPlayer.endTurn(computerPlayer);
+  expect(humanPlayer.checkTurn()).toBe(false);
+  expect(computerPlayer.checkTurn()).toBe(true);
+  computerPlayer.endTurn(humanPlayer);
+  expect(humanPlayer.checkTurn()).toBe(true);
+  expect(computerPlayer.checkTurn()).toBe(false);
 });
 
 test('targeted attack throws error when it is not the player\'s turn', () => {
-  boardAI.placeShip([2, 4], Ship('battleship'), 'horizontal');
-  boardMark.placeShip([5, 8], Ship('battleship'), 'vertical');
+  computerPlayerBoard.placeShip([2, 4], Ship('battleship'), 'horizontal');
+  humanPlayerBoard.placeShip([5, 8], Ship('battleship'), 'vertical');
 
-  expect(playerMark.checkTurn()).toBe(true);
-  expect(playerAI.checkTurn()).toBe(false);
+  expect(humanPlayer.checkTurn()).toBe(true);
+  expect(computerPlayer.checkTurn()).toBe(false);
 
-  playerMark.targetedAttack([4, 4], playerAI, boardAI);
+  humanPlayer.targetedAttack([4, 4], computerPlayer, computerPlayerBoard);
   expect(() => {
-    playerMark.targetedAttack([5, 4], playerAI, boardAI);
+    humanPlayer.targetedAttack([5, 4], computerPlayer, computerPlayerBoard);
   }).toThrow(Error);
 
-  expect(playerMark.checkTurn()).toBe(false);
-  expect(playerAI.checkTurn()).toBe(true);
+  expect(humanPlayer.checkTurn()).toBe(false);
+  expect(computerPlayer.checkTurn()).toBe(true);
 
-  playerAI.targetedAttack([5, 7], playerMark, boardMark);
+  computerPlayer.targetedAttack([5, 7], humanPlayer, humanPlayerBoard);
   expect(() => {
-    playerAI.targetedAttack([5, 6], playerMark, boardMark);
+    computerPlayer.targetedAttack([5, 6], humanPlayer, humanPlayerBoard);
   }).toThrow(Error);
 
-  expect(playerMark.checkTurn()).toBe(true);
-  expect(playerAI.checkTurn()).toBe(false);
+  expect(humanPlayer.checkTurn()).toBe(true);
+  expect(computerPlayer.checkTurn()).toBe(false);
 });

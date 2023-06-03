@@ -1,7 +1,7 @@
 import HumanPlayer from './HumanPlayer';
 
 class ComputerPlayer extends HumanPlayer {
-  constructor(name = 'Opponent ComputerPlayer', enemyPlayer, enemySide) {
+  constructor(name = 'Computer', enemyPlayer, enemySide) {
     super(name);
     this.turn = false;
     this.enemyPlayer = enemyPlayer;

@@ -1,4 +1,4 @@
-import displayController from './displayController';
+import displayController from '../display/displayController';
 
 const randomShips = (humanPlayerSide) => {
   const startGameBtn = document.querySelector('.start-game-btn');

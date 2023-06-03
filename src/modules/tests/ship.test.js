@@ -1,4 +1,4 @@
-import Ship from '../components/ship';
+import Ship from '../components/ship/Ship';
 
 let cruiser;
 
@@ -9,7 +9,7 @@ beforeEach(() => {
 test('accurate attributes about cruiser', () => {
   expect(cruiser.type).toBe('cruiser');
   expect(cruiser.length).toBe(3);
-  expect(cruiser.id).toBe(3);
+  expect(cruiser.id).toBe(2);
   expect(cruiser.hits).toBe(0);
 });
 

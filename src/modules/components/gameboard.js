@@ -134,8 +134,6 @@ const Gameboard = () => {
         board[row][i] = ship;
       }
     }
-
-    console.log(board);
   }
 
   function addShipToFleet(ship) {
@@ -152,7 +150,6 @@ const Gameboard = () => {
         }
       }
     }
-
     removeShipFromFleet(ship);
   }
 

@@ -163,7 +163,7 @@ const displayController = (() => {
     playerAI.resetHitArray();
     resetAiTiles();
     aiSide.placeShipsRandomly();
-    initiateAiShips(aiSide.board, 'ai');
+    initiateAiShips(aiSide.board);
   };
 
   const endGameController = (winner) => {

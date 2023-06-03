@@ -9,20 +9,29 @@ const resetGame = (playerSide, aiSide, playerAI, ships) => {
   const computerBoardContainer = document.querySelector('.computer-board-container');
   const middle = document.querySelector('.middle');
 
-  displayController.resetHumanPlayerBoard(playerSide);
-  displayController.resetComputerPlayerBoard(aiSide, playerAI, ships);
+  const resetBoards = () => {
+    displayController.resetHumanPlayerBoard(playerSide);
+    displayController.resetComputerPlayerBoard(aiSide, playerAI, ships);
+  }
+  
+  const resetGameStatus = () => {
+    endGameContainer.style.visibility = 'hidden';
+    startGameBtn.style.visibility = 'hidden';
+    dragContainer.style.visibility = 'visible';
+    computerBoardContainer.style.visibility = 'hidden';
+    middle.style.opacity = '1.0';
+    gameStatusText.textContent = 'Place your ships...';
+  }
+  
+  const resetDragShips = () => {
+    dragShips.forEach((ship) => {
+      ship.style.visibility = 'visible';
+    });
+  }
 
-  endGameContainer.style.visibility = 'hidden';
-  startGameBtn.style.visibility = 'hidden';
-  dragContainer.style.visibility = 'visible';
-  computerBoardContainer.style.visibility = 'hidden';
-  middle.style.opacity = '1.0';
-
-  dragShips.forEach((ship) => {
-    ship.style.visibility = 'visible';
-  });
-
-  gameStatusText.textContent = 'Place your ships...';
+  resetBoards();
+  resetGameStatus();
+  resetDragShips();
 };
 
 export default resetGame;

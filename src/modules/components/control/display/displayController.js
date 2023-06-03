@@ -2,18 +2,16 @@ const displayController = (() => {
   const displayShip = ([row, col], ship, direction) => {
     const humanPlayerTiles = document.querySelectorAll('.human-player-tile');
 
-    let length = ship.length;
-
     row = +row;
     col = +col;
 
     if (direction === 'horizontal') {
-      for (let i = col; i < col + length; i++) {
+      for (let i = col; i < col + ship.length; i++) {
         humanPlayerTiles.forEach((tile) => {
           if (tile.dataset.col == i && tile.dataset.row == row) {
             tile.setAttribute('ship', 'true');
             tile.setAttribute('shipid', ship.id);
-            tile.setAttribute('direction','horizontal');
+            tile.setAttribute('direction', 'horizontal');
           }
           if (tile.getAttribute('ship', 'true')) {
             tile.style.background = 'white';
@@ -22,12 +20,12 @@ const displayController = (() => {
         });
       }
     } else if (direction === 'vertical') {
-      for (let i = row; i < row + length; i++) {
+      for (let i = row; i < row + ship.length; i++) {
         humanPlayerTiles.forEach((tile) => {
           if (tile.dataset.row == i && tile.dataset.col == col) {
             tile.setAttribute('ship', 'true');
             tile.setAttribute('shipid', ship.id);
-            tile.setAttribute('direction','vertical');
+            tile.setAttribute('direction', 'vertical');
           }
           if (tile.getAttribute('ship', 'true')) {
             tile.style.background = 'white';
@@ -45,8 +43,8 @@ const displayController = (() => {
       if (tile.getAttribute('shipid') == ship.id) {
         resetBoardTile(tile);
       }
-    })
-  }
+    });
+  };
 
   const initiateComputerPlayerShips = (computerPlayerBoard) => {
     const computerPlayerTiles = document.querySelectorAll('.computer-player-tile');
@@ -56,7 +54,7 @@ const displayController = (() => {
         computerPlayerTiles.forEach((tile) => {
           if (computerPlayerBoard[row][col] !== null) {
             if (tile.dataset.row == row && tile.dataset.col == col) {
-              // Uncomment statement below to view AI board ships
+              // Uncomment statement below to view computer board ships
               // tile.style.background = 'white';
               tile.setAttribute('ship', 'true');
             }
@@ -86,13 +84,11 @@ const displayController = (() => {
   const displayShipPathOnHover = ([row, col], ship, direction, status) => {
     const humanPlayerTiles = document.querySelectorAll('.human-player-tile');
 
-    let length = ship.length;
-
     row = +row;
     col = +col;
 
     if (direction === 'horizontal') {
-      for (let i = col; i < col + length; i++) {
+      for (let i = col; i < col + ship.length; i++) {
         humanPlayerTiles.forEach((tile) => {
           if (tile.dataset.row == row && tile.dataset.col == i) {
             if (status === 'in') {
@@ -104,7 +100,7 @@ const displayController = (() => {
         });
       }
     } else if (direction === 'vertical') {
-      for (let i = row; i < row + length; i++) {
+      for (let i = row; i < row + ship.length; i++) {
         humanPlayerTiles.forEach((tile) => {
           if (tile.dataset.row == i && tile.dataset.col == col) {
             if (status === 'in') {
@@ -141,14 +137,14 @@ const displayController = (() => {
     humanPlayerTiles.forEach((tile) => {
       resetBoardTile(tile);
     });
-  }
+  };
 
   const resetComputerPlayerBoardTiles = () => {
     const computerPlayerTiles = document.querySelectorAll('.computer-player-tile');
     computerPlayerTiles.forEach((tile) => {
       resetBoardTile(tile);
     });
-  }
+  };
 
   const resetHumanPlayerBoard = (playerSide) => {
     playerSide.resetShipHits();
@@ -173,9 +169,6 @@ const displayController = (() => {
     displayAllPlayerShips,
     displayShipPathOnHover,
     updateTileOnClick,
-    resetBoardTile,
-    resetHumanPlayerBoardTiles,
-    resetComputerPlayerBoardTiles,
     resetHumanPlayerBoard,
     resetComputerPlayerBoard,
   };

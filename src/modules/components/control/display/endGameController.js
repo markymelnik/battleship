@@ -7,21 +7,27 @@ const endGameController = (winner) => {
   const computerPlayerName = document.querySelector('.computer-player-name');
   const middle = document.querySelector('.middle');
 
-  setTimeout(() => {
-    endGameContainer.style.visibility = 'visible';
-    middle.style.opacity = '0.5';
-    if (winner === 'player') {
+  const disableComputerPlayerTiles = () => {
+    computerPlayerTiles.forEach((tile) => {
+      tile.style.pointerEvents = 'none';
+    });
+  }
+
+  const displayEndGameResults = () => {
+    if (winner === 'human') {
       endGameText.textContent = 'You win!';
       gameStatusText.textContent = `${humanPlayerName.textContent} wins!`;
     } else {
       endGameText.textContent = 'You lose!';
       gameStatusText.textContent = `${computerPlayerName.textContent} wins!`;
     }
-  }, 800);
 
-  computerPlayerTiles.forEach((tile) => {
-    tile.style.pointerEvents = 'none';
-  });
+    endGameContainer.style.visibility = 'visible';
+    middle.style.opacity = '0.5';
+  };
+
+  disableComputerPlayerTiles();
+  setTimeout(displayEndGameResults, 800);
 };
 
 export default endGameController;

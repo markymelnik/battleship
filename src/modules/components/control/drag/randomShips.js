@@ -3,7 +3,6 @@ import displayController from '../display/displayController';
 const randomShips = (humanPlayerSide) => {
   const startGameBtn = document.querySelector('.start-game-btn');
   const randomBtn = document.querySelector('.random-btn');
-
   const dragShips = document.querySelectorAll('.drag-ship');
 
   randomBtn.addEventListener('click', () => {

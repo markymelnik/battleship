@@ -5,16 +5,23 @@ const startGame = () => {
   const gameStatusText = document.querySelector('.game-status-text');
   const computerBoardContainer = document.querySelector('.computer-board-container');
 
-  startGameBtn.addEventListener('click', () => {
-    dragContainer.style.visibility = 'hidden';
-    startGameBtn.style.visibility = 'hidden';
-    gameStatusText.textContent = 'Your strike!';
-    computerBoardContainer.style.visibility = 'visible';
-
+  const hideDragShips = () => {
     dragShips.forEach((ship) => {
       ship.style.visibility = 'hidden';
     });
-  });
+  };
+
+  const initiateGame = () => {
+    startGameBtn.addEventListener('click', () => {
+      dragContainer.style.visibility = 'hidden';
+      startGameBtn.style.visibility = 'hidden';
+      gameStatusText.textContent = 'Your strike!';
+      computerBoardContainer.style.visibility = 'visible';
+    });
+    hideDragShips();
+  }
+  
+  initiateGame();
 };
 
 export default startGame;

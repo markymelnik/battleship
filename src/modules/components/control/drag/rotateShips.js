@@ -2,6 +2,7 @@ const rotateShips = () => {
   const rotateBtn = document.querySelector('.rotate-btn');
   const dragFleet = document.querySelector('.drag-fleet');
   const dragShips = document.querySelectorAll('.drag-ship');
+  
   const shipTypes = [
     'destroyer',
     'submarine',

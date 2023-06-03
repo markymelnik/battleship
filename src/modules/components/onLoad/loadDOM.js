@@ -8,15 +8,19 @@ import createResetGameBtn from '../../utils/dom/game/resetGameBtn';
 
 const loadDOM = () => {
   const container = document.querySelector('.container');
-  container.append(
+
+  const elements = [
     createStartScreen(),
     createHeader(),
     createMiddle(),
     createDragContainer(),
     createEndGameContainer(),
     createFooter(),
-    createResetGameBtn()
-  );
+    createResetGameBtn(),
+  ];
+
+  container.append(...elements);
+
   return container;
 };
 

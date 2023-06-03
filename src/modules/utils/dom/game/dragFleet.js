@@ -10,14 +10,14 @@ const createDragShip = (tag, className1, className2, direction, id) => {
 }
 
 const createDragFleet = () => {
-  const dragShips = createElement('div', 'ships-container');
-  const destroyer = createDragShip('div', 'ship', 'destroyer-h', 'horizontal', 0);
-  const submarine = createDragShip('div', 'ship', 'submarine-h', 'horizontal', 1);
-  const cruiser = createDragShip('div', 'ship', 'cruiser-h', 'horizontal', 2);
-  const battleship = createDragShip('div', 'ship', 'battleship-h', 'horizontal', 3);
-  const carrier = createDragShip('div', 'ship', 'carrier-h', 'horizontal', 4);
-  dragShips.append(destroyer, submarine, cruiser, battleship, carrier);
-  return dragShips;
+  const dragFleet = createElement('div', 'drag-fleet');
+  const destroyer = createDragShip('div', 'drag-ship', 'destroyer-h', 'horizontal', 0);
+  const submarine = createDragShip('div', 'drag-ship', 'submarine-h', 'horizontal', 1);
+  const cruiser = createDragShip('div', 'drag-ship', 'cruiser-h', 'horizontal', 2);
+  const battleship = createDragShip('div', 'drag-ship', 'battleship-h', 'horizontal', 3);
+  const carrier = createDragShip('div', 'drag-ship', 'carrier-h', 'horizontal', 4);
+  dragFleet.append(destroyer, submarine, cruiser, battleship, carrier);
+  return dragFleet;
 }
 
 export default createDragFleet;

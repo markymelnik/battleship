@@ -1,13 +1,13 @@
 const loadStartScreen = () => {
 
   const startScreen = document.querySelector('.start-screen');
-  const startTitle = document.querySelector('.start-title');
+  const startTitle = document.querySelector('.start-screen-title');
   const enterGameBtn = document.querySelector('.enter-game-btn');
   const nameForm = document.querySelector('.name-form');
   const nameInput = document.querySelector('#username');
-  const playerName = document.querySelector('.player-name');
+  const humanPlayerName = document.querySelector('.human-player-name');
   const dragContainer = document.querySelector('.drag-container');
-  const aiContainer = document.querySelector('.ai-container');
+  const computerBoardContainer = document.querySelector('.computer-board-container');
 
   const resetGameBtn = document.querySelector('.reset-game-btn');
   const gameStatusText = document.querySelector('.game-status-text');
@@ -35,10 +35,10 @@ const loadStartScreen = () => {
       startScreen.style.top = '-100vh';
     }, 250);
   
-    playerName.textContent = nameInput.value || 'Player';
+    humanPlayerName.textContent = nameInput.value || 'Player';
     nameForm.reset();
   
-    aiContainer.style.visibility = 'hidden';
+    computerBoardContainer.style.visibility = 'hidden';
     dragContainer.style.visibility = 'visible';
     resetGameBtn.style.visibility = 'visible';
   

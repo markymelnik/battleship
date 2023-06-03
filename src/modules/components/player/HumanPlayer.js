@@ -1,4 +1,4 @@
-class Player {
+class HumanPlayer {
   constructor(playerName) {
     this.name = playerName;
     this.turn = true;
@@ -29,4 +29,4 @@ class Player {
   }
 }
 
-export default Player;
+export default HumanPlayer;

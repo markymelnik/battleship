@@ -1,15 +1,15 @@
 import displayController from './displayController';
 
-const randomShips = (playerSide, playerBoard) => {
+const randomShips = (humanPlayerSide) => {
   const startGameBtn = document.querySelector('.start-game-btn');
   const randomBtn = document.querySelector('.random-btn');
 
-  const dragShips = document.querySelectorAll('.ship');
+  const dragShips = document.querySelectorAll('.drag-ship');
 
   randomBtn.addEventListener('click', () => {
-    displayController.resetPlayerBoard(playerSide);
-    playerSide.placeShipsRandomly();
-    displayController.displayAllPlayerShips(playerBoard, 'player');
+    displayController.resetHumanPlayerBoard(humanPlayerSide);
+    humanPlayerSide.placeShipsRandomly();
+    displayController.displayAllPlayerShips(humanPlayerSide.board);
     startGameBtn.style.visibility = 'visible';
 
     dragShips.forEach((ship) => {

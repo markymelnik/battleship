@@ -29,7 +29,7 @@ describe('create start screen', () => {
     expect(startScreen.children.length).toBe(2);
   });
   test('start screen has correct title', () => {
-    const title = startScreen.querySelector('.start-title');
+    const title = startScreen.querySelector('.start-screen-title');
     expect(title.textContent).toBe('Battleship');
   });
   test('should create correct name input form structure', () => {
@@ -57,33 +57,33 @@ test('should create a middle section with correct structure', () => {
   expect(middle.tagName).toBe('DIV');
   expect(middle.classList.contains('middle')).toBe(true);
 
-  const boardContainer = middle.querySelector('.board-containers');
-  expect(boardContainer).not.toBeNull(); 
+  const gameboardContainers = middle.querySelector('.gameboards-container');
+  expect(gameboardContainers).not.toBeNull(); 
 
-  const playerContainer = boardContainer.querySelector('.player-container');
-  expect(playerContainer).not.toBeNull();
+  const humanPlayerContainer = gameboardContainers.querySelector('.human-board-container');
+  expect(humanPlayerContainer).not.toBeNull();
 
-  const aiContainer = boardContainer.querySelector('.ai-container');
-  expect(aiContainer).not.toBeNull();
+  const computerPlayerContainer = gameboardContainers.querySelector('.computer-board-container');
+  expect(computerPlayerContainer).not.toBeNull();
 
-  const playerName = playerContainer.querySelector('.player-name');
-  expect(playerName.textContent).toBe('placeholder');
+  const humanPlayerName = humanPlayerContainer.querySelector('.human-player-name');
+  expect(humanPlayerName.textContent).toBe('placeholder');
 
-  const aiName = aiContainer.querySelector('.ai-name');
-  expect(aiName.textContent).toBe('Opponent AI');
+  const computerPlayerName = computerPlayerContainer.querySelector('.computer-player-name');
+  expect(computerPlayerName.textContent).toBe('Opponent AI');
 
-  const gameText = middle.querySelector('.game-status-text');
-  expect(gameText.textContent).toBe('Loading...');
+  const gameStatusText = middle.querySelector('.game-status-text');
+  expect(gameStatusText.textContent).toBe('Loading...');
 });
 
 test('grid should be populated with tiles with correct row and col dataset properties', () => {
-  const type = 'player';
+  const type = 'human';
   const grid = createGridTiles(type);
 
   expect(grid.tagName).toBe('DIV');
-  expect(grid.classList.contains(`${type}-grid`)).toBe(true);
+  expect(grid.classList.contains(`${type}-player-grid`)).toBe(true);
 
-  const tiles = grid.querySelectorAll(`.${type}-tile`);
+  const tiles = grid.querySelectorAll(`.${type}-player-tile`);
   expect(tiles.length).toBe(100);
 
   tiles.forEach((tile, index) => {
@@ -110,7 +110,7 @@ describe('create drag fleet', () => {
   });
   test('should create a container with correct structure', () => {
     expect(dragFleet.nodeName).toBe('DIV');
-    expect(dragFleet.classList.contains('all-ships')).toBeTruthy();
+    expect(dragFleet.classList.contains('drag-fleet')).toBeTruthy();
     expect(dragFleet.children.length).toBe(5);
   });
 
@@ -123,14 +123,14 @@ describe('create drag fleet', () => {
       'carrier-h',
     ];
     for (let i = 0; i < shipTypes.length; i++) {
-      const ship = dragFleet.children[i];
+      const dragShip = dragFleet.children[i];
 
-      expect(ship.nodeName).toBe('DIV');
-      expect(ship.classList.contains('ship')).toBeTruthy();
-      expect(ship.classList.contains(shipTypes[i])).toBeTruthy();
-      expect(ship.classList.contains('horizontal')).toBeTruthy();
-      expect(ship.id).toBe(String(i));
-      expect(ship.getAttribute('draggable')).toBe('true');
+      expect(dragShip.nodeName).toBe('DIV');
+      expect(dragShip.classList.contains('drag-ship')).toBeTruthy();
+      expect(dragShip.classList.contains(shipTypes[i])).toBeTruthy();
+      expect(dragShip.id).toBe(String(i));
+      expect(dragShip.getAttribute('draggable')).toBe('true');
+      expect(dragShip.getAttribute('direction')).toBe('horizontal');
     }
   });
 });
@@ -151,7 +151,7 @@ describe('create drag container', () => {
 
   test('it should create a container with correct title, drag fleet, buttons, and their respective texts', () => {
     const title = dragContainer.querySelector('div');
-    const dragFleet = dragContainer.querySelector('.all-ships');
+    const dragFleet = dragContainer.querySelector('.drag-fleet');
     const btnContainer = dragContainer.querySelector('.btn-container');
     const rotateBtn = btnContainer.querySelector('.rotate-btn');
     const randomBtn = btnContainer.querySelector('.random-btn');
@@ -168,10 +168,10 @@ describe('create drag container', () => {
 test('should create end game container with correct structure', () => {
   const endGameContainer = createEndGameContainer();
   expect(endGameContainer.nodeName).toBe('DIV');
-  expect(endGameContainer.classList.contains('win-box')).toBeTruthy();
+  expect(endGameContainer.classList.contains('end-game-container')).toBeTruthy();
   expect(endGameContainer.children.length).toBe(2);
 
-  const winText = endGameContainer.querySelector('.win-text');
+  const winText = endGameContainer.querySelector('.end-game-text');
   expect(winText).not.toBe(null);
 
   const newGameBtn = endGameContainer.querySelector('.new-game-btn');

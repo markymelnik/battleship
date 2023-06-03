@@ -1,66 +1,99 @@
 import loadDOM from './modules/components/onLoad/loadDOM';
 import loadStartScreen from './modules/components/onLoad/loadStartScreen';
 import Gameboard from './modules/components/gameboard';
-import Player from './modules/components/user/player';
-import AI from './modules/components/user/ai';
+import HumanPlayer from './modules/components/player/HumanPlayer';
+import ComputerPlayer from './modules/components/player/ComputerPlayer';
+import Ship from './modules/components/ship/Ship';
 import initDrag from './modules/components/control/dragController';
 import displayController from './modules/components/control/displayController';
 
 loadDOM();
 loadStartScreen();
 
-const playerSide = Gameboard();
-const playerBoard = playerSide.board;
-const playerMark = new Player('Mark');
-const aiSide = Gameboard();
-const aiBoard = aiSide.board;
-const playerAI = new AI('AI', playerMark, playerSide);
+const humanPlayer = new HumanPlayer('Human Player');
+const humanPlayerSide = Gameboard();
 
-initDrag(playerSide, playerBoard);
-displayController.newGame(playerSide, aiSide, playerAI);
+const computerPlayer = new ComputerPlayer('Computer Player', humanPlayer, humanPlayerSide);
+const computerPlayerSide = Gameboard();
+
+const ships = [
+  Ship('destroyer'),
+  Ship('submarine'),
+  Ship('cruiser'),
+  Ship('battleship'),
+  Ship('carrier'),
+];
+
+initDrag(humanPlayerSide, ships);
+displayController.resetGame(humanPlayerSide, computerPlayerSide, computerPlayer, ships);
 
 const updateBoard = (() => {
-  
+  const humanPlayerTiles = document.querySelectorAll('.human-player-tile');
+  const computerPlayerTiles = document.querySelectorAll('.computer-player-tile');
   const resetGameBtn = document.querySelector('.reset-game-btn');
   const newGameBtn = document.querySelector('.new-game-btn');
-  const playerTiles = document.querySelectorAll('.player-tile');
-  const aiTiles = document.querySelectorAll('.ai-tile');
   const gameStatusText = document.querySelector('.game-status-text');
-  
+
   resetGameBtn.addEventListener('click', () => {
-    displayController.newGame(playerSide, aiSide, playerAI);
+    displayController.resetGame(
+      humanPlayerSide,
+      computerPlayerSide,
+      computerPlayer,
+      ships
+    );
   });
 
   newGameBtn.addEventListener('click', () => {
-    displayController.newGame(playerSide, aiSide, playerAI);
+    displayController.resetGame(
+      humanPlayerSide,
+      computerPlayerSide,
+      computerPlayer,
+      ships
+    );
   });
 
   const handleTileClick = (tile) => {
     let row = tile.dataset.row;
     let col = tile.dataset.col;
 
-    playerMark.targetedAttack([row, col], playerAI, aiSide);
+    tile.style.pointerEvents = 'none';
+
+    humanPlayer.targetedAttack([row, col], computerPlayer, computerPlayerSide);
     displayController.updateTileOnClick(tile);
 
-    aiTiles.forEach((tile) => {
-      tile.style.pointerEvents = 'none';
-    });
+    
+    if (humanPlayerSide.checkEndGame()) {
+      displayController.endGameController('ai');
+      return;
+    }
 
-    playerAI.randomAttack(playerMark, playerSide);
+    console.log(humanPlayerSide.fleet);
+
+    computerPlayer.randomAttack(humanPlayer, humanPlayerSide);
     gameStatusText.textContent = 'AI Strikes!';
 
-    let strike = playerAI.hitArray[playerAI.hitArray.length - 1];
+    if (computerPlayerSide.checkEndGame()) {
+      displayController.endGameController('player');
+      return;
+    }
 
-    playerTiles.forEach((tile) => {
+    console.log(computerPlayerSide.fleet);
+
+    let strike = computerPlayer.hitArray[computerPlayer.hitArray.length - 1];
+
+    humanPlayerTiles.forEach((tile) => {
       let row = +tile.dataset.row;
       let col = +tile.dataset.col;
 
       if (strike[0] === row && strike[1] === col) {
         setTimeout(() => {
           displayController.updateTileOnClick(tile);
-          if (!playerSide.checkEndGame() && !aiSide.checkEndGame()) {
+          if (
+            !humanPlayerSide.checkEndGame() &&
+            !computerPlayerSide.checkEndGame()
+          ) {
             gameStatusText.textContent = 'Your strike!';
-            aiTiles.forEach((tile) => {
+            computerPlayerTiles.forEach((tile) => {
               if (!tile.getAttribute('hit')) {
                 tile.style.pointerEvents = 'auto';
               }
@@ -68,13 +101,12 @@ const updateBoard = (() => {
           }
         }, 800);
       }
-    })
-  }
+    });
+  };
 
-  aiTiles.forEach((tile) => {
+  computerPlayerTiles.forEach((tile) => {
     tile.addEventListener('click', () => {
       handleTileClick(tile);
-    })
-  })
-
+    });
+  });
 })();

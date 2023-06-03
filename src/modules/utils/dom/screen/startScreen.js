@@ -2,7 +2,7 @@ import createElement from '../createElement';
 
 const createStartScreen = () => {
   const startScreen = createElement('div', 'start-screen');
-  const startTitle = createElement('h1', 'start-title', 'Battleship');
+  const startTitle = createElement('h1', 'start-screen-title', 'Battleship');
 
   startScreen.append(startTitle, createNameInputForm());
   return startScreen;

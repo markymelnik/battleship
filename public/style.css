@@ -44,7 +44,7 @@
   transition: 1s;
 }
 
-.start-title {
+.start-screen-title {
   position: absolute;
   top: 55%;
   left: 50%;
@@ -54,13 +54,13 @@
   transform: translate(-50%, -50%);
 }
 
-.start-title.active {
+.start-screen-title.active {
   bottom: 0;
   opacity: 1;
   transition: ease-in-out 0.5s;
 }
 
-.start-title.fade {
+.start-screen-title.fade {
   top: 100px;
   opacity: 0;
   transition: ease-in-out 0.5s;
@@ -155,7 +155,7 @@
   margin-bottom: 20px;
 }
 
-.ships-container {
+.drag-fleet {
   display: flex;
   flex-direction: column;
   height: 300px;
@@ -163,7 +163,7 @@
   gap: 25px;
 }
 
-.ship {
+.drag-ship {
   display: flex;
   height: 45px;
   width: 45px;
@@ -171,7 +171,7 @@
   z-index: 1;
 }
 
-.ship:hover {
+.drag-ship:hover {
   cursor: pointer;
   border: 4px solid var(--white-color);
 }
@@ -314,7 +314,7 @@
   width: 100%
 }
 
-.board-containers {
+.gameboards-container {
   display: flex;
   flex-direction: row;
   width: inherit;
@@ -329,8 +329,8 @@
   margin-bottom: 20px;
 }
 
-.player-container,
-.ai-container {
+.human-board-container,
+.computer-board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -340,22 +340,22 @@
   background: var(--dark-grey-color);
 }
 
-.player-grid,
-.ai-grid {
+.human-player-grid,
+.computer-player-grid {
   display: grid;
   grid-template: repeat(10, 45px) / repeat(10, 45px);
   margin-bottom: 50px;
   background: var(--dark-grey-color);
 }
 
-.player-name,
-.ai-name {
+.human-player-name,
+.computer-player-name {
   font-size: 30px;
   padding: 10px;
 }
 
-.player-tile,
-.ai-tile {
+.human-player-tile,
+.computer-player-tile {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -366,16 +366,16 @@
   transition: transform 0.2s ease;
 }
 
-.player-tile:hover {
+.human-player-tile:hover {
   cursor: auto;
 }
 
-.ai-tile:hover {
+.computer-player-tile:hover {
   cursor: pointer;
   transform: translateY(-2px) translateX(2px);
 }
 
-.ai-tile:active {
+.computer-player-tile:active {
   transform: translateY(0px) translateX(0px);
 }
 
@@ -410,7 +410,7 @@
   transform: scale(0.9);
 }
 
-.win-box {
+.end-game-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -424,7 +424,7 @@
   visibility: hidden;
 }
 
-.win-text {
+.end-game-text {
   font-size: 40px;
 }
 

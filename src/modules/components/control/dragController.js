@@ -1,8 +1,8 @@
-import Ship from '../ship';
+import Ship from '../ship/Ship';
 import displayController from './displayController';
 import rotateShips from './rotateShips';
 import randomShips from './randomShips';
-import startGame from './startGame'
+import startGame from './startGame';
 
 const ships = [
   Ship('destroyer'),
@@ -12,21 +12,21 @@ const ships = [
   Ship('carrier'),
 ];
 
-const dragController = (playerSide) => {
-  const allShips = document.querySelectorAll('.ship');
-  const allPlayerTiles = document.querySelectorAll('.player-tile');
+const dragController = (humanPlayerSide) => {
+  const dragShips = document.querySelectorAll('.drag-ship');
+  const humanPlayerTiles = document.querySelectorAll('.human-player-tile');
   const startGameBtn = document.querySelector('.start-game-btn');
 
   let draggedShip;
   let originalPosition;
   let lastDropValid = false;
 
-  allShips.forEach((ship) => {
+  dragShips.forEach((ship) => {
     ship.addEventListener('dragstart', dragStart);
     ship.addEventListener('dragend', dragEnd);
   });
 
-  allPlayerTiles.forEach((tile) => {
+  humanPlayerTiles.forEach((tile) => {
     tile.addEventListener('dragstart', dragShipOnBoardStart);
     tile.addEventListener('dragenter', dragEnter);
     tile.addEventListener('dragover', dragOver);
@@ -40,8 +40,7 @@ const dragController = (playerSide) => {
   }
 
   function dragShipOnBoardStart(tile) {
-
-    const allShips = document.querySelectorAll('.ship');
+    const dragShips = document.querySelectorAll('.drag-ship');
     const ship = ships[tile.target.getAttribute('shipid')];
     let direction = tile.target.getAttribute('direction');
 
@@ -49,12 +48,12 @@ const dragController = (playerSide) => {
       position: [tile.target.dataset.row, tile.target.dataset.col],
       ship,
       direction,
-    }
+    };
 
-    draggedShip = allShips[tile.target.getAttribute('shipid')];
+    draggedShip = dragShips[tile.target.getAttribute('shipid')];
 
     displayController.removeShipDisplay(ship);
-    playerSide.removeShip(ship);
+    humanPlayerSide.removeShip(ship);
   }
 
   function dragEnter(tile) {
@@ -66,7 +65,7 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    displayController.displayShipPath([row,col], ship, direction, 'in');
+    displayController.displayShipPathOnHover([row, col], ship, direction, 'in');
   }
 
   function dragOver(tile) {
@@ -78,7 +77,7 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    displayController.displayShipPath([row, col], ship, direction, 'in');
+    displayController.displayShipPathOnHover([row, col], ship, direction, 'in');
   }
 
   function dragLeave(tile) {
@@ -88,18 +87,23 @@ const dragController = (playerSide) => {
 
     const ship = ships[draggedShip.id];
 
-    displayController.displayShipPath([row, col], ship, direction, 'out');
+    displayController.displayShipPathOnHover(
+      [row, col],
+      ship,
+      direction,
+      'out'
+    );
   }
 
   function dropShip(tile) {
-    allPlayerTiles.forEach((tile) => {
+    humanPlayerTiles.forEach((tile) => {
       tile.classList.remove('drag-over');
     });
 
     const row = tile.target.dataset.row;
     const col = tile.target.dataset.col;
 
-    if (!playerSide.inBounds([row, col])) {
+    if (!humanPlayerSide.inBounds([row, col])) {
       lastDropValid = false;
       return;
     }
@@ -111,14 +115,14 @@ const dragController = (playerSide) => {
 
     try {
       const direction = draggedShip.getAttribute('direction');
-      const position = [row,col];
-      playerSide.placeShip(position, ship, direction);
+      const position = [row, col];
+      humanPlayerSide.placeShip(position, ship, direction);
       displayController.displayShip(position, ship, direction);
     } catch (placementError) {
-      console.log(placementError)
+      console.log(placementError);
       try {
         const { position, ship, direction } = originalPosition;
-        playerSide.placeShip(position, ship, direction);
+        humanPlayerSide.placeShip(position, ship, direction);
         displayController.displayShip(position, ship, direction);
       } catch (error) {
         displayController.removeShipDisplay(ship);
@@ -126,7 +130,7 @@ const dragController = (playerSide) => {
       }
     }
 
-    if (playerSide.checkStartGame()) {
+    if (humanPlayerSide.checkStartGame()) {
       startGameBtn.style.visibility = 'visible';
     }
   }
@@ -139,11 +143,11 @@ const dragController = (playerSide) => {
   }
 };
 
-const initDrag = (playerSide, playerBoard) => {
-  dragController(playerSide),
-  rotateShips(),
-  randomShips(playerSide, playerBoard),
-  startGame();
+const initDrag = (humanPlayerSide) => {
+  dragController(humanPlayerSide),
+    rotateShips(),
+    randomShips(humanPlayerSide),
+    startGame();
 };
 
 export default initDrag;

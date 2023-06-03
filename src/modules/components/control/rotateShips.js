@@ -1,7 +1,7 @@
 const rotateShips = () => {
   const rotateBtn = document.querySelector('.rotate-btn');
-  const shipsContainer = document.querySelector('.ships-container');
-  const allShips = document.querySelectorAll('.ship');
+  const dragFleet = document.querySelector('.drag-fleet');
+  const dragShips = document.querySelectorAll('.drag-ship');
   const shipTypes = [
     'destroyer',
     'submarine',
@@ -11,12 +11,12 @@ const rotateShips = () => {
   ];
 
   rotateBtn.addEventListener('click', () => {
-    allShips.forEach((ship) => {
+    dragShips.forEach((ship) => {
       if (ship.getAttribute('direction') === 'horizontal') {
-        shipsContainer.style.flexDirection = 'row';
+        dragFleet.style.flexDirection = 'row';
         rotateShip(ship, 'vertical', 'h', 'v');
       } else if (ship.getAttribute('direction') === 'vertical') {
-        shipsContainer.style.flexDirection = 'column';
+        dragFleet.style.flexDirection = 'column';
         rotateShip(ship, 'horizontal', 'v', 'h');
       }
     });

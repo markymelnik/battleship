@@ -1,6 +1,6 @@
 import HumanPlayer from '../components/player/HumanPlayer';
 import ComputerPlayer from '../components/player/ComputerPlayer';
-import Gameboard from '../components/control/Gameboard';
+import Gameboard from '../components/gameboard/gameboard';
 import Ship from '../components/ship/Ship';
 
 let humanPlayer, computerPlayer, humanPlayerBoard, computerPlayerBoard;

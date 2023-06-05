@@ -1,7 +1,8 @@
 import Ship from '../../ship/Ship';
 import displayController from '../display/displayController';
-import rotateShips from '../drag/rotateShips';
-import randomShips from '../drag/randomShips';
+import rotateDragShips from '../drag/rotateDragShips';
+import placeDragShipsRandomly from './placeDragShipsRandomly';
+import resetDragShips from './resetDragShips';
 import startGame from '../display/startGame';
 
 const ships = [
@@ -145,8 +146,9 @@ const dragController = (humanPlayerSide) => {
 
 const initDrag = (humanPlayerSide) => {
   dragController(humanPlayerSide),
-    rotateShips(),
-    randomShips(humanPlayerSide),
+    rotateDragShips(),
+    placeDragShipsRandomly(humanPlayerSide),
+    resetDragShips(humanPlayerSide),
     startGame();
 };
 

@@ -1,5 +1,6 @@
 import loadDOM from './modules/components/onLoad/loadDOM';
 import loadStartScreen from './modules/components/onLoad/loadStartScreen';
+import initGameboard from './modules/components/gameboard/initGameboard';
 import initPlayers from './modules/components/player/initPlayers';
 import initShips from './modules/components/ship/initShips';
 import initDrag from './modules/components/control/drag/dragController';
@@ -10,7 +11,8 @@ const gameFlowController = (() => {
   loadDOM();
   loadStartScreen();
 
-  const { humanPlayer, humanPlayerSide, computerPlayer, computerPlayerSide } = initPlayers();
+  const { humanPlayerSide, computerPlayerSide } = initGameboard();
+  const { humanPlayer, computerPlayer } = initPlayers(humanPlayerSide);
   const ships = initShips();
 
   initDrag(humanPlayerSide, ships);

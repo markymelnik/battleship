@@ -1,15 +1,11 @@
 import HumanPlayer from './HumanPlayer';
 import ComputerPlayer from './ComputerPlayer';
-import Gameboard from '../control/Gameboard';
 
-const initPlayers = () => {
+const initPlayers = (humanPlayerSide) => {
   const humanPlayer = new HumanPlayer('Human Player');
-  const humanPlayerSide = Gameboard();
-
   const computerPlayer = new ComputerPlayer('Computer Player', humanPlayer, humanPlayerSide);
-  const computerPlayerSide = Gameboard();
 
-  return { humanPlayer, humanPlayerSide, computerPlayer, computerPlayerSide }
+  return { humanPlayer, computerPlayer }
 }
 
 export default initPlayers;

@@ -146,20 +146,20 @@ const displayController = (() => {
     });
   };
 
-  const resetHumanPlayerBoard = (playerSide) => {
-    playerSide.resetShipHits();
-    playerSide.clearFleet();
-    playerSide.clearBoard();
+  const resetHumanPlayerBoard = (humanPlayerSide) => {
+    humanPlayerSide.resetShipHits();
+    humanPlayerSide.clearFleet();
+    humanPlayerSide.clearBoard();
     resetHumanPlayerBoardTiles();
   };
 
-  const resetComputerPlayerBoard = (aiSide, playerAI, ships) => {
-    aiSide.clearFleet();
-    aiSide.clearBoard();
-    playerAI.resetHitArray();
+  const resetComputerPlayerBoard = (computerPlayerSide, computerPlayer, ships) => {
+    computerPlayerSide.clearFleet();
+    computerPlayerSide.clearBoard();
+    computerPlayer.resetHitArray();
     resetComputerPlayerBoardTiles();
-    aiSide.placeShipsRandomly(ships);
-    initiateComputerPlayerShips(aiSide.board);
+    computerPlayerSide.placeShipsRandomly(ships);
+    initiateComputerPlayerShips(computerPlayerSide.board);
   };
 
   return {

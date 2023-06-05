@@ -5,13 +5,13 @@ const createMiddle = () => {
   const boardContainer = createElement('div', 'gameboards-container');
   const humanPlayerContainer = createElement('div', 'human-board-container');
   const playerName = createElement('div', 'human-player-name', 'placeholder');
-  const aiContainer = createElement('div', 'computer-board-container');
-  const aiName = createElement('div', 'computer-player-name', 'Opponent AI');
+  const computerPlayerContainer = createElement('div', 'computer-board-container');
+  const computerName = createElement('div', 'computer-player-name', 'Computer');
   const gameStatusText = createElement('div', 'game-status-text', 'Loading...');
 
   humanPlayerContainer.append(playerName, createGridTiles('human'));
-  aiContainer.append(aiName, createGridTiles('computer'));
-  boardContainer.append(humanPlayerContainer, aiContainer);
+  computerPlayerContainer.append(computerName, createGridTiles('computer'));
+  boardContainer.append(humanPlayerContainer, computerPlayerContainer);
   middle.append(boardContainer, gameStatusText);
 
   return middle;

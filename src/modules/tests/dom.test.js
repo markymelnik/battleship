@@ -70,7 +70,7 @@ test('should create a middle section with correct structure', () => {
   expect(humanPlayerName.textContent).toBe('placeholder');
 
   const computerPlayerName = computerPlayerContainer.querySelector('.computer-player-name');
-  expect(computerPlayerName.textContent).toBe('Opponent AI');
+  expect(computerPlayerName.textContent).toBe('Computer');
 
   const gameStatusText = middle.querySelector('.game-status-text');
   expect(gameStatusText.textContent).toBe('Loading...');
@@ -153,14 +153,16 @@ describe('create drag container', () => {
     const title = dragContainer.querySelector('div');
     const dragFleet = dragContainer.querySelector('.drag-fleet');
     const btnContainer = dragContainer.querySelector('.btn-container');
-    const rotateBtn = btnContainer.querySelector('.rotate-btn');
-    const randomBtn = btnContainer.querySelector('.random-btn');
+    const rotateBtn = btnContainer.querySelector('.rotate-drag-btn');
+    const randomBtn = btnContainer.querySelector('.random-drag-btn');
+    const resetDragBtn = btnContainer.querySelector('.reset-drag-btn');
     const startGameBtn = dragContainer.querySelector('.start-game-btn');
 
     expect(title.textContent).toBe('Drag your ships onto the board!');
     expect(dragFleet).not.toBeNull();
     expect(rotateBtn.textContent).toBe('Rotate');
     expect(randomBtn.textContent).toBe('Random');
+    expect(resetDragBtn.textContent).toBe('Reset');
     expect(startGameBtn.textContent).toBe('Start');
   });
 });

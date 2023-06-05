@@ -1,6 +1,6 @@
 import displayController from './displayController';
 
-const resetGame = (playerSide, aiSide, playerAI, ships) => {
+const resetGame = (humanPlayerSide, computerPlayerSide, computerPlayer, ships) => {
   const dragContainer = document.querySelector('.drag-container');
   const dragShips = document.querySelectorAll('.drag-ship');
   const startGameBtn = document.querySelector('.start-game-btn');
@@ -10,8 +10,8 @@ const resetGame = (playerSide, aiSide, playerAI, ships) => {
   const middle = document.querySelector('.middle');
 
   const resetBoards = () => {
-    displayController.resetHumanPlayerBoard(playerSide);
-    displayController.resetComputerPlayerBoard(aiSide, playerAI, ships);
+    displayController.resetHumanPlayerBoard(humanPlayerSide);
+    displayController.resetComputerPlayerBoard(computerPlayerSide, computerPlayer, ships);
   }
   
   const resetGameStatus = () => {

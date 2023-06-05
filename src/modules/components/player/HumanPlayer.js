@@ -25,7 +25,7 @@ class HumanPlayer {
     if (this.checkTurn()) {
       enemySide.receiveAttack([row, col]);
       this.endTurn(enemyPlayer);
-    } else throw Error('Not your turn!');
+    } else throw new Error('Not your turn!');
   }
 }
 

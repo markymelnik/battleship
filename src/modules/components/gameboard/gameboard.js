@@ -37,8 +37,7 @@ const Gameboard = () => {
 
   function validPlacement([row, col], ship, direction) {
     if (!inBounds([row, col])) {
-      console.error('Invalid initial starting position');
-      return false;
+      throw new Error('Invalid initial starting position');
     }
 
     if (direction === 'horizontal') {
@@ -115,16 +114,13 @@ const Gameboard = () => {
     col = +col;
 
     if (!validPlacement([row, col], ship, direction)) {
-      console.error('The ship extends outside the board.');
-      return;
+      throw new Error('The ship extends outside the board.');
     }
     if (!isPathClearOfShips([row, col], ship, direction)) {
-      console.error('There is another ship in the way.');
-      return;
+      throw new Error('There is another ship in the way.');
     }
     if (!areAdjacentTilesEmpty([row, col], ship, direction)) {
-      console.error('This ship is adjacent to another ship.');
-      return;
+      throw new Error('This ship is adjacent to another ship.');
     }
 
     addShipToFleet(ship);
@@ -133,17 +129,19 @@ const Gameboard = () => {
       for (let i = row; i < row + ship.length; i++) {
         board[i][col] = ship;
       }
+      return true;
     } else if (direction === 'horizontal') {
       for (let i = col; i < col + ship.length; i++) {
         board[row][i] = ship;
       }
+      return true;
     }
   }
 
   function addShipToFleet(ship) {
     if (!fleet.some((fleetShip) => fleetShip.id === ship.id)) {
       fleet.push(ship);
-    } else console.error('This ship is already in the fleet!');
+    } else throw new Error('This ship is already in the fleet!');
   }
 
   function removeShip(ship) {

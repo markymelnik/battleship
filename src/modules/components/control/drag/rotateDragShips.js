@@ -1,5 +1,5 @@
-const rotateShips = () => {
-  const rotateBtn = document.querySelector('.rotate-btn');
+const rotateDragShips = () => {
+  const rotateBtn = document.querySelector('.rotate-drag-btn');
   const dragFleet = document.querySelector('.drag-fleet');
   const dragShips = document.querySelectorAll('.drag-ship');
   
@@ -23,7 +23,7 @@ const rotateShips = () => {
     });
   });
 
-  function rotateShip(ship, direction, oldClass, newClass) {
+  const rotateShip = (ship, direction, oldClass, newClass) => {
     ship.setAttribute('direction', direction);
     let shipType = shipTypes[ship.id];
     ship.classList.remove(`${shipType}-${oldClass}`);
@@ -31,4 +31,4 @@ const rotateShips = () => {
   }
 };
 
-export default rotateShips;
+export default rotateDragShips;
